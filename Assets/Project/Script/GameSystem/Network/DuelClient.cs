@@ -8,13 +8,19 @@ using System.Diagnostics;
 
 namespace Egan
 {
-    public class SocketClient
+    /// <summary>
+    /// 与决斗服务器交互的socket客户端类
+    /// </summary>
+    public class DuelClient
     {
         private const string IP = "";
         private const int PORT = 2333;
 
         private Socket client;
 
+        /// <summary>
+        /// 开始连接
+        /// </summary>
         public void Start()
         {
             try
@@ -50,13 +56,22 @@ namespace Egan
             }
         }
 
-        public void Send(String msg)
+        /// <summary>
+        /// 发送游戏操作消息
+        /// </summary>
+        /// <param name="msg"></param>
+        public void SendOPMsg(String msg)
         {
-            client.Send(Encoding.UTF8.GetBytes(msg));
+            client.Send(Encoding.UTF8.GetBytes("o" + msg));
         }
 
-        public void CreateRoom(String id, String name, String password)
+        /// <summary>
+        /// 发送聊天消息
+        /// </summary>
+        /// <param name="msg"></param>
+        public void SendChatMsg(String msg)
         {
+            client.Send(Encoding.UTF8.GetBytes("c" + msg));
         }
 
 

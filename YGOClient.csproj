@@ -228,7 +228,7 @@
     <Compile Include="Assets\Project\Script\GameSystem\CardSelect\Mono_MoveCard_Mouse.cs" />
     <Compile Include="Assets\Project\Script\GameSystem\LinkFrameWork\BaseTimePoint.cs" />
     <Compile Include="Assets\Project\Script\GameSystem\Network\Room.cs" />
-    <Compile Include="Assets\Project\Script\GameSystem\Network\SocketClient.cs" />
+    <Compile Include="Assets\Project\Script\GameSystem\Network\DuelClient.cs" />
     <Compile Include="Assets\Project\Script\Setting\Setting.cs" />
     <Compile Include="Assets\Project\Script\UI\UI_MS_Background.cs" />
     <Compile Include="Assets\Project\Script\UI\UIFrameWork\AUIBase.cs" />

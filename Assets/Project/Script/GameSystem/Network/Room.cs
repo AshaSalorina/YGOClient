@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Egan
 {
-    class Room
+    public class Room
     {
         private string id;
         private string rName;

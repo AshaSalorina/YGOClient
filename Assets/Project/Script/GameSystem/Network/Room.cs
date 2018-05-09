@@ -11,8 +11,43 @@ namespace Egan
         private string rName;
         private string uName;
 
-        public string Id { get => id; set => id = value; }
-        public string RName { get => rName; set => rName = value; }
-        public string UName { get => uName; set => uName = value; }
+        public string Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
+
+        public string RName
+        {
+            get
+            {
+                return rName;
+            }
+
+            set
+            {
+                rName = value;
+            }
+        }
+
+        public string UName
+        {
+            get
+            {
+                return uName;
+            }
+
+            set
+            {
+                uName = value;
+            }
+        }
     }
 }

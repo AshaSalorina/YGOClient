@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 110954688}
   - component: {fileID: 110954690}
   - component: {fileID: 110954689}
+  - component: {fileID: 110954691}
   m_Layer: 5
   m_Name: MS_Background
   m_TagString: Untagged
@@ -254,6 +255,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 110954687}
+--- !u!114 &110954691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 110954687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd06658cf8f5fd47aee07d488f63f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &210025767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1278,7 @@ GameObject:
   - component: {fileID: 1235939714}
   - component: {fileID: 1235939713}
   - component: {fileID: 1235939712}
+  - component: {fileID: 1235939715}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1318,6 +1331,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1235939715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1235939711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 966e642ae0b9e294da961294a8773aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1283352429
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace Asha
         /// <summary>
         /// 背景图片的地址（URL）
         /// </summary>
-        public static string MS_Background_URL;
+        public static string MS_Background_URL = "";
 
 
         #endregion

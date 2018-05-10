@@ -23,13 +23,12 @@ namespace Asha.Tools
         /// <param name="url">地址</param>
         /// <param name="tp">载入类型</param>
         /// <returns></returns>
-        IEnumerator LoadImage(GameObject obj, string url, LoadImageType tp)
+        public static IEnumerator LoadImage(GameObject obj, string url, LoadImageType tp)
         {
 
             switch (tp)
             {
                 case LoadImageType.WebOrLocal:
-
                     WWW wLink = new WWW(url);
                     yield return wLink;
                     try

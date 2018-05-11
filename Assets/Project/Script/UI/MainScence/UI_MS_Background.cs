@@ -8,7 +8,7 @@ namespace Asha
 
     public class UI_MS_Background : MonoBehaviour
     {
-        static UI_MS_Background obj;
+        UI_MS_Background obj;
 
         void Start()
         {
@@ -19,15 +19,15 @@ namespace Asha
         /// <summary>
         /// 刷新背景图
         /// </summary>
-        public static void Refresh()
+        public void Refresh()
         {
             if (Setting.MS_Background_URL != null && Setting.MS_Background_URL != "")
             {
-                obj.StartCoroutine(ImageHelper.LoadImage(gameObject, Setting.MS_Background_URL, ImageHelper.LoadImageType.WebOrLocal));
+                StartCoroutine(ImageHelper.LoadImage(gameObject, Setting.MS_Background_URL, ImageHelper.LoadImageType.WebOrLocal));
             }
             else
             {
-                obj.StartCoroutine(ImageHelper.LoadImage(gameObject, "Images/UI/Backgrounds/df1", ImageHelper.LoadImageType.Resources));
+                StartCoroutine(ImageHelper.LoadImage(gameObject, "Images/UI/Backgrounds/df1", ImageHelper.LoadImageType.Resources));
             }
         }
 

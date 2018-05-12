@@ -19,6 +19,11 @@ namespace Asha
         /// </summary>
         public static int AudioLaude;
 
+        /// <summary>
+        /// 声音源
+        /// </summary>
+        public static GameObject AudioSource;
+
         #endregion
 
         #region 全局路径

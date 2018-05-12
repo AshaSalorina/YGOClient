@@ -8,9 +8,18 @@ namespace Asha
 
     public class UI_MS_Background : MonoBehaviour
     {
+        UI_MS_Background obj;
 
-        // Use this for initialization
         void Start()
+        {
+            obj = this;
+            Refresh();
+        }
+
+        /// <summary>
+        /// 刷新背景图
+        /// </summary>
+        public void Refresh()
         {
             if (Setting.MS_Background_URL != null && Setting.MS_Background_URL != "")
             {
@@ -18,10 +27,11 @@ namespace Asha
             }
             else
             {
-                // StartCoroutine(ImageHelper.LoadImage(gameObject, "/Images/Backgrounds/default.jpg", ImageHelper.LoadImageType.Resources));
-                gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("/Images/Backgrounds/default.jpg");
+                StartCoroutine(ImageHelper.LoadImage(gameObject, "Images/UI/Backgrounds/df1", ImageHelper.LoadImageType.Resources));
             }
         }
+
+
     }
 }
 

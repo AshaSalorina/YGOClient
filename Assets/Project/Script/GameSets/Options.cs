@@ -14,6 +14,10 @@ namespace Asha
         /// </summary>
         public static string MS_Background_URL = "";
 
+        /// <summary>
+        /// 音量大小
+        /// </summary>
+        public static int AudioLaude;
 
         #endregion
 

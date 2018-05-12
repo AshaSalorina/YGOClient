@@ -20,10 +20,10 @@ namespace Asha
                 StreamReader sR = new StreamReader(fS);
                 while (sR.Peek() != -1)
                 {
-                    Setting.MS_Background_URL = sR.ReadLine();
+                    Options.MS_Background_URL = sR.ReadLine();
                 }
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 throw;
             }
@@ -37,7 +37,7 @@ namespace Asha
                 FileStream fS = new FileStream($"{Application.dataPath}/StreamingAssets/Setting.ygo", FileMode.OpenOrCreate);
                 StreamWriter sW = new StreamWriter(fS);
 
-                sW.WriteLine(Setting.MS_Background_URL);
+                sW.WriteLine(Options.MS_Background_URL);
 
 
             }

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Asha
 {
-    public class Setting
+    public class Options
     {
 
         #region 全局字段
@@ -17,7 +17,14 @@ namespace Asha
 
         #endregion
 
-        
+        #region 全局路径
+
+        public static Transform MainSMainScence;
+
+
+        #endregion
+
+
     }
 }
 

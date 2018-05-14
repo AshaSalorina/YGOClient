@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Egan
+namespace Model.Egan
 {
     /// <summary>
     /// 房间类

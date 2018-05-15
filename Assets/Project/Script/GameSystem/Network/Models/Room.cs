@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Egan.Models
 {
     /// <summary>
     /// 房间类
     /// </summary>
+    [DataContract]
     public class Room
     {
         /// <summary>
@@ -18,32 +20,59 @@ namespace Egan.Models
         /// <summary>
         /// 房间名称
         /// </summary>
-        private string rName;
-
-        /// <summary>
-        /// 房主名称
-        /// </summary>
-        private string uName;
+        [DataMember(Name = "nm")]
+        private string name;
 
         /// <summary>
         /// 房间描述
         /// </summary>
+        [DataMember(Name = "ds")]
         private string desc;
 
         /// <summary>
         /// 房间是否存在密码
         /// </summary>
+        [DataMember(Name = "hp")]
         private bool hasPwd;
 
         /// <summary>
         /// 房间密码
         /// </summary>
+        [DataMember(Name = "ps")]
         private string password;
 
         /// <summary>
         /// 房间是否正在进行游戏
         /// </summary>
+        [DataMember(Name = "isp")]
         private bool isPlaying;
+
+        /// <summary>
+        /// 房主
+        /// </summary>
+        [DataMember(Name = "hs")]
+        private Player host;
+
+        /// <summary>
+        /// 客人
+        /// </summary>
+        [DataMember(Name = "gs")]
+        private Player guest;
+
+        public Room() { }
+
+        public Room(int id, string name, string desc, bool hasPwd, 
+            string password, bool isPlaying, Player host, Player guest)
+        {
+            this.id = id;
+            this.name = name;
+            this.desc = desc;
+            this.hasPwd = hasPwd;
+            this.password = password;
+            this.isPlaying = isPlaying;
+            this.host = host;
+            this.guest = guest;
+        }
 
         public int Id
         {
@@ -58,29 +87,16 @@ namespace Egan.Models
             }
         }
 
-        public string RName
+        public string Name
         {
             get
             {
-                return rName;
+                return name;
             }
 
             set
             {
-                rName = value;
-            }
-        }
-
-        public string UName
-        {
-            get
-            {
-                return uName;
-            }
-
-            set
-            {
-                uName = value;
+                name = value;
             }
         }
 
@@ -133,6 +149,32 @@ namespace Egan.Models
             set
             {
                 isPlaying = value;
+            }
+        }
+
+        public Player Host
+        {
+            get
+            {
+                return host;
+            }
+
+            set
+            {
+                host = value;
+            }
+        }
+
+        public Player Guest
+        {
+            get
+            {
+                return guest;
+            }
+
+            set
+            {
+                guest = value;
             }
         }
     }

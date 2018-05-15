@@ -1,11 +1,13 @@
-﻿using System;
+﻿
+using Egan.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Egan
+namespace Egan.Cotrollers
 {
     /// <summary>
     /// 游戏大厅客户端类
@@ -13,16 +15,16 @@ namespace Egan
     class LobbyClient
     {
 
-        private const string URL = "";
+        private string URL;
+
+        LobbyClient(){}
 
         /// <summary>
         /// 获取房间列表信息
         /// </summary>
-        public void GetRoomList()
+        public List<Room> GetRoomList()
         {
-
+            
         }
-
-        
     }
 }

@@ -19,18 +19,23 @@ namespace Asha
         /// </summary>
         public static int AudioLaude;
 
-        /// <summary>
-        /// 声音源
-        /// </summary>
-        public static GameObject AudioSource;
 
         #endregion
 
         #region 全局路径
 
-        public static Transform MainSMainScence;
+        public static GameObject MainScence;
+        public static GameObject Menu;
+        public static GameObject GameCenter;
+        public static GameObject CardsSet;
+        public static GameObject Game2D;
 
+        public static GameObject Game3D;
 
+        /// <summary>
+        /// 声音源
+        /// </summary>
+        public static GameObject AudioSource;
         #endregion
 
 

@@ -1,5 +1,6 @@
 ﻿using Egan.Cotrollers;
 using Egan.Models;
+using Egan.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Egan.Cotrollers
 {
     /// <summary>
     /// 网络包装类
+    /// 统一包装网络方法
     /// </summary>
     public class NetworkWrapper
     {
@@ -34,6 +36,16 @@ namespace Egan.Cotrollers
             
             return lobbyClient.GetRoomList(ref maxRoomNum);
         }
+
+        /// <summary>
+        /// 创建新房间
+        /// </summary>
+        /// <param name="room">新房间信息</param>
+        /// <returns>处理后的服务器响应状态</returns>
+        public RHandler CreateRoom(Room room)
+        {
+            return new RHandler(lobbyClient.CreateRoom(room));
+        } 
 
         public int MaxRoomNum
         {

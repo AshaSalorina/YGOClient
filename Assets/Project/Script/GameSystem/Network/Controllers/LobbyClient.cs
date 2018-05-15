@@ -45,5 +45,23 @@ namespace Egan.Cotrollers
 
             return rooms;
         }
+
+        /// <summary>
+        /// 创建房间
+        /// </summary>
+        /// <param name="room">新房间信息</param>
+        /// <returns>服务器响应状态的数据载体</returns>
+        public R CreateRoom(Room room)
+        {
+            if (room.Id != 0)
+                room.Id = 0;
+
+            String roomStr = JsonConvert.SerializeObject(room);
+
+            String responseResult = HttpWebWrapper.Post(URL, roomStr);
+
+            return JsonConvert.DeserializeObject<R>(responseResult);
+
+        }
     }
 }

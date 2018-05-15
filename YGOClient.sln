@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YGOClient", "Assembly-CSharp.csproj", "{1830431F-0C92-FE6F-7421-2A8AA23B281F}"
+VisualStudioVersion = 15.0.27703.2000
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YGOClient", "YGOClient.csproj", "{6000DEA3-5F8E-B547-A3CE-2037DFF7EDCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1830431F-0C92-FE6F-7421-2A8AA23B281F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1830431F-0C92-FE6F-7421-2A8AA23B281F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1830431F-0C92-FE6F-7421-2A8AA23B281F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1830431F-0C92-FE6F-7421-2A8AA23B281F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6000DEA3-5F8E-B547-A3CE-2037DFF7EDCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6000DEA3-5F8E-B547-A3CE-2037DFF7EDCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6000DEA3-5F8E-B547-A3CE-2037DFF7EDCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6000DEA3-5F8E-B547-A3CE-2037DFF7EDCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4FE65185-A680-4ADA-8B8C-C172B4AE6A75}
 	EndGlobalSection
 EndGlobal

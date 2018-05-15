@@ -13,17 +13,41 @@ namespace Egan.Cotrollers
     /// </summary>
     public class NetworkWrapper
     {
-
         private LobbyClient lobbyClient;
 
         private DuelClient duelClient;
 
-        public NetworkWrapper() {}
+        /// <summary>
+        /// 最大房间数
+        /// </summary>
+        private int maxRoomNum;
 
-        public List<Room> GetRooms() {
+        public NetworkWrapper() { }
+
+        /// <summary>
+        /// 获取房间列表信息
+        /// </summary>
+        /// <returns>房间列表</returns>
+        public List<Room> GetRoom() {
             if (lobbyClient == null)
                 lobbyClient = new LobbyClient();
-            return lobbyClient.GetRoomList();
+            
+            return lobbyClient.GetRoomList(ref maxRoomNum);
+        }
+
+        public int MaxRoomNum
+        {
+            get
+            {
+                return maxRoomNum;
+            }
+
+            set
+            {
+                maxRoomNum = value;
+            }
         }
     }
+
+
 }

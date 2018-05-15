@@ -11,14 +11,14 @@ namespace Asha
     public class MathCommonData
     {
         /// <summary>
-        /// 0向量
+        /// 0向量:(0,0,0)
         /// </summary>
-        public static Vector3 ZVector3 = new Vector3(0, 0, 0);
+        public static readonly Vector3 ZVector3 = new Vector3(0, 0, 0);
 
         /// <summary>
-        /// 1向量
+        /// 1向量:(1,1,1)
         /// </summary>
-        public static Vector3 EVector3 = new Vector3(1,1,1);
+        public static readonly Vector3 EVector3 = new Vector3(1,1,1);
     }
 }
 

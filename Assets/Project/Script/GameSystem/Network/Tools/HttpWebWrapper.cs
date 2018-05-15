@@ -43,12 +43,15 @@ namespace Egan.Tools
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.ContentLength = Encoding.UTF8.GetByteCount(data);
 
-            Stream reqStream = request.GetRequestStream();
-            StreamWriter writer = new StreamWriter(reqStream, Encoding.UTF8);
-            writer.Write(data);
+            byte[] bytes = Encoding.UTF8.GetBytes(data);
+
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = bytes.Length;
+
+            Stream writer = request.GetRequestStream();
+            //StreamWriter writer = new StreamWriter(reqStream, Encoding.GetEncoding("UTF-8"));
+            writer.Write(bytes, 0, bytes.Length);
             writer.Close();
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -58,6 +61,7 @@ namespace Egan.Tools
 
             string result = reader.ReadToEnd();
 
+            writer.Close();
             reader.Close();
             respStream.Close();
 

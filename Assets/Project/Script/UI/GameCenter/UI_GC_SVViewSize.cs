@@ -15,14 +15,13 @@ namespace Asha
         }
 
         /// <summary>
-        /// 刷新房间控件的大小，为了减少开销，从外部必须使用SendMessage来刷新
+        /// 刷新房间控件的大小
         /// </summary>
         void Refresh()
         {
             int ct = gameObject.transform.childCount;
             Vector2 v2 = gameObject.GetComponent<RectTransform>().sizeDelta;
             gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(v2.x, ct * 105);
-
         }
 
 

@@ -1,16 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UI_MS_pl : MonoBehaviour {
+namespace Asha
+{
+    public class UI_MS_btnGameCenter : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        void Start() {
+            gameObject.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                if (Options.GameCenter == null)
+                {
+                    Options.GameCenter = GameObject.Find("GameCenter");
+                }
+                Options.GameCenter.SetActive(true);
+                Options.Menu.SetActive(false);
+            });
+        }
+
+    }
 }
+

@@ -14,6 +14,7 @@ namespace Asha
 
         public static void Load()
         {
+            #region 配置文件载入
             try
             {
                 FileStream fS = new FileStream($"{Application.dataPath}/StreamingAssets/Setting.ygo", FileMode.OpenOrCreate);
@@ -27,6 +28,26 @@ namespace Asha
             {
                 throw;
             }
+            #endregion
+
+            #region 路径实例化和预载入
+            Options.MainScence = GameObject.Find("MainScence");
+
+            /*
+            GameObject pl_menu = Instantiate(Resources.Load<GameObject>(@"Prefabs\UI\MainScence\pl_menu"));
+            pl_menu.transform.SetParent(Options.MainScence.transform);
+            pl_menu.transform.localPosition = new Vector3(0, 0, 0);
+            pl_menu.transform.localScale = new Vector3(1, 1, 1);
+            */
+            Options.Menu = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\MainScence\pl_menu"),Options.MainScence,new Vector3(0,0,0),new Vector3(1,1,1),false);
+            //pl_menu.SetActive(false);
+
+
+            Options.GameCenter = GameObject.Find("GameCenter");
+            Options.CardsSet = GameObject.Find("CardsSet");
+            Options.Game2D = GameObject.Find("Game2D");
+            Options.Game3D = GameObject.Find("Game2D");
+            #endregion
         }
 
 

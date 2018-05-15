@@ -13,20 +13,20 @@ namespace Egan.Exceptions
     /// </summary>
     public class RExceptionHandler
     {
-        public static RException R(int code)
+        public static RException handler(int code)
         {
+            StatusCode codeEnum = (StatusCode)code;
+
             string msg;
 
-            switch (code)
+            switch (codeEnum)
             {
-                case 4000: msg = "房间信息缺失"; break;
-                case 4316: msg = "房间密码错误"; break;
-                case 4317: msg = "当前证书已过期"; break;
-                case 4381: msg = "房间已开始游戏"; break;
-                case 4382: msg = "房客未进入准备状态"; break;
-                case 4383: msg = "房间已解散"; break;
-                case 4391: msg = "游戏大厅的房间容量已满"; break;
-                case 4392: msg = "房间的玩家容量已满"; break;
+                case StatusCode.Incorrect: msg = "房间密码错误"; break;
+                case StatusCode.Playing: msg = "房间已开始游戏"; break;
+                case StatusCode.Unprepared: msg = "房客未进入准备状态"; break;
+                case StatusCode.Dimissed: msg = "房间已解散"; break;
+                case StatusCode.FullLobby: msg = "游戏大厅的房间容量已满"; break;
+                case StatusCode.FullRoom: msg = "房间的玩家容量已满"; break;
                 default: msg = "发生未知错误"; break;
             }
 

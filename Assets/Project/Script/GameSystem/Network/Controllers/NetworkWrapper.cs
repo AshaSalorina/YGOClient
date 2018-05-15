@@ -1,9 +1,11 @@
 ﻿using Egan.Cotrollers;
+using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,9 +44,19 @@ namespace Egan.Cotrollers
         /// </summary>
         /// <param name="room">新房间信息</param>
         /// <returns>处理后的服务器响应状态</returns>
-        public RHandler CreateRoom(Room room)
+        public void CreateRoom(Room room)
         {
-            return new RHandler(lobbyClient.CreateRoom(room));
+            if (lobbyClient == null)
+                lobbyClient = new LobbyClient();
+
+
+            R rStatus = lobbyClient.CreateRoom(room);
+
+            if(rStatus.Code != 2000)
+            {
+                throw RExceptionHandler.handler(rStatus.Code);
+            }
+            
         } 
 
         public int MaxRoomNum

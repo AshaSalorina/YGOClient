@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Egan.Models
+namespace Egan.Tools
 {
     /// <summary>
     /// 数据载体类

@@ -10,10 +10,6 @@ namespace Asha
         void Start() {
             gameObject.GetComponent<Button>().onClick.AddListener(() =>
             {
-                if (Options.GameCenter == null)
-                {
-                    Options.GameCenter = GameObject.Find("GameCenter");
-                }
                 Options.GameCenter.SetActive(true);
                 Options.Menu.SetActive(false);
             });

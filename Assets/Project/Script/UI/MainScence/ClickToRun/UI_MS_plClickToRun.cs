@@ -14,10 +14,6 @@ namespace Asha
             {
                 if (Input.GetMouseButtonUp(0))
                 {
-                    if (Options.Menu == null)
-                    {
-                        Options.Menu = GameObject.Find("pl_menu");
-                    }
                     Options.Menu.SetActive(true);
                     gameObject.SetActive(false);
                     enabled = false;

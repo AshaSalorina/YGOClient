@@ -24,12 +24,14 @@ namespace Asha
 
         #region 全局路径
 
+        public static GameObject MainCanvas;
+
         public static GameObject MainScence;
         public static GameObject Menu;
         public static GameObject GameCenter;
         public static GameObject CardsSet;
         public static GameObject Game2D;
-
+        public static GameObject Optionpl;
         public static GameObject Game3D;
 
         /// <summary>

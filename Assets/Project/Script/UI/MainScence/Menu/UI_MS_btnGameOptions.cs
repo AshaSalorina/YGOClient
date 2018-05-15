@@ -13,14 +13,7 @@ namespace Asha
         {
             gameObject.GetComponent<Button>().onClick.AddListener(() =>
             {
-                GameObject opt = GameObject.Find("pl_Options");
-                if (opt == null)
-                {
-                    opt = Instantiate(Resources.Load<GameObject>(@"Prefabs\UI\MainScenc\pl_Options"));
-                    opt.transform.SetParent(Options.MainScence.transform);
-                    opt.transform.localPosition = new Vector3(0, 0, 0);
-                }
-                opt.SetActive(true);
+                Options.Optionpl.SetActive(true);
                 Options.Menu.SetActive(false);
             });
         }

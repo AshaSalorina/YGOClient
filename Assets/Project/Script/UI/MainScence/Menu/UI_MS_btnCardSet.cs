@@ -13,10 +13,6 @@ namespace Asha
         {
             gameObject.GetComponent<Button>().onClick.AddListener(() =>
             {
-                if (Options.CardsSet == null)
-                {
-                    Options.CardsSet = GameObject.Find("CardsSet");
-                }
                 Options.CardsSet.SetActive(true);
                 Options.Menu.SetActive(false);
             });

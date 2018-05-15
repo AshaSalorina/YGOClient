@@ -31,14 +31,31 @@ namespace Asha
             #endregion
 
             #region 路径实例化和预载入
+            Options.MainCanvas = GameObject.Find("Canvas");
             Options.MainScence = GameObject.Find("MainScence");
 
             Options.Menu = InstantiateHelper.InsObj( Resources.Load<GameObject>(@"Prefabs\UI\MainScence\pl_menu"),Options.MainScence, "pl_menu", false);
+            //Options.Menu = GameObject.Find("pl_menu");
+            //Options.Menu.SetActive(false);
+            Options.GameCenter = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\GameCenter"), Options.MainCanvas, "GameCenter", false);
+            Options.GameCenter.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
 
-            Options.GameCenter = GameObject.Find("GameCenter");
-            Options.CardsSet = GameObject.Find("CardsSet");
+            //Options.GameCenter = GameObject.Find("GameCenter");
+            //Options.GameCenter.SetActive(false);
+
+
+            Options.Optionpl = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\MainScence\pl_Options"), Options.MainScence, "pl_Options", false);
+            //Options.Optionpl = GameObject.Find("pl_Options");
+            //Options.Optionpl.SetActive(false);
+
+            Options.CardsSet = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\CardSet\CardsSet"), Options.MainCanvas, "CardsSet", false);
+            Options.CardsSet.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+            //Options.CardsSet = GameObject.Find("CardsSet");
+            //Options.CardsSet.SetActive(false);
             Options.Game2D = GameObject.Find("Game2D");
-            Options.Game3D = GameObject.Find("Game2D");
+            Options.Game2D.SetActive(false);
+            Options.Game3D = GameObject.Find("Game3D");
+            Options.Game3D.SetActive(false);
             #endregion
         }
 

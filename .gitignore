@@ -44,3 +44,6 @@ sysinfo.txt
 /doc/~$功能分析.xlsx
 /doc/~$王卡牌游戏需求规格说明书.doc
 /.gitattributes
+/Packages
+/packages.config
+/app.config

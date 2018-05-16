@@ -1,4 +1,5 @@
 ﻿
+using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
 using Newtonsoft.Json;
@@ -38,9 +39,10 @@ namespace Egan.Cotrollers
             try{
                 rooms = JsonConvert.DeserializeObject<List<Room>>(jobj["rm"].ToString());
             }
-            catch(NullReferenceException ex)
+            catch(NullReferenceException){}
+            catch (RException rex)
             {
-                //ex.ToString();
+                throw rex;
             }
 
             return rooms;
@@ -57,8 +59,16 @@ namespace Egan.Cotrollers
                 room.Id = 0;
 
             String roomStr = JsonConvert.SerializeObject(room);
+            String responseResult = "" ;
 
-            String responseResult = HttpWebWrapper.Post(URL, roomStr);
+            try
+            {
+                responseResult = HttpWebWrapper.Post(URL, roomStr);
+            }catch(RException rex)
+            {
+                throw rex;
+            }
+            
 
             return JsonConvert.DeserializeObject<R>(responseResult);
 

@@ -44,9 +44,9 @@ namespace Egan.Exceptions
         public static RException Handle(int timeOut, double usedTime)
         {
             if (timeOut > usedTime)
-                throw new RException("网络连接失败，请检查您的网络情况");
+                return new RException("网络连接失败，请检查您的网络情况");
             else
-                throw new RException("服务器故障，详情请查看公告");
+                return new RException("服务器故障，详情请查看公告");
         }
     }
 }

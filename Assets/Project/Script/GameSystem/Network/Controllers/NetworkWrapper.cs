@@ -35,8 +35,14 @@ namespace Egan.Cotrollers
         public List<Room> GetRoom() {
             if (lobbyClient == null)
                 lobbyClient = new LobbyClient();
+            try
+            {
+                return lobbyClient.GetRoomList(ref maxRoomNum);
+            }catch(RException rex)
+            {
+                throw rex;
+            }
             
-            return lobbyClient.GetRoomList(ref maxRoomNum);
         }
 
         /// <summary>
@@ -49,12 +55,17 @@ namespace Egan.Cotrollers
             if (lobbyClient == null)
                 lobbyClient = new LobbyClient();
 
-
-            R rStatus = lobbyClient.CreateRoom(room);
-
-            if(rStatus.Code != 2000)
+            try
             {
-                throw RExceptionHandler.handler(rStatus.Code);
+                StatusCode code = (StatusCode)lobbyClient.CreateRoom(room).Code;
+                if (code != StatusCode.OK)
+                {
+                    throw RExceptionHandler.Handle(code);
+                }
+            }
+            catch (RException rex)
+            {
+                throw rex;
             }
             
         } 

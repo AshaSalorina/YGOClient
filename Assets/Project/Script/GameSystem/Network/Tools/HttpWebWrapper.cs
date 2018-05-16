@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Egan.Exceptions;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -20,14 +22,35 @@ namespace Egan.Tools
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = "text/plain;charset=utf-8";
+            request.Timeout = 10000;
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream respStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(respStream,
-                Encoding.GetEncoding("utf-8"));
-            string result = reader.ReadToEnd();
-            reader.Close();
-            respStream.Close();
+            string result = "";
+
+            Stream stream = null;
+            StreamReader reader = null;
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            try
+            {
+                
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                stream = response.GetResponseStream();
+                reader = new StreamReader(stream,
+                    Encoding.GetEncoding("utf-8"));
+                result = reader.ReadToEnd();
+            }catch(WebException wex)
+            {
+                throw RExceptionHandler.Handle(request.Timeout, watch.Elapsed.TotalMilliseconds);
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+                if (stream != null)
+                    stream.Close();
+                watch.Stop();
+            }
 
             return result;
 
@@ -48,24 +71,47 @@ namespace Egan.Tools
 
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = bytes.Length;
+            request.Timeout = 10000;
 
-            Stream writer = request.GetRequestStream();
-            //StreamWriter writer = new StreamWriter(reqStream, Encoding.GetEncoding("UTF-8"));
-            writer.Write(bytes, 0, bytes.Length);
-            writer.Close();
+            string result = "";
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream writer = null, stream = null;
+            StreamReader reader = null;
 
-            Stream respStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(respStream, Encoding.UTF8);
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
 
-            string result = reader.ReadToEnd();
+            try
+            {
+                writer = request.GetRequestStream();
+                writer.Write(bytes, 0, bytes.Length);
 
-            writer.Close();
-            reader.Close();
-            respStream.Close();
+                watch.Restart();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                stream = response.GetResponseStream();
+                reader = new StreamReader(stream, Encoding.UTF8);
+
+                result = reader.ReadToEnd();
+                
+            }catch(WebException)
+            {
+                throw RExceptionHandler.Handle(request.Timeout, watch.Elapsed.TotalMilliseconds);
+            }
+            finally
+            {
+                watch.Stop();
+                if(writer != null)
+                    writer.Close();
+                if (reader != null)
+                    reader.Close();
+                if(stream != null)
+                    stream.Close();
+            }
 
             return result;
+
         }
     }
 }

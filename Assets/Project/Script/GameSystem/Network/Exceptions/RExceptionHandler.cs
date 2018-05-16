@@ -9,17 +9,19 @@ namespace Egan.Exceptions
 {
     /// <summary>
     /// 自定义异常处理器
-    /// 处理来自服务器响应状态的异常
     /// </summary>
     public class RExceptionHandler
     {
-        public static RException handler(int code)
+        /// <summary>
+        /// 处理来自服务器响应状态的异常
+        /// </summary>
+        /// <param name="code">服务器响应状态码</param>
+        /// <returns></returns>
+        public static RException Handle(StatusCode code)
         {
-            StatusCode codeEnum = (StatusCode)code;
-
             string msg;
 
-            switch (codeEnum)
+            switch (code)
             {
                 case StatusCode.Incorrect: msg = "房间密码错误"; break;
                 case StatusCode.Playing: msg = "房间已开始游戏"; break;
@@ -31,6 +33,20 @@ namespace Egan.Exceptions
             }
 
             return new RException(msg);
+        }
+
+        /// <summary>
+        /// 处理网络连接异常
+        /// </summary>
+        /// <param name="timeOut"></param>
+        /// <param name="usedTime"></param>
+        /// <returns>异常</returns>
+        public static RException Handle(int timeOut, double usedTime)
+        {
+            if (timeOut > usedTime)
+                throw new RException("网络连接失败，请检查您的网络情况");
+            else
+                throw new RException("服务器故障，详情请查看公告");
         }
     }
 }

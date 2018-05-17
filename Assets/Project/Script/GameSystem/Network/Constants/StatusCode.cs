@@ -1,5 +1,5 @@
 ﻿
-namespace Egan.Tools
+namespace Egan.Constants
 {
     public enum StatusCode
     {

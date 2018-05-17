@@ -12,54 +12,43 @@ namespace Egan.Models
     [DataContract]
     public class Room
     {
-        /// <summary>
-        /// 房间ID
-        /// </summary>
+        
         private int id;
 
-        /// <summary>
-        /// 房间名称
-        /// </summary>
+        
         [DataMember(Name = "nm")]
         private string name;
 
-        /// <summary>
-        /// 房间描述
-        /// </summary>
+        
         [DataMember(Name = "ds")]
         private string desc;
 
-        /// <summary>
-        /// 房间是否存在密码
-        /// </summary>
+        
         [DataMember(Name = "hp")]
         private bool hasPwd;
 
-        /// <summary>
-        /// 房间密码
-        /// </summary>
+        
         [DataMember(Name = "ps")]
         private string password;
 
-        /// <summary>
-        /// 房间是否正在进行游戏
-        /// </summary>
+        
         [DataMember(Name = "isp")]
         private bool isPlaying;
 
-        /// <summary>
-        /// 房主
-        /// </summary>
+        
         [DataMember(Name = "hs")]
         private Player host;
 
-        /// <summary>
-        /// 客人
-        /// </summary>
+        
         [DataMember(Name = "gs")]
         private Player guest;
 
-        public Room() { }
+        public override bool Equals(object obj)
+        {
+            return id.Equals(((Room)obj).Id);
+        }
+
+        public Room() {}
 
         public Room(int id, string name, string desc, bool hasPwd, 
             string password, bool isPlaying, Player host, Player guest)
@@ -74,6 +63,9 @@ namespace Egan.Models
             this.guest = guest;
         }
 
+        /// <summary>
+        /// 房间ID
+        /// </summary>
         public int Id
         {
             get
@@ -87,6 +79,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房间名称
+        /// </summary>
         public string Name
         {
             get
@@ -100,6 +95,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房间描述
+        /// </summary>
         public string Desc
         {
             get
@@ -113,6 +111,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房间是否存在密码
+        /// </summary>
         public bool HasPwd
         {
             get
@@ -126,6 +127,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房间密码
+        /// </summary>
         public string Password
         {
             get
@@ -139,6 +143,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房间是否正在进行游戏
+        /// </summary>
         public bool IsPlaying
         {
             get
@@ -152,6 +159,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房主
+        /// </summary>
         public Player Host
         {
             get
@@ -165,6 +175,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 房客
+        /// </summary>
         public Player Guest
         {
             get

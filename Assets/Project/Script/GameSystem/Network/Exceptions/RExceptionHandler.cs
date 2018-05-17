@@ -38,8 +38,8 @@ namespace Egan.Exceptions
         /// <summary>
         /// 处理网络连接异常
         /// </summary>
-        /// <param name="timeOut"></param>
-        /// <param name="usedTime"></param>
+        /// <param name="timeOut">预设请求超时时间</param>
+        /// <param name="usedTime">当前用时</param>
         /// <returns>异常</returns>
         public static RException Handle(int timeOut, double usedTime)
         {

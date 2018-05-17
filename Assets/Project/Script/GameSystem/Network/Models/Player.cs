@@ -13,27 +13,19 @@ namespace Egan.Models
     [DataContract]
     public class Player
     {
-        /// <summary>
-        /// 玩家名
-        /// </summary>
+        
         [DataMember(Name = "nm")]
         private String name;
 
-        /// <summary>
-        /// 玩家头像图片
-        /// </summary>
+        
         [DataMember(Name = "hd")]
         private byte[] head;
 
-        /// <summary>
-        /// 玩家（房客）是否已进入准备状态
-        /// </summary>
+        
         [DataMember(Name = "isp")]
         private bool isPrepared;
 
-        /// <summary>
-        /// 玩家（房主）是否已经进入开始状态
-        /// </summary>
+        
         [DataMember(Name = "iss")]
         private bool isStarting;
 
@@ -47,6 +39,9 @@ namespace Egan.Models
             this.isStarting = isStarting;
         }
 
+        /// <summary>
+        /// 玩家名
+        /// </summary>
         public string Name
         {
             get
@@ -60,6 +55,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 玩家头像图片
+        /// </summary>
         public byte[] Head
         {
             get
@@ -73,6 +71,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 玩家（房客）是否已进入准备状态
+        /// </summary>
         public bool IsPrepared
         {
             get
@@ -86,6 +87,9 @@ namespace Egan.Models
             }
         }
 
+        /// <summary>
+        /// 玩家（房主）是否已经进入开始状态
+        /// </summary>
         public bool IsStarted
         {
             get

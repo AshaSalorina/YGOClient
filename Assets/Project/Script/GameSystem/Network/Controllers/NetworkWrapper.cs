@@ -32,7 +32,7 @@ namespace Egan.Cotrollers
         /// 获取房间列表信息
         /// </summary>
         /// <returns>房间列表</returns>
-        public List<Room> GetRoom() {
+        public List<Room> GetRooms() {
             if (lobbyClient == null)
                 lobbyClient = new LobbyClient();
             try

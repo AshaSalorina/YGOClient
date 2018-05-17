@@ -1,5 +1,4 @@
-﻿
-using Egan.Exceptions;
+﻿using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
 using Newtonsoft.Json;

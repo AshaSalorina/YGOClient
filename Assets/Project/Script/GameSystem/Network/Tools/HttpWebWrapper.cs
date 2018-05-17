@@ -39,7 +39,7 @@ namespace Egan.Tools
                 reader = new StreamReader(stream,
                     Encoding.GetEncoding("utf-8"));
                 result = reader.ReadToEnd();
-            }catch(WebException wex)
+            }catch(WebException)
             {
                 throw RExceptionHandler.Handle(request.Timeout, watch.Elapsed.TotalMilliseconds);
             }

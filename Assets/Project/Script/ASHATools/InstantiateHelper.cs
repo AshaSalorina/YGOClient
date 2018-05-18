@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Asha
+namespace Asha.Tools
 {
     /// <summary>
     /// 我实在受不了那么多加载了，就总结了一个

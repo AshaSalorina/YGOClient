@@ -38,6 +38,6 @@ namespace Egan.Constants
         /// <summary>
         /// 校验卡组
         /// </summary>
-        VERITY = 0x0,
+        DECK = 0x0,
     }
 }

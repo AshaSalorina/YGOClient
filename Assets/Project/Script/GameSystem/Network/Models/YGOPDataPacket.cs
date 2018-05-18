@@ -34,6 +34,11 @@ namespace Egan.Models
         private int magic;
 
         /// <summary>
+        /// 消息体长度
+        /// </summary>
+        private int len;
+
+        /// <summary>
         /// json消息体
         /// </summary>
         private String body;
@@ -45,11 +50,22 @@ namespace Egan.Models
         /// <param name="type">消息类型</param>
         public YGOPDataPacket(String body, MessageType type)
         {
-            this.version = ProtocolConstant.version;
+            this.version = ProtocolConstant.VERSION;
             this.type = type;
             this.magic = ProtocolConstant.MAGIC;
             this.body = body;
         }
+
+        public YGOPDataPacket(float version, MessageType type, int magic, int len, string body)
+        {
+            this.version = version;
+            this.type = type;
+            this.magic = magic;
+            this.len = len;
+            this.body = body;
+        }
+
+
 
         /// <summary>
         /// 版本号
@@ -96,6 +112,22 @@ namespace Egan.Models
             set
             {
                 magic = value;
+            }
+        }
+
+        /// <summary>
+        /// 消息体长度
+        /// </summary>
+        public int Len
+        {
+            get
+            {
+                return len;
+            }
+
+            set
+            {
+                len = value;
             }
         }
 

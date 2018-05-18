@@ -53,7 +53,7 @@ namespace Egan.Cotrollers
         {
             byte[] buffer = new byte[1024];
             int len = 0;
-            //分段接收服务器信息?
+            //分段接收服务器信息
             while (true)
             {
                 len = client.Receive(buffer);

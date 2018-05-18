@@ -10,30 +10,26 @@ namespace Egan.Constants
         /// <summary>
         /// 房间密码错误
         /// </summary>
-        Incorrect = 4316,
-        /// <summary>
-        /// Token无效
-        /// </summary>
-        InvalidToken = 4317,
+        INCORRECT = 4316,
         /// <summary>
         /// 房间已开始游戏
         /// </summary>
-        Playing = 4381,
+        PLAYING = 4381,
         /// <summary>
         /// 房客未准备
         /// </summary>
-        Unprepared = 4382,
+        UNPREPARED = 4382,
         /// <summary>
         /// 房间已解散
         /// </summary>
-        Dimissed = 4383,
+        DISMISSED = 4383,
         /// <summary>
         /// 大厅已满
         /// </summary>
-        FullLobby = 4391,
+        FULL_LOBBY = 4391,
         /// <summary>
         /// 房间已满
         /// </summary>
-        FullRoom = 4392
+        FULL_ROOM = 4392
     }
 }

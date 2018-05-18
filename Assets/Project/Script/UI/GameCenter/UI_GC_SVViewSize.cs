@@ -54,13 +54,8 @@ namespace Asha
                 }
                 try
                 {
-<<<<<<< HEAD
                     //通过NetWorkWrapper获取房间列表，并生成房间置入滚动框
-                    var nT = new NetworkWrapper();
-=======
-                    //通过NetWorkWrapper获取房间列表
                     var nT = new NetworkClient();
->>>>>>> 35a274449469c9ad25d8d0cc175da20cd1fcd931
                     var ls = nT.GetRooms();
                     foreach (var item in ls)
                     {

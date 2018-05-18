@@ -17,10 +17,10 @@ namespace Egan.Cotrollers
     /// </summary>
     public class LobbyClient
     {
+        
+        private string URL;
 
-        private string URL = "http://localhost:8844/";
-
-        public LobbyClient(){}
+        public LobbyClient(string URL){ this.URL = URL; }
 
         /// <summary>
         /// 获取房间列表

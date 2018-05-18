@@ -13,10 +13,16 @@ namespace Egan.Cotrollers
     /// </summary>
     public class DuelClient
     {
-        private const string IP = "";
-        private const int PORT = 2333;
+        private string IP = "";
+        private int PORT = 2333;
 
         private Socket client;
+
+        public DuelClient(string IP, int PORT)
+        {
+            this.IP = IP;
+            this.PORT = PORT;
+        }
 
         /// <summary>
         /// 开始连接

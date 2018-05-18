@@ -1,13 +1,7 @@
-﻿using Egan.Cotrollers;
-using Egan.Exceptions;
+﻿using Egan.Exceptions;
 using Egan.Models;
-using Egan.Tools;
-using System;
+using Egan.Constants;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Egan.Cotrollers
 {
@@ -15,8 +9,23 @@ namespace Egan.Cotrollers
     /// 网络包装类
     /// 统一包装网络方法
     /// </summary>
-    public class NetworkWrapper
+    public class NetworkClient
     {
+        /// <summary>
+        /// 游戏大厅服务器的URL
+        /// </summary>
+        private string lobbyURL = "http://localhost:8844/";
+
+        /// <summary>
+        /// 决斗服务器的IP地址
+        /// </summary>
+        private string duelIP = "....";
+
+        /// <summary>
+        /// 决斗服务器的端口号
+        /// </summary>
+        private int duelPort = 0000;
+
         private LobbyClient lobbyClient;
 
         private DuelClient duelClient;
@@ -26,15 +35,17 @@ namespace Egan.Cotrollers
         /// </summary>
         private int maxRoomNum;
 
-        public NetworkWrapper() { }
+        public NetworkClient()
+        {
+            lobbyClient = new LobbyClient(lobbyURL);
+            duelClient = new DuelClient(duelIP, duelPort);
+        }
 
         /// <summary>
         /// 获取房间列表信息
         /// </summary>
         /// <returns>房间列表</returns>
         public List<Room> GetRooms() {
-            if (lobbyClient == null)
-                lobbyClient = new LobbyClient();
             try
             {
                 return lobbyClient.GetRoomList(ref maxRoomNum);
@@ -52,9 +63,6 @@ namespace Egan.Cotrollers
         /// <returns>处理后的服务器响应状态</returns>
         public void CreateRoom(Room room)
         {
-            if (lobbyClient == null)
-                lobbyClient = new LobbyClient();
-
             try
             {
                 StatusCode code = (StatusCode)lobbyClient.CreateRoom(room).Code;

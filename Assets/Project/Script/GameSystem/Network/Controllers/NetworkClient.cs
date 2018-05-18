@@ -1,13 +1,7 @@
-﻿using Egan.Cotrollers;
-using Egan.Exceptions;
+﻿using Egan.Exceptions;
 using Egan.Models;
-using Egan.Tools;
-using System;
+using Egan.Constants;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Egan.Cotrollers
 {
@@ -15,7 +9,7 @@ namespace Egan.Cotrollers
     /// 网络包装类
     /// 统一包装网络方法
     /// </summary>
-    public class NetworkWrapper
+    public class NetworkClient
     {
         /// <summary>
         /// 游戏大厅服务器的URL
@@ -41,7 +35,7 @@ namespace Egan.Cotrollers
         /// </summary>
         private int maxRoomNum;
 
-        public NetworkWrapper()
+        public NetworkClient()
         {
             lobbyClient = new LobbyClient(lobbyURL);
             duelClient = new DuelClient(duelIP, duelPort);

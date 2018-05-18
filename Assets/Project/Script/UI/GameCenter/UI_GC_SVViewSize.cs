@@ -46,7 +46,7 @@ namespace Asha
                 try
                 {
                     //通过NetWorkWrapper获取房间列表
-                    var nT = new NetworkWrapper();
+                    var nT = new NetworkClient();
                     var ls = nT.GetRooms();
                     foreach (var item in ls)
                     {

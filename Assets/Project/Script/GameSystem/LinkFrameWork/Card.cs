@@ -68,6 +68,8 @@ namespace HYJ
         /// </summary>
         protected string translatedType = "";
 
+        public Card() { }
+
         /// <summary>
         /// Card类构造函数
         /// </summary>

@@ -3,25 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Asha.Tools;
 
 namespace Asha
 {
     public class UI_GC_SVViewSize : MonoBehaviour
     {
-        ScrollRect sR;
+
         // Use this for initialization
         void Start()
         {
-            sR = gameObject.GetComponent<ScrollRect>();
             Refresh();
+            //携程启动
             StartCoroutine(RefreshRoomList());
         }
 
         private void OnDisable()
         {
+            //携程维护
             StopCoroutine(RefreshRoomList());
         }
+
+
+        private void OnDestroy()
+        {
+            //携程维护
+            StopCoroutine(RefreshRoomList());
+        }
+
         /// <summary>
         /// 刷新房间控件的大小
         /// </summary>
@@ -45,7 +54,7 @@ namespace Asha
                 }
                 try
                 {
-                    //通过NetWorkWrapper获取房间列表
+                    //通过NetWorkWrapper获取房间列表，并生成房间置入滚动框
                     var nT = new NetworkClient();
                     var ls = nT.GetRooms();
                     foreach (var item in ls)
@@ -64,7 +73,9 @@ namespace Asha
                     Debug.Log(e.ToString());
                     //throw;
                 }
+                //更新控件框大小
                 Refresh();
+                //等待30s
                 yield return new WaitForSeconds(30f);
             }
 

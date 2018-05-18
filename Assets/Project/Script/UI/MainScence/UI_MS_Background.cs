@@ -18,9 +18,9 @@ namespace Asha
         /// </summary>
         public void Refresh()
         {
-            if (Options.MS_Background_URL != null && Options.MS_Background_URL != "")
+            if (Options.backgroundURL != null && Options.backgroundURL != "")
             {
-                StartCoroutine(ImageHelper.LoadImage(gameObject, Options.MS_Background_URL, ImageHelper.LoadImageType.WebOrLocal));
+                StartCoroutine(ImageHelper.LoadImage(gameObject, Options.backgroundURL, ImageHelper.LoadImageType.WebOrLocal));
             }
             else
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Asha
+namespace Asha.Tools
 {
     /// <summary>
     /// 一些常用的非科学定义量数据集

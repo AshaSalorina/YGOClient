@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Asha.Tools;
 
 namespace Asha
 {
@@ -21,7 +22,7 @@ namespace Asha
                 StreamReader sR = new StreamReader(fS);
                 while (sR.Peek() != -1)
                 {
-                    Options.MS_Background_URL = sR.ReadLine();
+                    Options.backgroundURL = sR.ReadLine();
                 }
             }
             catch (System.Exception)
@@ -59,7 +60,9 @@ namespace Asha
             #endregion
         }
 
-
+        /// <summary>
+        /// 保存配置文件
+        /// </summary>
         public static void Save()
         {
             try
@@ -67,7 +70,7 @@ namespace Asha
                 FileStream fS = new FileStream($"{Application.dataPath}/StreamingAssets/Setting.ygo", FileMode.OpenOrCreate);
                 StreamWriter sW = new StreamWriter(fS);
 
-                sW.WriteLine(Options.MS_Background_URL);
+                sW.WriteLine(Options.backgroundURL);
 
 
             }

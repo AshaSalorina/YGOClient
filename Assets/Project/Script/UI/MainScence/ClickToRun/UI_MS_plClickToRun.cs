@@ -15,8 +15,10 @@ namespace Asha
                 if (Input.GetMouseButtonUp(0))
                 {
                     Options.Menu.SetActive(true);
-                    gameObject.SetActive(false);
-                    enabled = false;
+                    GameObject.Find("Title").SetActive(false);
+                    //gameObject.SetActive(false);
+                    //enabled = false;
+                    Destroy(gameObject);
                 }
             });
         }

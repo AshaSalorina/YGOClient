@@ -14,14 +14,15 @@ namespace Egan.Constants
         /// <summary>
         /// 当前版本
         /// </summary>
-        static readonly double version = 1.0;
+        public static readonly float version = 1.0F;
         /// <summary>
-        /// 魔数
+        /// 魔数字典
+        /// 根据版本号查看魔数
         /// </summary>
-        static readonly int MAGIC =  0x48;
+        public static readonly int MAGIC = 0x3cb;
         /// <summary>
         /// 最大内容长度
         /// </summary>
-        static readonly int MAX_LEN = 1024;
+        public static readonly int MAX_LEN = 1024;
     }
 }

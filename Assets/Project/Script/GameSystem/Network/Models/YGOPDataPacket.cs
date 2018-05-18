@@ -34,11 +34,6 @@ namespace Egan.Models
         private int magic;
 
         /// <summary>
-        /// 消息体长度
-        /// </summary>
-        private int len;
-
-        /// <summary>
         /// json消息体
         /// </summary>
         private String body;
@@ -54,6 +49,70 @@ namespace Egan.Models
             this.type = type;
             this.magic = ProtocolConstant.MAGIC;
             this.body = body;
+        }
+
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public float Version
+        {
+            get
+            {
+                return version;
+            }
+
+            set
+            {
+                version = value;
+            }
+        }
+
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public MessageType Type
+        {
+            get
+            {
+                return type;
+            }
+
+            set
+            {
+                type = value;
+            }
+        }
+
+        /// <summary>
+        /// 魔数
+        /// </summary>
+        public int Magic
+        {
+            get
+            {
+                return magic;
+            }
+
+            set
+            {
+                magic = value;
+            }
+        }
+
+        /// <summary>
+        /// json消息体
+        /// </summary>
+        public string Body
+        {
+            get
+            {
+                return body;
+            }
+
+            set
+            {
+                body = value;
+            }
         }
     }
 }

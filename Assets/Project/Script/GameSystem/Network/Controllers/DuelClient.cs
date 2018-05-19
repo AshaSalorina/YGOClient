@@ -5,6 +5,8 @@ using System.Text;
 using System.Net.Sockets;
 using System.Threading;
 using System.Diagnostics;
+using Egan.Tools;
+using Egan.Models;
 
 namespace Egan.Cotrollers
 {
@@ -17,6 +19,8 @@ namespace Egan.Cotrollers
         private int PORT = 2333;
 
         private Socket client;
+
+        private YGOPDecoder decoder;
 
         public DuelClient(string IP, int PORT)
         {
@@ -37,6 +41,9 @@ namespace Egan.Cotrollers
                 client.Connect(IP, PORT);
                 Console.WriteLine("连接服务器成功");
 
+                //创建编码器
+                decoder = new YGOPDecoder(client);
+
                 //创建后台线程接收服务器消息
                 Thread threadReceive = new Thread(ReceiveMsg);
                 threadReceive.IsBackground = true;
@@ -56,9 +63,15 @@ namespace Egan.Cotrollers
             //分段接收服务器信息
             while (true)
             {
-                len = client.Receive(buffer);
-                if(len > 0)
-                    Console.WriteLine($"服务器：{Encoding.UTF8.GetString(buffer, 0, len - 1)}");
+                if (decoder.ReceivePacket())
+                {
+                    YGOPDataPacket packet = decoder.ParsePacket();
+                    Console.WriteLine(
+                        $"+——--------——+——-----------——+——------------——+——-------——+\n" +
+                        $"|  {packet.Version}  | ${packet.Type.ToString()}  |  ${packet.Magic}  |  ${packet.Len}  |  ${packet.Body}  |\n" +
+                        $"+——--------——+——-----------——+——------------——+——-------——+\n"
+                        );
+                }
             }
         }
 

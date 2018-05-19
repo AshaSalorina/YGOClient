@@ -21,11 +21,6 @@ namespace Egan.Tools
         private Socket socket;
 
         /// <summary>
-        /// 一个完整数据包的缓冲区
-        /// </summary>
-        private byte[] packet;
-
-        /// <summary>
         /// 一个数据包的头部缓冲区
         /// </summary>
         private byte[] packetHead = new byte[ProtocolConstant.HEAD_LEN];
@@ -57,7 +52,7 @@ namespace Egan.Tools
         /// <summary>
         /// 接收socket接收的消息，将其还原成一个完整的数据包
         /// </summary>
-        /// <returns></returns>
+        /// <returns>是否完全接收一个包</returns>
         public bool ReceivePacket()
         {
             if (ReceiveHead())
@@ -69,8 +64,6 @@ namespace Egan.Tools
 
                 packetBody = new byte[len];
                 remaingBody = len;
-
-                packet = new byte[packetHead.Length + packetBody.Length];
 
                 if (ReceiveBody())
                     return true;
@@ -87,21 +80,25 @@ namespace Egan.Tools
         /// <returns>是否完全接收一个数据包头/returns>
         private bool ReceiveHead()
         {
-            //此次接收的头部消息字节数
-            int receiveHeadCount;
-            //此次接收的头部消息
-            byte[] currentHead = new byte[ProtocolConstant.HEAD_LEN];
-            if(remaingHead >= packetHead.Length)
+            
+            if(remaingHead > 0)
             {
-                receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
-            }
-            else
-            {
-                receiveHeadCount = socket.Receive(currentHead, remaingHead, 0);
-            }
+                //此次接收的头部消息字节数
+                int receiveHeadCount;
+                //此次接收的头部消息
+                byte[] currentHead = new byte[ProtocolConstant.HEAD_LEN];
+                if (remaingHead >= packetHead.Length)
+                {
+                    receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
+                }
+                else
+                {
+                    receiveHeadCount = socket.Receive(currentHead, remaingHead, 0);
+                }
 
-            currentHead.CopyTo(currentHead, currentHead.Length - remaingHead);
-            remaingHead -= receiveHeadCount;
+                currentHead.CopyTo(currentHead, currentHead.Length - remaingHead);
+                remaingHead -= receiveHeadCount;
+            }
 
             return remaingHead == 0 ? true : false;
         }
@@ -112,22 +109,25 @@ namespace Egan.Tools
         /// <returns>是否完全接收一个消息体</returns>
         private bool ReceiveBody()
         {
-            //此次接收的消息体字节数
-            int receiveBodyCount;
-            
-            //此次接收的消息体
-            byte[] currentBody = new byte[packetBody.Length];
-            if (remaingBody >= packetBody.Length)
+            if(remaingBody > 0)
             {
-                receiveBodyCount = socket.Receive(currentBody, currentBody.Length, 0);
-            }
-            else
-            {
-                receiveBodyCount = socket.Receive(currentBody, remaingBody, 0);
-            }
+                //此次接收的消息体字节数
+                int receiveBodyCount;
 
-            currentBody.CopyTo(currentBody, currentBody.Length - remaingBody);
-            remaingBody -= receiveBodyCount;
+                //此次接收的消息体
+                byte[] currentBody = new byte[packetBody.Length];
+                if (remaingBody >= packetBody.Length)
+                {
+                    receiveBodyCount = socket.Receive(currentBody, currentBody.Length, 0);
+                }
+                else
+                {
+                    receiveBodyCount = socket.Receive(currentBody, remaingBody, 0);
+                }
+
+                currentBody.CopyTo(packetBody, currentBody.Length - remaingBody);
+                remaingBody -= receiveBodyCount;
+            }
 
             return remaingBody == 0 ? true : false;
         }
@@ -151,6 +151,9 @@ namespace Egan.Tools
             int magic = BitConverter.ToInt32(magicBytes, 0);
             int len = packetBody.Length;
             string body = BitConverter.ToString(packetBody, 0);
+
+            //重置待接收的头和消息体字节数
+            remaingHead = ProtocolConstant.HEAD_LEN;
 
             return new YGOPDataPacket(version, type, magic, len, body);
         }

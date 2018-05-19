@@ -39,6 +39,7 @@ namespace Asha
             int ct = gameObject.transform.childCount;
             Vector2 v2 = gameObject.GetComponent<RectTransform>().sizeDelta;
             gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(v2.x, ct * 105);
+            
         }
 
 

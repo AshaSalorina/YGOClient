@@ -138,14 +138,17 @@ namespace Egan.Tools
         /// <returns></returns>
         public YGOPDataPacket ParsePacket()
         {
+            byte[] startBytes = new byte[ProtocolConstant.START_LEN];
             byte[] versionBytes = new byte[ProtocolConstant.VERSION_LEN];
             byte[] typeBytes = new byte[ProtocolConstant.TYPE_LEN];
             byte[] magicBytes = new byte[ProtocolConstant.MAGIC_LEN];
 
+            Array.Copy(packetHead, ProtocolConstant.START_MARK, startBytes, 0, ProtocolConstant.START_LEN);
             Array.Copy(packetHead, ProtocolConstant.VERSION_POS, versionBytes, 0, ProtocolConstant.VERSION_LEN);
-            Array.Copy(packetHead, ProtocolConstant.TYPE_POS, versionBytes, 0, ProtocolConstant.TYPE_LEN);
-            Array.Copy(packetHead, ProtocolConstant.MAGIC_POS, versionBytes, 0, ProtocolConstant.MAGIC_LEN);
+            Array.Copy(packetHead, ProtocolConstant.TYPE_POS, typeBytes, 0, ProtocolConstant.TYPE_LEN);
+            Array.Copy(packetHead, ProtocolConstant.MAGIC_POS, magicBytes, 0, ProtocolConstant.MAGIC_LEN);
 
+            int start = BitConverter.ToInt32(startBytes, 0);
             int version = BitConverter.ToInt32(versionBytes, 0);
             MessageType type = (MessageType)BitConverter.ToInt32(typeBytes, 0);
             int magic = BitConverter.ToInt32(magicBytes, 0);
@@ -155,7 +158,7 @@ namespace Egan.Tools
             //重置待接收的头和消息体字节数
             remaingHead = ProtocolConstant.HEAD_LEN;
 
-            return new YGOPDataPacket(version, type, magic, len, body);
+            return new YGOPDataPacket(start, version, type, magic, len, body);
         }
     }
 }

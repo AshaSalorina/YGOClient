@@ -12,6 +12,11 @@ namespace Egan.Constants
     public class ProtocolConstant
     {
         /// <summary>
+        /// 协议开始标志
+        /// </summary>
+        public static readonly int START_MARK = 0x97;
+
+        /// <summary>
         /// 当前版本
         /// </summary>
         public static readonly float VERSION = 1.0F;
@@ -30,7 +35,13 @@ namespace Egan.Constants
         /// <summary>
         /// 协议的段数
         /// </summary>
-        public static readonly int PART_COUNT = 5;
+        public static readonly int PART_COUNT = 6;
+
+
+        /// <summary>
+        /// 开始标志所占长度
+        /// </summary>
+        public static readonly int START_LEN = 4;
         /// <summary>
         /// 版本所占字节数
         /// </summary>
@@ -48,29 +59,37 @@ namespace Egan.Constants
         /// </summary>
         public static readonly int LEN_LEN = 4;
         /// <summary>
+        /// 开始标志的顺序
+        /// </summary>
+        public static readonly int START_ORDER = 0;
+        /// <summary>
         /// 版本的顺序
         /// </summary>
-        public static readonly int VERSION_ORDER = 0;
+        public static readonly int VERSION_ORDER = START_LEN + 1;
         /// <summary>
         /// 类型的顺序
         /// </summary>
-        public static readonly int TYPE_ORDER = 1;
+        public static readonly int TYPE_ORDER = VERSION_ORDER + 1;
         /// <summary>
         /// 魔数的顺序
         /// </summary>
-        public static readonly int MAGIC_ORDER = 2;
+        public static readonly int MAGIC_ORDER = TYPE_ORDER + 1;
         /// <summary>
         /// 消息体长度的顺序
         /// </summary>
-        public static readonly int LEN_ORDER = 3;
+        public static readonly int LEN_ORDER = MAGIC_ORDER + 1;
         /// <summary>
         /// 消息体的顺序
         /// </summary>
-        public static readonly int BODY_ORDER = 4;
+        public static readonly int BODY_ORDER = LEN_ORDER + 1;
+        /// <summary>
+        /// 开始协议的位置
+        /// </summary>
+        public static readonly int START_POS = 0;
         /// <summary>
         /// 版本的位置
         /// </summary>
-        public static readonly int VERSION_POS = 0;
+        public static readonly int VERSION_POS = START_POS + START_LEN;
         /// <summary>
         /// 类型的位置
         /// </summary>

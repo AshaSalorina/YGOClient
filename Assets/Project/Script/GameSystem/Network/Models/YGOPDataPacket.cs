@@ -10,14 +10,19 @@ namespace Egan.Models
 {
     /// <summary>
     /// 自定义协议YGOP的数据包
-    ///  +——--------——+——-----------——+——------------——+——-------——+
-    ///  |  版本号(4)  |  消息类型(4)  |  魔数校验码(4)  |  长度(4)  |
-    ///  +——--------——+——-----------——+——------------——+——-------——+
-    ///  |                      JSON数据(UNKNOW)                   |
-    ///  +——-----------------------------------------------------——+
+    ///  +——--------——+——---------——+——------------——+——------------——+——-------——+
+    ///  |  开始标志   |  版本号(4)  |  消息类型(4)    |  魔数校验码(4)  |  长度(4)  |
+    ///  +——--------——+——---------——+——------------——+——------------——+——-------——+
+    ///  |                                 JSON数据(UNKNOW)                       |
+    ///  +——--------------------------------------------------------------------——+
     /// </summary>
     public class YGOPDataPacket
     {
+        /// <summary>
+        /// 开始标志
+        /// </summary>
+        private int start;
+
         /// <summary>
         /// 版本号
         /// </summary>
@@ -56,8 +61,10 @@ namespace Egan.Models
             this.body = body;
         }
 
-        public YGOPDataPacket(float version, MessageType type, int magic, int len, string body)
+        public YGOPDataPacket(int start, float version, 
+            MessageType type, int magic, int len, string body)
         {
+            this.start = start;
             this.version = version;
             this.type = type;
             this.magic = magic;
@@ -65,7 +72,21 @@ namespace Egan.Models
             this.body = body;
         }
 
+        /// <summary>
+        /// 协议开始标志
+        /// </summary>
+        public int Start
+        {
+            get
+            {
+                return start;
+            }
 
+            set
+            {
+                start = value;
+            }
+        }
 
         /// <summary>
         /// 版本号
@@ -146,5 +167,7 @@ namespace Egan.Models
                 body = value;
             }
         }
+
+        
     }
 }

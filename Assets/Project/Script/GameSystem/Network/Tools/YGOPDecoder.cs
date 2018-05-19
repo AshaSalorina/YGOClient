@@ -138,7 +138,21 @@ namespace Egan.Tools
         /// <returns></returns>
         public YGOPDataPacket ParsePacket()
         {
-            return new YGOPDataPacket("", MessageType.CHAT);
+            byte[] versionBytes = new byte[ProtocolConstant.VERSION_LEN];
+            byte[] typeBytes = new byte[ProtocolConstant.TYPE_LEN];
+            byte[] magicBytes = new byte[ProtocolConstant.MAGIC_LEN];
+
+            Array.Copy(packetHead, ProtocolConstant.VERSION_POS, versionBytes, 0, ProtocolConstant.VERSION_LEN);
+            Array.Copy(packetHead, ProtocolConstant.TYPE_POS, versionBytes, 0, ProtocolConstant.TYPE_LEN);
+            Array.Copy(packetHead, ProtocolConstant.MAGIC_POS, versionBytes, 0, ProtocolConstant.MAGIC_LEN);
+
+            int version = BitConverter.ToInt32(versionBytes, 0);
+            MessageType type = (MessageType)BitConverter.ToInt32(typeBytes, 0);
+            int magic = BitConverter.ToInt32(magicBytes, 0);
+            int len = packetBody.Length;
+            string body = BitConverter.ToString(packetBody, 0);
+
+            return new YGOPDataPacket(version, type, magic, len, body);
         }
     }
 }

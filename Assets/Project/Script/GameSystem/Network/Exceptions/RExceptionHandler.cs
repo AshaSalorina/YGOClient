@@ -24,12 +24,12 @@ namespace Egan.Exceptions
 
             switch (code)
             {
-                case StatusCode.Incorrect: msg = "房间密码错误"; break;
-                case StatusCode.Playing: msg = "房间已开始游戏"; break;
-                case StatusCode.Unprepared: msg = "房客未进入准备状态"; break;
-                case StatusCode.Dimissed: msg = "房间已解散"; break;
-                case StatusCode.FullLobby: msg = "游戏大厅的房间容量已满"; break;
-                case StatusCode.FullRoom: msg = "房间的玩家容量已满"; break;
+                case StatusCode.INCORRECT: msg = "房间密码错误"; break;
+                case StatusCode.PLAYING: msg = "房间已开始游戏"; break;
+                case StatusCode.UNPREPARED: msg = "房客未进入准备状态"; break;
+                case StatusCode.DISMISSED: msg = "房间已解散"; break;
+                case StatusCode.FULL_LOBBY: msg = "游戏大厅的房间容量已满"; break;
+                case StatusCode.FULL_ROOM: msg = "房间的玩家容量已满"; break;
                 default: msg = "发生未知错误"; break;
             }
 

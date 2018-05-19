@@ -62,6 +62,16 @@ namespace Egan.Tools
         {
             if (ReceiveHead())
             {
+                //获取消息体长度
+                byte[] lenBytes = new byte[ProtocolConstant.LEN_LEN];
+                Array.Copy(packetHead, ProtocolConstant.LEN_POS, lenBytes, 0, ProtocolConstant.LEN_LEN);
+                int len = BitConverter.ToInt32(lenBytes, 0);
+
+                packetBody = new byte[len];
+                remaingBody = len;
+
+                packet = new byte[packetHead.Length + packetBody.Length];
+
                 if (ReceiveBody())
                     return true;
 
@@ -96,27 +106,36 @@ namespace Egan.Tools
             return remaingHead == 0 ? true : false;
         }
 
+        /// <summary>
+        /// 接收socket接收的消息，将其还原成一个完整的数据包消息体
+        /// </summary>
+        /// <returns>是否完全接收一个消息体</returns>
         private bool ReceiveBody()
         {
-            //此次接收的头部消息字节数
-            int receiveHeadCount;
-            //此次接收的头部消息
-            byte[] currentHead = new byte[ProtocolConstant.HEAD_LEN];
-            if (remaingHead >= packetHead.Length)
+            //此次接收的消息体字节数
+            int receiveBodyCount;
+            
+            //此次接收的消息体
+            byte[] currentBody = new byte[packetBody.Length];
+            if (remaingBody >= packetBody.Length)
             {
-                receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
+                receiveBodyCount = socket.Receive(currentBody, currentBody.Length, 0);
             }
             else
             {
-                receiveHeadCount = socket.Receive(currentHead, remaingHead, 0);
+                receiveBodyCount = socket.Receive(currentBody, remaingBody, 0);
             }
 
-            currentHead.CopyTo(currentHead, currentHead.Length - remaingHead);
-            remaingHead -= receiveHeadCount;
+            currentBody.CopyTo(currentBody, currentBody.Length - remaingBody);
+            remaingBody -= receiveBodyCount;
 
-            return remaingHead == 0 ? true : false;
+            return remaingBody == 0 ? true : false;
         }
 
+        /// <summary>
+        /// 将数据包头和消息体从字节数组还原成一个数据包对象
+        /// </summary>
+        /// <returns></returns>
         public YGOPDataPacket ParsePacket()
         {
             return new YGOPDataPacket("", MessageType.CHAT);

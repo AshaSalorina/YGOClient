@@ -55,8 +55,8 @@ namespace Asha
             //Options.CardsSet.SetActive(false);
             Options.Game2D = GameObject.Find("Game2D");
             Options.Game2D.SetActive(false);
-            Options.Game3D = GameObject.Find("Game3D");
-            Options.Game3D.SetActive(false);
+            Options.GameArea = GameObject.Find("GameArea");
+            Options.GameArea.SetActive(false);
             #endregion
         }
 

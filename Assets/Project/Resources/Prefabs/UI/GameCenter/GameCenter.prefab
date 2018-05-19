@@ -339,7 +339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1768945386086876
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 222118073317751188}
   - component: {fileID: 114800542016241728}
   - component: {fileID: 114251562405743750}
+  - component: {fileID: 114588089209689740}
   m_Layer: 5
   m_Name: btn_Back
   m_TagString: Untagged
@@ -1080,6 +1081,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114588089209689740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1768945386086876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a5a22e5221ff74f949779a86830dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114596907966088242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2017,9 +2029,9 @@ RectTransform:
   m_Father: {fileID: 224502588631343216}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 800, y: -50}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1570, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224813921180518298

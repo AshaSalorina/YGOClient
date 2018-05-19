@@ -55,7 +55,7 @@ namespace Asha
         /// <summary>
         /// 全局-3d游戏盘
         /// </summary>
-        public static GameObject Game3D;
+        public static GameObject GameArea;
 
         /// <summary>
         /// 声音源

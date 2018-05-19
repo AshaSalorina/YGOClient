@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.68936795, g: 0.4349858, b: 0.8018868, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -549,7 +549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &360652668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,27 +1105,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1758604518392560, guid: e3fbc0b78dfca594bad28304a993168f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224587673008808652, guid: e3fbc0b78dfca594bad28304a993168f,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224587673008808652, guid: e3fbc0b78dfca594bad28304a993168f,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224587673008808652, guid: e3fbc0b78dfca594bad28304a993168f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 800
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224587673008808652, guid: e3fbc0b78dfca594bad28304a993168f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -50
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e3fbc0b78dfca594bad28304a993168f, type: 2}
@@ -1789,6 +1789,22 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1015609473}
+--- !u!1 &1083169248 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1768945386086876, guid: e3fbc0b78dfca594bad28304a993168f,
+    type: 2}
+  m_PrefabInternal: {fileID: 653969885}
+--- !u!114 &1083169249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1083169248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a5a22e5221ff74f949779a86830dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1095715300
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,18 +2228,6 @@ Prefab:
     - target: {fileID: 1022956616468694, guid: 0e58571908010364e951a55a7dca8c04, type: 2}
       propertyPath: m_Name
       value: btn_clickToRrun
-      objectReference: {fileID: 0}
-    - target: {fileID: 1022956616468694, guid: 0e58571908010364e951a55a7dca8c04, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1464344131666722, guid: 0e58571908010364e951a55a7dca8c04, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1022956616468694, guid: 0e58571908010364e951a55a7dca8c04, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e58571908010364e951a55a7dca8c04, type: 2}

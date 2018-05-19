@@ -27,7 +27,7 @@ namespace Egan.Constants
         /// <summary>
         /// 数据包头的固定长度
         /// </summary>
-        public static readonly int HEAD_LEN = 16;
+        public static readonly int HEAD_LEN = 20;
         /// <summary>
         /// 最大内容长度
         /// </summary>
@@ -65,7 +65,7 @@ namespace Egan.Constants
         /// <summary>
         /// 版本的顺序
         /// </summary>
-        public static readonly int VERSION_ORDER = START_LEN + 1;
+        public static readonly int VERSION_ORDER = START_ORDER + 1;
         /// <summary>
         /// 类型的顺序
         /// </summary>
@@ -101,7 +101,7 @@ namespace Egan.Constants
         /// <summary>
         /// 消息体长度的位置
         /// </summary>
-        public static readonly int LEN_POS = MAGIC_POS + MAGIC_POS;
+        public static readonly int LEN_POS = MAGIC_POS + MAGIC_LEN;
         /// <summary>
         /// 消息体的位置
         /// </summary>

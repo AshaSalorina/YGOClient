@@ -28,12 +28,13 @@ namespace Egan.Tools
         {
             byte[][] bytesArray = new byte[ProtocolConstant.PART_COUNT][];
 
-            bytesArray[ProtocolConstant.START_MARK] = BitConverter.GetBytes(ProtocolConstant.START_MARK);
+            bytesArray[ProtocolConstant.START_ORDER] = BitConverter.GetBytes(ProtocolConstant.START_MARK);
             bytesArray[ProtocolConstant.VERSION_ORDER] = BitConverter.GetBytes(packet.Version);
             bytesArray[ProtocolConstant.TYPE_ORDER] = BitConverter.GetBytes((int)packet.Type);
             bytesArray[ProtocolConstant.MAGIC_ORDER] = BitConverter.GetBytes(packet.Magic);
             bytesArray[ProtocolConstant.BODY_ORDER] = System.Text.UTF8Encoding.Default.GetBytes(packet.Body);
-            bytesArray[ProtocolConstant.LEN_ORDER] = BitConverter.GetBytes(bytesArray[4].Length);
+            bytesArray[ProtocolConstant.LEN_ORDER] = BitConverter.GetBytes(
+                bytesArray[ProtocolConstant.BODY_ORDER].Length);
 
             return bytesArray;
         }

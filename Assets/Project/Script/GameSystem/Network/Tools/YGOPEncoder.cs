@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Egan.Constants;
 using Egan.Models;
 
 namespace Egan.Tools
@@ -25,13 +26,13 @@ namespace Egan.Tools
         /// <returns>若干个字节数组</returns>
         private static byte[][] ToBytesArray(YGOPDataPacket packet)
         {
-            byte[][] bytesArray = new byte[5][];
+            byte[][] bytesArray = new byte[ProtocolConstant.PART_COUNT][];
 
-            bytesArray[0] = BitConverter.GetBytes(packet.Version);
-            bytesArray[1] = BitConverter.GetBytes((int)packet.Type);
-            bytesArray[2] = BitConverter.GetBytes(packet.Magic);
-            bytesArray[4] = System.Text.UTF8Encoding.Default.GetBytes(packet.Body);
-            bytesArray[3] = BitConverter.GetBytes(bytesArray[4].Length);
+            bytesArray[ProtocolConstant.VERSION_ORDER] = BitConverter.GetBytes(packet.Version);
+            bytesArray[ProtocolConstant.TYPE_ORDER] = BitConverter.GetBytes((int)packet.Type);
+            bytesArray[ProtocolConstant.MAGIC_ORDER] = BitConverter.GetBytes(packet.Magic);
+            bytesArray[ProtocolConstant.BODY_ORDER] = System.Text.UTF8Encoding.Default.GetBytes(packet.Body);
+            bytesArray[ProtocolConstant.LEN_ORDER] = BitConverter.GetBytes(bytesArray[4].Length);
 
             return bytesArray;
         }
@@ -42,11 +43,11 @@ namespace Egan.Tools
             foreach(byte[] bytes in bytesArray)
                 len += bytes.Length;
             byte[] total = new byte[len];
-            bytesArray[0].CopyTo(total, 0);
-            bytesArray[1].CopyTo(total, 4);
-            bytesArray[2].CopyTo(total, 8);
-            bytesArray[3].CopyTo(total, 12);
-            bytesArray[4].CopyTo(total, 16);
+            bytesArray[ProtocolConstant.VERSION_ORDER].CopyTo(total, ProtocolConstant.VERSION_POS);
+            bytesArray[ProtocolConstant.TYPE_ORDER].CopyTo(total, ProtocolConstant.TYPE_POS);
+            bytesArray[ProtocolConstant.MAGIC_ORDER].CopyTo(total, ProtocolConstant.MAGIC_POS);
+            bytesArray[ProtocolConstant.LEN_ORDER].CopyTo(total, ProtocolConstant.LEN_POS);
+            bytesArray[ProtocolConstant.BODY_ORDER].CopyTo(total,ProtocolConstant.BODY_POS);
 
             return total;
         }

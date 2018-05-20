@@ -23,7 +23,7 @@ namespace Egan.Constants
         /// <summary>
         /// 决斗tcp服务器的IP地址
         /// </summary>
-        public static readonly string DUEL_IP = "";
+        public static readonly string DUEL_IP = "127.0.0.1";
         /// <summary>
         /// 决斗tcp服务器的端口
         /// </summary>

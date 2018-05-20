@@ -37,8 +37,8 @@ namespace Egan.Cotrollers
 
         public NetworkClient()
         {
-            lobbyClient = new LobbyClient(lobbyURL);
-            duelClient = new DuelClient(duelIP, duelPort);
+            lobbyClient = new LobbyClient();
+            duelClient = new DuelClient();
         }
 
         /// <summary>

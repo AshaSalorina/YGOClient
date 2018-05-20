@@ -7,6 +7,7 @@ using System.Threading;
 using System.Diagnostics;
 using Egan.Tools;
 using Egan.Models;
+using Egan.Constants;
 
 namespace Egan.Cotrollers
 {
@@ -15,18 +16,9 @@ namespace Egan.Cotrollers
     /// </summary>
     public class DuelClient
     {
-        private string IP = "";
-        private int PORT = 2333;
-
         private Socket client;
 
         private YGOPDecoder decoder;
-
-        public DuelClient(string IP, int PORT)
-        {
-            this.IP = IP;
-            this.PORT = PORT;
-        }
 
         /// <summary>
         /// 开始连接
@@ -38,7 +30,7 @@ namespace Egan.Cotrollers
                 
                 client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Console.WriteLine("正在连接服务器...");
-                client.Connect(IP, PORT);
+                client.Connect(RemoteAddress.DUEL_IP, RemoteAddress.DUEL_PORT);
                 Console.WriteLine("连接服务器成功");
 
                 //创建编码器

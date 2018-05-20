@@ -1,4 +1,5 @@
-﻿using Egan.Exceptions;
+﻿using Egan.Constants;
+using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
 using Newtonsoft.Json;
@@ -17,11 +18,6 @@ namespace Egan.Cotrollers
     /// </summary>
     public class LobbyClient
     {
-        
-        private string URL;
-
-        public LobbyClient(string URL){ this.URL = URL; }
-
         /// <summary>
         /// 获取房间列表
         /// </summary>
@@ -29,7 +25,7 @@ namespace Egan.Cotrollers
         /// <returns>房间列表</returns>
         public List<Room> GetRoomList(ref int max)
         {
-            string jsonText = HttpWebWrapper.Get(URL);
+            string jsonText = HttpWebWrapper.Get(RemoteAddress.LOBBY_URL_ROOM);
             var jobj = JObject.Parse(jsonText);
             max = int.Parse(jobj["mx"].ToString());
 
@@ -62,7 +58,7 @@ namespace Egan.Cotrollers
 
             try
             {
-                responseResult = HttpWebWrapper.Post(URL, roomStr);
+                responseResult = HttpWebWrapper.Post(RemoteAddress.LOBBY_URL_ROOM, roomStr);
             }catch(RException rex)
             {
                 throw rex;

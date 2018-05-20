@@ -48,6 +48,11 @@ namespace Egan.Cotrollers
         }
 
 
+        public bool IsConnected()
+        {
+            return client.Connected;
+        }
+
         private void ReceiveMsg()
         {
             byte[] buffer = new byte[1024];

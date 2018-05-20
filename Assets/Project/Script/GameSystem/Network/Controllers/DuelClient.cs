@@ -56,7 +56,7 @@ namespace Egan.Cotrollers
             {
                 if (decoder.ReceivePacket())
                 {
-                    YGOPDataPacket packet = decoder.ParsePacket();
+                    DataPacket packet = decoder.ParsePacket();
                     Console.WriteLine(
                         $"+——--------——+——-----------——+——------------——+——-------——+\n" +
                         $"|  {packet.Version}  | ${packet.Type.ToString()}  |  ${packet.Magic}  |  ${packet.Len}  |  ${packet.Body}  |\n" +
@@ -72,7 +72,8 @@ namespace Egan.Cotrollers
         /// <param name="msg"></param>
         public void SendOPMsg(String msg)
         {
-            client.Send(Encoding.UTF8.GetBytes("o" + msg));
+            DataPacket packet = new DataPacket(msg, MessageType.OPERATE);
+            client.Send(YGOPEncoder.Encoder(packet));
         }
 
         /// <summary>
@@ -81,7 +82,8 @@ namespace Egan.Cotrollers
         /// <param name="msg"></param>
         public void SendChatMsg(String msg)
         {
-            client.Send(Encoding.UTF8.GetBytes("c" + msg));
+            DataPacket packet = new DataPacket(msg, MessageType.CHAT);
+            client.Send(YGOPEncoder.Encoder(packet));
         }
 
 

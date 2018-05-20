@@ -136,7 +136,7 @@ namespace Egan.Tools
         /// 将数据包头和消息体从字节数组还原成一个数据包对象
         /// </summary>
         /// <returns></returns>
-        public YGOPDataPacket ParsePacket()
+        public DataPacket ParsePacket()
         {
             byte[] versionBytes = new byte[ProtocolConstant.VERSION_LEN];
             byte[] typeBytes = new byte[ProtocolConstant.TYPE_LEN];
@@ -155,7 +155,7 @@ namespace Egan.Tools
             //重置待接收的头和消息体字节数
             remaingHead = ProtocolConstant.HEAD_LEN;
 
-            return new YGOPDataPacket(version, type, magic, len, body);
+            return new DataPacket(version, type, magic, len, body);
         }
     }
 }

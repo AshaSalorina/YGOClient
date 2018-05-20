@@ -13,7 +13,7 @@ namespace Egan.Tools
     /// </summary>
     public class YGOPEncoder
     {
-        public static byte[] Encoder(YGOPDataPacket packet)
+        public static byte[] Encoder(DataPacket packet)
         {
             byte[][] array = ToBytesArray(packet);
             return Compose(array);
@@ -24,7 +24,7 @@ namespace Egan.Tools
         /// </summary>
         /// <param name="packet">数据包</param>
         /// <returns>若干个字节数组</returns>
-        private static byte[][] ToBytesArray(YGOPDataPacket packet)
+        private static byte[][] ToBytesArray(DataPacket packet)
         {
             byte[][] bytesArray = new byte[ProtocolConstant.PART_COUNT][];
 

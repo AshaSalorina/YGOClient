@@ -12,11 +12,6 @@ namespace Egan.Constants
     public class ProtocolConstant
     {
         /// <summary>
-        /// 协议开始标志
-        /// </summary>
-        public static readonly int START_MARK = 0x97;
-
-        /// <summary>
         /// 当前版本
         /// </summary>
         public static readonly float VERSION = 1.0F;
@@ -27,7 +22,7 @@ namespace Egan.Constants
         /// <summary>
         /// 数据包头的固定长度
         /// </summary>
-        public static readonly int HEAD_LEN = 20;
+        public static readonly int HEAD_LEN = VERSION_LEN + TYPE_LEN + MAGIC_LEN + LEN_LEN;
         /// <summary>
         /// 最大内容长度
         /// </summary>
@@ -35,13 +30,9 @@ namespace Egan.Constants
         /// <summary>
         /// 协议的段数
         /// </summary>
-        public static readonly int PART_COUNT = 6;
+        public static readonly int PART_COUNT = 5;
 
 
-        /// <summary>
-        /// 开始标志所占长度
-        /// </summary>
-        public static readonly int START_LEN = 4;
         /// <summary>
         /// 版本所占字节数
         /// </summary>
@@ -58,14 +49,11 @@ namespace Egan.Constants
         /// 消息体长度所占字节数
         /// </summary>
         public static readonly int LEN_LEN = 4;
-        /// <summary>
-        /// 开始标志的顺序
-        /// </summary>
-        public static readonly int START_ORDER = 0;
+
         /// <summary>
         /// 版本的顺序
         /// </summary>
-        public static readonly int VERSION_ORDER = START_ORDER + 1;
+        public static readonly int VERSION_ORDER = 0;
         /// <summary>
         /// 类型的顺序
         /// </summary>
@@ -82,14 +70,11 @@ namespace Egan.Constants
         /// 消息体的顺序
         /// </summary>
         public static readonly int BODY_ORDER = LEN_ORDER + 1;
-        /// <summary>
-        /// 开始协议的位置
-        /// </summary>
-        public static readonly int START_POS = 0;
+
         /// <summary>
         /// 版本的位置
         /// </summary>
-        public static readonly int VERSION_POS = START_POS + START_LEN;
+        public static readonly int VERSION_POS = 0;
         /// <summary>
         /// 类型的位置
         /// </summary>

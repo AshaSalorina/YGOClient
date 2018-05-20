@@ -64,7 +64,7 @@ namespace Egan.Cotrollers
                     DataPacket packet = decoder.ParsePacket();
                     Console.WriteLine(
                         $"+——--------——+——-----------——+——------------——+——-------——+\n" +
-                        $"|  {packet.Version}  | ${packet.Type.ToString()}  |  ${packet.Magic}  |  ${packet.Len}  |  ${packet.Body}  |\n" +
+                        $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
                         $"+——--------——+——-----------——+——------------——+——-------——+\n"
                         );
                 }

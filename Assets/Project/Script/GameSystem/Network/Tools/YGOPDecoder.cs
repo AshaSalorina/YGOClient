@@ -60,6 +60,7 @@ namespace Egan.Tools
                 //获取消息体长度
                 byte[] lenBytes = new byte[ProtocolConstant.LEN_LEN];
                 Array.Copy(packetHead, ProtocolConstant.LEN_POS, lenBytes, 0, ProtocolConstant.LEN_LEN);
+                Array.Reverse(lenBytes);
                 int len = BitConverter.ToInt32(lenBytes, 0);
 
                 packetBody = new byte[len];
@@ -96,7 +97,7 @@ namespace Egan.Tools
                     receiveHeadCount = socket.Receive(currentHead, remaingHead, 0);
                 }
 
-                currentHead.CopyTo(currentHead, currentHead.Length - remaingHead);
+                currentHead.CopyTo(packetHead, currentHead.Length - remaingHead);
                 remaingHead -= receiveHeadCount;
             }
 
@@ -146,11 +147,16 @@ namespace Egan.Tools
             Array.Copy(packetHead, ProtocolConstant.TYPE_POS, typeBytes, 0, ProtocolConstant.TYPE_LEN);
             Array.Copy(packetHead, ProtocolConstant.MAGIC_POS, magicBytes, 0, ProtocolConstant.MAGIC_LEN);
 
+            Array.Reverse(versionBytes);
+            Array.Reverse(typeBytes);
+            Array.Reverse(magicBytes);
+
             int version = BitConverter.ToInt32(versionBytes, 0);
             MessageType type = (MessageType)BitConverter.ToInt32(typeBytes, 0);
             int magic = BitConverter.ToInt32(magicBytes, 0);
             int len = packetBody.Length;
-            string body = BitConverter.ToString(packetBody, 0);
+
+            string body = System.Text.Encoding.UTF8.GetString(packetBody);
 
             //重置待接收的头和消息体字节数
             remaingHead = ProtocolConstant.HEAD_LEN;

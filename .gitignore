@@ -48,3 +48,4 @@ sysinfo.txt
 /packages.config
 /app.config
 /.vs
+/Assets/Project/Script/GameSystem/Network/Constants/RemoteAddress.cs

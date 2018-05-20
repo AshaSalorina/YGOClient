@@ -16,7 +16,7 @@ namespace Egan.Models
     ///  |                  JSON数据(UNKNOW)                       |
     ///  +——-----------------------------------------------------——+
     /// </summary>
-    public class YGOPDataPacket
+    public class DataPacket
     {
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Egan.Models
         /// </summary>
         /// <param name="body">消息体</param>
         /// <param name="type">消息类型</param>
-        public YGOPDataPacket(String body, MessageType type)
+        public DataPacket(String body, MessageType type)
         {
             this.version = ProtocolConstant.VERSION;
             this.type = type;
@@ -57,7 +57,7 @@ namespace Egan.Models
             this.body = body;
         }
 
-        public YGOPDataPacket(float version, 
+        public DataPacket(float version, 
             MessageType type, int magic, int len, string body)
         {
             this.version = version;

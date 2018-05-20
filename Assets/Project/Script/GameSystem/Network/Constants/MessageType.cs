@@ -18,26 +18,26 @@ namespace Egan.Constants
         /// <summary>
         /// 操作信息
         /// </summary>
-        OPERATE = 0x4,
+        OPERATE = 0x2,
         /// <summary>
         /// 加入房间
         /// </summary>
-        JOIN = 0x8,
+        JOIN = 0x4,
         /// <summary>
         /// 离开房间
         /// </summary>
-        LEAVE = 0x0,
+        LEAVE = 0x8,
         /// <summary>
         /// 进入准备状态
         /// </summary>
-        PREPARED = 0x0,
+        PREPARED = 0x10,
         /// <summary>
         /// 进入开始状态
         /// </summary>
-        STARTED = 0x0,
+        STARTED = 0x20,
         /// <summary>
         /// 校验卡组
         /// </summary>
-        DECK = 0x0,
+        DECK = 0x40,
     }
 }

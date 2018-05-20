@@ -28,7 +28,6 @@ namespace Egan.Tools
         {
             byte[][] bytesArray = new byte[ProtocolConstant.PART_COUNT][];
 
-            bytesArray[ProtocolConstant.START_ORDER] = BitConverter.GetBytes(ProtocolConstant.START_MARK);
             bytesArray[ProtocolConstant.VERSION_ORDER] = BitConverter.GetBytes(packet.Version);
             bytesArray[ProtocolConstant.TYPE_ORDER] = BitConverter.GetBytes((int)packet.Type);
             bytesArray[ProtocolConstant.MAGIC_ORDER] = BitConverter.GetBytes(packet.Magic);
@@ -45,7 +44,6 @@ namespace Egan.Tools
             foreach(byte[] bytes in bytesArray)
                 len += bytes.Length;
             byte[] total = new byte[len];
-            bytesArray[ProtocolConstant.START_ORDER].CopyTo(total, ProtocolConstant.START_POS);
             bytesArray[ProtocolConstant.VERSION_ORDER].CopyTo(total, ProtocolConstant.VERSION_POS);
             bytesArray[ProtocolConstant.TYPE_ORDER].CopyTo(total, ProtocolConstant.TYPE_POS);
             bytesArray[ProtocolConstant.MAGIC_ORDER].CopyTo(total, ProtocolConstant.MAGIC_POS);

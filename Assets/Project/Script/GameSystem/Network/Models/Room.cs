@@ -48,6 +48,13 @@ namespace Egan.Models
             return id.Equals(((Room)obj).Id);
         }
 
+        public override int GetHashCode()
+        {
+            var hashCode = -1952275321;
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            return hashCode;
+        }
+
         public Room() {}
 
         public Room(int id, string name, string desc, bool hasPwd, 

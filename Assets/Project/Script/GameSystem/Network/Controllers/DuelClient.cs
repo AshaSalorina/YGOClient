@@ -59,7 +59,6 @@ namespace Egan.Cotrollers
         private void ReceiveMsg()
         {
             byte[] buffer = new byte[1024];
-            int len = 0;
             //分段接收服务器信息
             while (true)
             {

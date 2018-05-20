@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Egan.Tools;
 using Egan.Models;
 using Egan.Constants;
+using Egan.Exceptions;
 
 namespace Egan.Cotrollers
 {
@@ -43,7 +44,7 @@ namespace Egan.Cotrollers
             }
             catch
             {
-                Console.WriteLine("连接服务器失败");
+                throw new RException("网络连接失败");
             }
         }
 

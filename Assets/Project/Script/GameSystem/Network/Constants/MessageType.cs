@@ -18,26 +18,42 @@ namespace Egan.Constants
         /// <summary>
         /// 操作信息
         /// </summary>
-        OPERATE = 0x2,
+        OPERATE = CHAT << 1,
         /// <summary>
-        /// 加入房间
+        /// 玩家加入房间
         /// </summary>
-        JOIN = 0x4,
+        JOIN = OPERATE << 1,
         /// <summary>
-        /// 离开房间
+        /// 玩家离开房间
         /// </summary>
-        LEAVE = 0x8,
+        LEAVE = JOIN << 1,
         /// <summary>
-        /// 进入准备状态
+        /// 玩家进入准备状态
         /// </summary>
-        PREPARED = 0x10,
+        PREPARED = LEAVE << 1,
         /// <summary>
-        /// 进入开始状态
+        /// 玩家进入开始状态
         /// </summary>
-        STARTED = 0x20,
+        STARTED = PREPARED << 1,
         /// <summary>
-        /// 校验卡组
+        /// 请玩家开始倒计时
         /// </summary>
-        DECK = 0x40,
+        COUNT_DOWN = STARTED << 1,
+        /// <summary>
+        /// 校验客户端文件完整性
+        /// </summary>
+        VERITY = COUNT_DOWN << 1,
+        /// <summary>
+        /// 发送卡牌
+        /// </summary>
+        DECK = VERITY << 1,
+        /// <summary>
+        /// 退出游戏
+        /// </summary>
+        EXIT = DECK << 1,
+        /// <summary>
+        /// 服务器发出警告信息
+        /// </summary>
+        WARRING = EXIT << 1
     }
 }

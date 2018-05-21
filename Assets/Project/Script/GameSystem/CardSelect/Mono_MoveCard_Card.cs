@@ -12,6 +12,6 @@ public class Mono_MoveCard_Card : MonoBehaviour, IPointerClickHandler
 {
     public void OnPointerClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

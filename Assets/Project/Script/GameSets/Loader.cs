@@ -53,10 +53,12 @@ namespace Asha
             Options.CardsSet.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
             //Options.CardsSet = GameObject.Find("CardsSet");
             //Options.CardsSet.SetActive(false);
+            /*
             Options.Game2D = GameObject.Find("Game2D");
             Options.Game2D.SetActive(false);
             Options.GameArea = GameObject.Find("GameArea");
             Options.GameArea.SetActive(false);
+            */
             #endregion
         }
 

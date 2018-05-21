@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System;
 using System.Threading;
+using Egan.Controllers;
 
 namespace Egan.Cotrollers
 {
@@ -20,10 +21,16 @@ namespace Egan.Cotrollers
         /// </summary>
         private int maxRoomNum;
 
-        private Socket duelClient;
+        /// <summary>
+        /// 懒汉模式
+        /// </summary>
+        private YgoSocket duelSocket = new YgoSocket();
+
+        private RoomController roomController;
 
         public NetworkClient()
         {
+            roomController = new RoomController(duelSocket);
         }
 
         /// <summary>
@@ -38,7 +45,6 @@ namespace Egan.Cotrollers
             {
                 throw rex;
             }
-            
         }
 
         /// <summary>
@@ -50,7 +56,7 @@ namespace Egan.Cotrollers
         {
             try
             {
-                
+                roomController.Create(room);
             }
             catch (RException rex)
             {

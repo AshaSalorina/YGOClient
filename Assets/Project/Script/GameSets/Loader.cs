@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Asha.Tools;
+using Egan.Cotrollers;
 
 namespace Asha
 {
@@ -13,7 +14,14 @@ namespace Asha
             Load();
         }
 
-        public static void Load()
+        private void Update()
+        {
+            
+        }
+
+
+        static NetworkClient client;
+        public void Load()
         {
             #region 配置文件载入
             try
@@ -60,12 +68,18 @@ namespace Asha
             Options.GameArea.SetActive(false);
             */
             #endregion
+
+            #region 网络连接
+
+            client = new NetworkClient();
+
+            #endregion
         }
 
         /// <summary>
         /// 保存配置文件
         /// </summary>
-        public static void Save()
+        public void Save()
         {
             try
             {
@@ -73,8 +87,6 @@ namespace Asha
                 StreamWriter sW = new StreamWriter(fS);
 
                 sW.WriteLine(Options.backgroundURL);
-
-
             }
             catch (System.Exception)
             {

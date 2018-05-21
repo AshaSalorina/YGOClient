@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Asha;
 
 namespace Egan.Models
 {
@@ -64,6 +65,7 @@ namespace Egan.Models
                         $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
                         $"+——--------——+——-----------——+——------------——+——-------——+\n"
                         );
+                    Options.YGOWaiter.Distribute(packet);
                 }
             }
         }

@@ -30,7 +30,7 @@ namespace Egan.Constants
         /// <summary>
         /// 玩家进入准备状态
         /// </summary>
-        PREPARED = LEAVE << 1,
+        PREPARED = KICK_OUT << 1,
         /// <summary>
         /// 玩家进入开始状态
         /// </summary>
@@ -62,7 +62,7 @@ namespace Egan.Constants
         /// <summary>
         /// 退出游戏
         /// </summary>
-        EXIT = DECK << 1,
+        EXIT = OPERATE << 1,
         /// <summary>
         /// 服务器发出警告信息
         /// </summary>

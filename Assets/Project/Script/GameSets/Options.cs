@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Asha.Tools;
 
 namespace Asha
 {
@@ -61,6 +62,14 @@ namespace Asha
         /// 声音源
         /// </summary>
         public static GameObject AudioSource;
+        #endregion
+
+        #region 消息机对象
+        /// <summary>
+        /// 服务器被动等待队列分发器
+        /// </summary>
+        public static YGOTrig YGOWaiter;
+
         #endregion
 
         #region 游戏大厅下的字段(GameCenter)

@@ -12,21 +12,21 @@ namespace Egan.Constants
     public enum MessageType
     {
         /// <summary>
-        /// 聊天信息
+        /// 创建房间
         /// </summary>
-        CHAT = 0x1,
-        /// <summary>
-        /// 操作信息
-        /// </summary>
-        OPERATE = CHAT << 1,
+        CREATE = 0x1,
         /// <summary>
         /// 玩家加入房间
         /// </summary>
-        JOIN = OPERATE << 1,
+        JOIN = CREATE << 1,
         /// <summary>
         /// 玩家离开房间
         /// </summary>
         LEAVE = JOIN << 1,
+        /// <summary>
+        /// 踢出房间
+        /// </summary>
+        KICK_OUT = LEAVE << 1,
         /// <summary>
         /// 玩家进入准备状态
         /// </summary>
@@ -47,6 +47,18 @@ namespace Egan.Constants
         /// 发送卡牌
         /// </summary>
         DECK = VERITY << 1,
+        /// <summary>
+        /// 猜拳消息
+        /// </summary>
+        FINGER_GUESS = DECK << 1,
+        /// <summary>
+        /// 聊天信息
+        /// </summary>
+        CHAT = FINGER_GUESS << 1,
+        /// <summary>
+        /// 操作信息
+        /// </summary>
+        OPERATE = CHAT << 1,
         /// <summary>
         /// 退出游戏
         /// </summary>

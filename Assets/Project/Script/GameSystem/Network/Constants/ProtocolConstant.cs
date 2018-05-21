@@ -93,6 +93,11 @@ namespace Egan.Constants
         /// </summary>
         public static readonly int PART_COUNT = 5;
 
+        /// <summary>
+        /// 请求超时时间
+        /// </summary>
+        public static readonly int TIME_OUT = 10000;
+
 
     }
 }

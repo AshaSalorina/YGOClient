@@ -29,6 +29,9 @@ namespace Egan.Models
         [DataMember(Name = "iss")]
         private bool isStarting;
 
+        [DataMember(Name = "fg")]
+        private bool finger;
+
         public Player() { }
 
         public Player(string name, byte[] head, bool isPrepared, bool isStarting)
@@ -100,6 +103,22 @@ namespace Egan.Models
             set
             {
                 isStarting = value;
+            }
+        }
+
+        /// <summary>
+        /// 猜拳
+        /// </summary>
+        public bool Finger
+        {
+            get
+            {
+                return finger;
+            }
+
+            set
+            {
+                finger = value;
             }
         }
     }

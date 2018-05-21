@@ -2,6 +2,9 @@
 using Egan.Models;
 using Egan.Constants;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System;
+using System.Threading;
 
 namespace Egan.Cotrollers
 {
@@ -12,19 +15,15 @@ namespace Egan.Cotrollers
     public class NetworkClient
     {
 
-        private LobbyController lobbyClient;
-
-        private DuelClient duelClient;
-
         /// <summary>
         /// 最大房间数
         /// </summary>
         private int maxRoomNum;
 
+        private Socket duelClient;
+
         public NetworkClient()
         {
-            lobbyClient = new LobbyController();
-            duelClient = new DuelClient();
         }
 
         /// <summary>
@@ -34,7 +33,7 @@ namespace Egan.Cotrollers
         public List<Room> GetRooms() {
             try
             {
-                return lobbyClient.GetRoomList(ref maxRoomNum);
+                return LobbyController.GetRoomList (ref maxRoomNum);
             }catch(RException rex)
             {
                 throw rex;
@@ -51,11 +50,7 @@ namespace Egan.Cotrollers
         {
             try
             {
-                StatusCode code = (StatusCode)lobbyClient.CreateRoom(room).Code;
-                if (code != StatusCode.OK)
-                {
-                    throw RExceptionHandler.Handle(code);
-                }
+                
             }
             catch (RException rex)
             {
@@ -63,7 +58,6 @@ namespace Egan.Cotrollers
             }
             
         } 
-
 
         public int MaxRoomNum
         {

@@ -1,4 +1,5 @@
-﻿using Egan.Exceptions;
+﻿using Egan.Constants;
+using Egan.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,7 +23,7 @@ namespace Egan.Tools
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = "text/plain;charset=utf-8";
-            request.Timeout = 10000;
+            request.Timeout = ProtocolConstant.TIME_OUT;
 
             string result = "";
 
@@ -41,7 +42,7 @@ namespace Egan.Tools
                 result = reader.ReadToEnd();
             }catch(WebException)
             {
-                throw RExceptionHandler.Handle(request.Timeout, watch.Elapsed.TotalMilliseconds);
+                throw RExceptionFactory.Generate(watch.Elapsed.TotalMilliseconds);
             }
             finally
             {
@@ -71,7 +72,7 @@ namespace Egan.Tools
 
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = bytes.Length;
-            request.Timeout = 10000;
+            request.Timeout = ProtocolConstant.TIME_OUT;
 
             string result = "";
 
@@ -97,7 +98,7 @@ namespace Egan.Tools
                 
             }catch(WebException)
             {
-                throw RExceptionHandler.Handle(request.Timeout, watch.Elapsed.TotalMilliseconds);
+                throw RExceptionFactory.Generate(watch.Elapsed.TotalMilliseconds);
             }
             finally
             {

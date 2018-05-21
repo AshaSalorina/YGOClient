@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 namespace Egan.Exceptions
 {
     /// <summary>
-    /// 自定义异常处理器
+    /// 自定义异常工厂
     /// </summary>
-    public class RExceptionHandler
+    public class RExceptionFactory
     {
         /// <summary>
-        /// 处理来自服务器响应状态的异常
+        /// 根据服务器响应状态生成异常
         /// </summary>
         /// <param name="code">服务器响应状态码</param>
         /// <returns></returns>
-        public static RException Handle(StatusCode code)
+        public static RException Generate(StatusCode code)
         {
             string msg;
 
@@ -37,14 +37,13 @@ namespace Egan.Exceptions
         }
 
         /// <summary>
-        /// 处理网络连接异常
+        /// 根据请求超时时间生成异常
         /// </summary>
-        /// <param name="timeOut">预设请求超时时间</param>
         /// <param name="usedTime">当前用时</param>
         /// <returns>异常</returns>
-        public static RException Handle(int timeOut, double usedTime)
+        public static RException Generate(double usedTime)
         {
-            if (timeOut > usedTime)
+            if (ProtocolConstant.TIME_OUT > usedTime)
                 return new RException("网络连接失败，请检查您的网络情况");
             else
                 return new RException("服务器故障，详情请查看公告");

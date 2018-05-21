@@ -2,35 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Mono_MoveCard_Card : MonoBehaviour {
 
-    public static Camera cmr;
-    bool moveInSite = false;
-    Vector3 startP;
-    Vector3 pre;
-    Vector3 V3;
-    public void MouseDrag()
+/// <summary>
+/// TestScript
+/// </summary>
+public class Mono_MoveCard_Card : MonoBehaviour, IPointerClickHandler
+{
+    public void OnPointerClick(PointerEventData eventData)
     {
-        V3 =Input.mousePosition;
-        var mover = V3 - pre;
-        gameObject.transform.localPosition += mover;
-        pre = V3;
+        throw new System.NotImplementedException();
     }
-
-
-    public void MouseDown()
-    {
-        startP = gameObject.transform.position;
-        pre = Input.mousePosition;
-    }
-
-    public void MouseUp()
-    {
-        if (!moveInSite)
-        {
-            gameObject.transform.position = startP;
-        }
-    }
-
 }

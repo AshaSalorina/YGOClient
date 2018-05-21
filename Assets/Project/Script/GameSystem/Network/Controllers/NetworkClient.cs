@@ -6,27 +6,13 @@ using System.Collections.Generic;
 namespace Egan.Cotrollers
 {
     /// <summary>
-    /// 网络包装类
-    /// 统一包装网络方法
+    /// 网络客户端类
+    /// 包装所有网络方法
     /// </summary>
     public class NetworkClient
     {
-        /// <summary>
-        /// 游戏大厅服务器的URL
-        /// </summary>
-        private string lobbyURL = "http://localhost:8844/";
 
-        /// <summary>
-        /// 决斗服务器的IP地址
-        /// </summary>
-        private string duelIP = "....";
-
-        /// <summary>
-        /// 决斗服务器的端口号
-        /// </summary>
-        private int duelPort = 0000;
-
-        private LobbyClient lobbyClient;
+        private LobbyController lobbyClient;
 
         private DuelClient duelClient;
 
@@ -37,7 +23,7 @@ namespace Egan.Cotrollers
 
         public NetworkClient()
         {
-            lobbyClient = new LobbyClient();
+            lobbyClient = new LobbyController();
             duelClient = new DuelClient();
         }
 
@@ -77,6 +63,7 @@ namespace Egan.Cotrollers
             }
             
         } 
+
 
         public int MaxRoomNum
         {

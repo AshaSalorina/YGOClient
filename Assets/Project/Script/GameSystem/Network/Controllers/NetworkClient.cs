@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using Egan.Controllers;
 
-namespace Egan.Cotrollers
+namespace Egan.Controllers
 {
     /// <summary>
     /// 网络客户端类

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Egan.Cotrollers
+namespace Egan.Controllers
 {
     /// <summary>
     /// 游戏大厅控制器

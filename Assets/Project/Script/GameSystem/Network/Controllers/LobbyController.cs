@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Egan.Cotrollers
 {
@@ -89,9 +90,9 @@ namespace Egan.Cotrollers
 
             }
             catch (NullReferenceException) { }
-            catch (Exception rex)
+            catch (WebException)
             {
-                Console.WriteLine(rex.ToString());
+                throw new RException("网络连接失败");
             }
 
             return id;

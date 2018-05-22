@@ -47,9 +47,9 @@ namespace Egan.Controllers
         {
             try
             {
-                Console.WriteLine("正在连接服务器...");
+                //Console.WriteLine("正在连接服务器...");
                 Connect(host, port);
-                Console.WriteLine("连接服务器成功");
+                //Console.WriteLine("连接服务器成功");
 
                 //创建编码器
                 decoder = new YGOPDecoder(this);
@@ -142,11 +142,11 @@ namespace Egan.Controllers
 
         public static void PrintPacket(DataPacket packet)
         {
-            Console.WriteLine(
-                        $"+——--------——+——-----------——+——------------——+——-------——+\n" +
-                        $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
-                        $"+——--------——+——-----------——+——------------——+——-------——+\n"
-                        );
+            //Console.WriteLine(
+            //            $"+——--------——+——-----------——+——------------——+——-------——+\n" +
+            //            $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
+            //            $"+——--------——+——-----------——+——------------——+——-------——+\n"
+            //            );
         }
     }
 }

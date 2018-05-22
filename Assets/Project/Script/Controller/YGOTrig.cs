@@ -23,38 +23,8 @@ namespace Asha.Tools
         /// <param name="packet">消息包</param>
         public void Distribute(DataPacket packet)
         {
-            switch (packet.Type)
-            {
-                case MessageType.CREATE:
-                    Packets[MessageType.CREATE].Add(packet);
-                    break;
-                case MessageType.JOIN:
-                    break;
-                case MessageType.LEAVE:
-                    break;
-                case MessageType.KICK_OUT:
-                    break;
-                case MessageType.READY:
-                    break;
-                case MessageType.STARTED:
-                    break;
-                case MessageType.COUNT_DOWN:
-                    break;
-                case MessageType.VERITY:
-                    break;
-                case MessageType.DECK:
-                    break;
-                case MessageType.FINGER_GUESS:
-                    break;
-                case MessageType.CHAT:
-                    break;
-                case MessageType.OPERATE:
-                    break;
-                case MessageType.EXIT:
-                    break;
-                default:
-                    break;
-            }
+
+            Packets[packet.Type].Add(packet);
         }
 
     }

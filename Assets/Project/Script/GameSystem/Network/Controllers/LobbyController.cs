@@ -15,12 +15,20 @@ namespace Egan.Cotrollers
     /// </summary>
     class LobbyController
     {
+
+        private DataPacket packet;
+
+        public LobbyController(DataPacket packet)
+        {
+            this.packet = packet;
+        }
+
         /// <summary>
         /// 获取房间列表
         /// </summary>
         /// <param name="max">最大房间数</param>
         /// <returns>房间列表</returns>
-        public static List<Room> GetRoomList(ref int max)
+        public List<Room> GetRoomList(ref int max)
         {
             List<Room> rooms = null;
 
@@ -30,6 +38,8 @@ namespace Egan.Cotrollers
                 var jobj = JObject.Parse(jsonText);
                 max = int.Parse(jobj["mx"].ToString());
                 rooms = JsonConvert.DeserializeObject<List<Room>>(jobj["rm"].ToString());
+
+                while()
             }
             catch(NullReferenceException){}
             catch (RException rex)

@@ -30,6 +30,7 @@ namespace Egan.Cotrollers
 
         public NetworkClient()
         {
+            duelSocket.Start(RemoteAddress.DUEL_IP, RemoteAddress.DUEL_PORT);
             roomController = new RoomController(duelSocket);
         }
 

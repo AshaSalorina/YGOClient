@@ -48,5 +48,10 @@ namespace Egan.Exceptions
             else
                 return new RException("服务器故障，详情请查看公告");
         }
+
+        public static RException Generate(Exception e)
+        {
+            return new RException(e.Message, e);
+        }
     }
 }

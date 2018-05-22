@@ -6,27 +6,37 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Asha;
+
 
 namespace Egan.Models
 {
-    public class YgoSocket : Socket
+    class YgoSocket : Socket
     {
-
+        /// <summary>
+        /// 解码器
+        /// </summary>
         private YGOPDecoder decoder;
+        /// <summary>
+        /// 接收服务器消息的线程
+        /// </summary>
+        private Thread receiver;
+        /// <summary>
+        /// 是否终止线程receiver的flag
+        /// </summary>
+        private Boolean stopFlag;
 
         public YgoSocket() : 
             base(AddressFamily.InterNetwork, 
                 SocketType.Stream, ProtocolType.Tcp){}
-
 
         /// <summary>
         /// 开始连接
         /// </summary>
         /// <param name="host">远程主机地址</param>
         /// <param name="port">远程主机端口</param>
-        /// <param name="start">远程消息处理方法</param>
-        public void Start(string host, int port, ThreadStart start = null)
+        /// <param name="start">消息处理方法</param>
+        /// <param name="flag">消息处理方法的终止变量</param>
+        public void Start(string host, int port, ThreadStart start = null, Boolean flag = false)
         {
             try
             {
@@ -37,10 +47,13 @@ namespace Egan.Models
                 //创建编码器
                 decoder = new YGOPDecoder(this);
 
-                //创建后台线程接收服务器消息
-                Thread threadReceive = new Thread(start == null ? ReceiveMsg : start);
-                threadReceive.IsBackground = true;
-                threadReceive.Start();
+                //如果需要，创建一个线程持续接收服务器的消息
+                if(start != null)
+                {
+                    receiver = new Thread(start);
+                    receiver.IsBackground = true;
+                    receiver.Start();
+                }
             }
             catch
             {
@@ -48,26 +61,52 @@ namespace Egan.Models
             }
         }
 
-        /// <summary>
-        /// 默认的对远程主机的消息的处理方法
-        /// </summary>
-        private void ReceiveMsg()
+
+        public void ShutdownGracefully()
         {
-            byte[] buffer = new byte[1024];
-            //分段接收服务器信息
+            try
+            {
+                if (Connected)
+                {
+                    Shutdown(SocketShutdown.Both);
+                    Close();
+                    stopFlag = true;
+                }
+            }catch(Exception e)
+            {
+                throw RExceptionFactory.Generate(e);
+            }
+         
+        }
+
+        /// <summary>
+        /// 接收并返回一个完整的数据包
+        /// 超时时抛出RException异常
+        /// </summary>
+        public DataPacket ReceivePacket()
+        {
+            Stopwatch wacth = new Stopwatch();
+            wacth.Start();
             while (true)
             {
+                if (wacth.ElapsedMilliseconds > ProtocolConstant.TIME_OUT)
+                    throw RExceptionFactory.Generate(wacth.ElapsedMilliseconds);
                 if (decoder.ReceivePacket())
                 {
                     DataPacket packet = decoder.ParsePacket();
-                    Console.WriteLine(
+                    PrintPacket(packet);
+                    return packet;
+                }
+            }
+        }
+
+        public static void PrintPacket(DataPacket packet)
+        {
+            Console.WriteLine(
                         $"+——--------——+——-----------——+——------------——+——-------——+\n" +
                         $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
                         $"+——--------——+——-----------——+——------------——+——-------——+\n"
                         );
-                    Options.YGOWaiter.Distribute(packet);
-                }
-            }
         }
 
         public void Send(String body, MessageType type)

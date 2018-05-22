@@ -15,6 +15,7 @@ namespace Egan.Tools
     {
         public static byte[] Encoder(DataPacket packet)
         {
+            Console.WriteLine(packet.Body);
             byte[][] array = ToBytesArray(packet);
             return Compose(array);
         }
@@ -38,7 +39,7 @@ namespace Egan.Tools
             Array.Reverse(bytesArray[ProtocolConstant.MAGIC_ORDER]);
 
             bytesArray[ProtocolConstant.BODY_ORDER] = 
-                System.Text.UTF8Encoding.Default.GetBytes(packet.Body);
+                System.Text.Encoding.UTF8.GetBytes(packet.Body);
 
             bytesArray[ProtocolConstant.LEN_ORDER] = 
                 BitConverter.GetBytes(bytesArray[ProtocolConstant.BODY_ORDER].Length);

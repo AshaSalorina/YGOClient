@@ -45,7 +45,7 @@ namespace Egan.Models
 
         public override bool Equals(object obj)
         {
-            return id.Equals(((Room)obj).Id);
+            return obj is Room && id.Equals(((Room)obj).Id);
         }
 
         public override int GetHashCode()

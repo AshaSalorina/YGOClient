@@ -34,7 +34,7 @@ namespace Asha.Tools
                     break;
                 case MessageType.KICK_OUT:
                     break;
-                case MessageType.PREPARED:
+                case MessageType.READY:
                     break;
                 case MessageType.STARTED:
                     break;

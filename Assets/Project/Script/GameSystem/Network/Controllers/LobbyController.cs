@@ -1,4 +1,5 @@
 ﻿using Egan.Constants;
+using Egan.Controllers;
 using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
@@ -16,11 +17,19 @@ namespace Egan.Cotrollers
     class LobbyController
     {
 
-        private DataPacket packet;
+        private YgoSocket socket;
 
-        public LobbyController(DataPacket packet)
+        public LobbyController(YgoSocket socket)
         {
-            this.packet = packet;
+            this.socket = socket;
+            try
+            {
+                socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
+            }
+            catch
+            {
+                throw new RException("网络连接失败");
+            }
         }
 
         /// <summary>
@@ -34,12 +43,18 @@ namespace Egan.Cotrollers
 
             try
             {
-                string jsonText = HttpWebWrapper.Get(RemoteAddress.LOBBY_URL_ROOM);
+                //发送获取房间列表请求
+                socket.Send("", MessageType.GET_ROOMS);
+                DataPacket packet;
+
+                //等待服务器的响应
+                packet = socket.ReceivePacket();
+
+                string jsonText = packet.Body;
                 var jobj = JObject.Parse(jsonText);
                 max = int.Parse(jobj["mx"].ToString());
                 rooms = JsonConvert.DeserializeObject<List<Room>>(jobj["rm"].ToString());
 
-                while()
             }
             catch(NullReferenceException){}
             catch (RException rex)
@@ -51,45 +66,35 @@ namespace Egan.Cotrollers
         }
 
         /// <summary>
-        /// 获取最新的版本号
+        /// 创建新房间
         /// </summary>
-        /// <returns></returns>
-        public static float GetVersion()
+        /// <param name="room">新房间信息</param>
+        /// <returns>新房间ID</returns>
+        public int CreateRoom(Room room)
         {
-            float version = 0f;
-            try
-            {
-                string jsonText = HttpWebWrapper.Get(RemoteAddress.LOBBY_URL_VERSION);
-                var jobj = JObject.Parse(jsonText);
-                version = float.Parse(jobj["vs"].ToString());
-            }
-            catch (NullReferenceException) { }
-            catch (RException rex)
-            {
-                throw rex;
-            }
-            return version;
-        }
+            int id = 0;
 
-        /// <summary>
-        /// 获取公告
-        /// </summary>
-        /// <returns></returns>
-        public static String GetBulletin()
-        {
-            String buelltin = null;
             try
             {
-                string jsonText = HttpWebWrapper.Get(RemoteAddress.LOBBY_URL_VERSION);
-                var jobj = JObject.Parse(jsonText);
-                buelltin = jobj["bt"].ToString();
+                String roomStr = JsonConvert.SerializeObject(room);
+
+                //发送创建房间请求
+                socket.Send(roomStr, MessageType.CREATE);
+                DataPacket packet;
+
+                //等待服务器的响应
+                packet = socket.ReceivePacket();
+
+                id = int.Parse(packet.Body);
+
             }
             catch (NullReferenceException) { }
-            catch (RException rex)
+            catch (Exception rex)
             {
-                throw rex;
+                Console.WriteLine(rex.ToString());
             }
-            return buelltin;
+
+            return id;
         }
         
     }

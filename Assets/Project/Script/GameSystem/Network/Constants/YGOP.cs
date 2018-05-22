@@ -9,7 +9,7 @@ namespace Egan.Constants
     /// <summary>
     /// YGOP协议的其他常量
     /// </summary>
-    public class ProtocolConstant
+    public class YGOP
     {
         
         /// <summary>

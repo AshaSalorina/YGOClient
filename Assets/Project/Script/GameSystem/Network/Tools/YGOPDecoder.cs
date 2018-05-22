@@ -23,7 +23,7 @@ namespace Egan.Tools
         /// <summary>
         /// 一个数据包的头部缓冲区
         /// </summary>
-        private byte[] packetHead = new byte[ProtocolConstant.HEAD_LEN];
+        private byte[] packetHead = new byte[YGOP.HEAD_LEN];
 
         /// <summary>
         /// 一个数据包的消息体缓冲区
@@ -33,7 +33,7 @@ namespace Egan.Tools
         /// <summary>
         /// 待接收的头部消息字节数
         /// </summary>
-        private int remaingHead = ProtocolConstant.HEAD_LEN;
+        private int remaingHead = YGOP.HEAD_LEN;
 
         /// <summary>
         /// 待接收的消息体字节数
@@ -58,8 +58,8 @@ namespace Egan.Tools
             if (ReceiveHead())
             {
                 //获取消息体长度
-                byte[] lenBytes = new byte[ProtocolConstant.LEN_LEN];
-                Array.Copy(packetHead, ProtocolConstant.LEN_POS, lenBytes, 0, ProtocolConstant.LEN_LEN);
+                byte[] lenBytes = new byte[YGOP.LEN_LEN];
+                Array.Copy(packetHead, YGOP.LEN_POS, lenBytes, 0, YGOP.LEN_LEN);
                 Array.Reverse(lenBytes);
                 int len = BitConverter.ToInt32(lenBytes, 0);
 
@@ -87,7 +87,7 @@ namespace Egan.Tools
                 //此次接收的头部消息字节数
                 int receiveHeadCount;
                 //此次接收的头部消息
-                byte[] currentHead = new byte[ProtocolConstant.HEAD_LEN];
+                byte[] currentHead = new byte[YGOP.HEAD_LEN];
                 if (remaingHead >= packetHead.Length)
                 {
                     receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
@@ -139,13 +139,13 @@ namespace Egan.Tools
         /// <returns></returns>
         public DataPacket ParsePacket()
         {
-            byte[] versionBytes = new byte[ProtocolConstant.VERSION_LEN];
-            byte[] typeBytes = new byte[ProtocolConstant.TYPE_LEN];
-            byte[] magicBytes = new byte[ProtocolConstant.MAGIC_LEN];
+            byte[] versionBytes = new byte[YGOP.VERSION_LEN];
+            byte[] typeBytes = new byte[YGOP.TYPE_LEN];
+            byte[] magicBytes = new byte[YGOP.MAGIC_LEN];
 
-            Array.Copy(packetHead, ProtocolConstant.VERSION_POS, versionBytes, 0, ProtocolConstant.VERSION_LEN);
-            Array.Copy(packetHead, ProtocolConstant.TYPE_POS, typeBytes, 0, ProtocolConstant.TYPE_LEN);
-            Array.Copy(packetHead, ProtocolConstant.MAGIC_POS, magicBytes, 0, ProtocolConstant.MAGIC_LEN);
+            Array.Copy(packetHead, YGOP.VERSION_POS, versionBytes, 0, YGOP.VERSION_LEN);
+            Array.Copy(packetHead, YGOP.TYPE_POS, typeBytes, 0, YGOP.TYPE_LEN);
+            Array.Copy(packetHead, YGOP.MAGIC_POS, magicBytes, 0, YGOP.MAGIC_LEN);
 
             Array.Reverse(versionBytes);
             Array.Reverse(typeBytes);
@@ -159,7 +159,7 @@ namespace Egan.Tools
             string body = System.Text.Encoding.UTF8.GetString(packetBody);
 
             //重置待接收的头和消息体字节数
-            remaingHead = ProtocolConstant.HEAD_LEN;
+            remaingHead = YGOP.HEAD_LEN;
 
             return new DataPacket(version, type, magic, len, body);
         }

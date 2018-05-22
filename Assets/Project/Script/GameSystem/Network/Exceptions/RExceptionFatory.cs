@@ -18,9 +18,11 @@ namespace Egan.Exceptions
         /// </summary>
         /// <param name="code">服务器响应状态码</param>
         /// <returns></returns>
-        public static RException Generate(StatusCode code)
+        public static RException Generate(R r)
         {
             string msg;
+
+            StatusCode code = (StatusCode)r.Code;
 
             switch (code)
             {
@@ -30,7 +32,7 @@ namespace Egan.Exceptions
                 case StatusCode.DISMISSED: msg = "房间已解散"; break;
                 case StatusCode.FULL_LOBBY: msg = "游戏大厅的房间容量已满"; break;
                 case StatusCode.FULL_ROOM: msg = "房间的玩家容量已满"; break;
-                default: msg = "发生未知错误"; break;
+                default: msg = r.Msg; break;
             }
 
             return new RException(msg);
@@ -43,7 +45,7 @@ namespace Egan.Exceptions
         /// <returns>异常</returns>
         public static RException Generate(double usedTime)
         {
-            if (ProtocolConstant.TIME_OUT > usedTime)
+            if (YGOP.TIME_OUT > usedTime)
                 return new RException("网络连接失败，请检查您的网络情况");
             else
                 return new RException("服务器故障，详情请查看公告");

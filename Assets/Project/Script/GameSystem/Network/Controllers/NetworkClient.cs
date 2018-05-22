@@ -24,14 +24,14 @@ namespace Egan.Cotrollers
         /// <summary>
         /// 懒汉模式
         /// </summary>
-        private YgoSocket duelSocket = new YgoSocket();
+        private YgoSocket socket = new YgoSocket();
+        private LobbyController lobbyController;
 
         private RoomController roomController;
 
         public NetworkClient()
         {
-            duelSocket.Start(RemoteAddress.DUEL_IP, RemoteAddress.DUEL_PORT);
-            roomController = new RoomController(duelSocket);
+            lobbyController = new LobbyController(socket);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Egan.Cotrollers
         public List<Room> GetRooms() {
             try
             {
-                return LobbyController.GetRoomList (ref maxRoomNum);
+                return lobbyController.GetRoomList (ref maxRoomNum);
             }catch(RException rex)
             {
                 throw rex;
@@ -53,11 +53,11 @@ namespace Egan.Cotrollers
         /// </summary>
         /// <param name="room">新房间信息</param>
         /// <returns>处理后的服务器响应状态</returns>
-        public void CreateRoom(Room room)
+        public int CreateRoom(Room room)
         {
             try
             {
-                roomController.Create(room);
+                return lobbyController.CreateRoom(room);
             }
             catch (RException rex)
             {
@@ -77,6 +77,11 @@ namespace Egan.Cotrollers
             {
                 maxRoomNum = value;
             }
+        }
+
+        public void ShutDownGracefully()
+        {
+            socket.ShutdownGracefully();
         }
     }
 

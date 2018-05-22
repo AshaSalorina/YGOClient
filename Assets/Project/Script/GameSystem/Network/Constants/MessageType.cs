@@ -12,60 +12,74 @@ namespace Egan.Constants
     public enum MessageType
     {
         /// <summary>
-        /// 创建房间
+        /// 接收到房间列表
         /// </summary>
-        CREATE = 0x1,
+        GET_ROOMS = 0x1,
         /// <summary>
-        /// 玩家加入房间
+        /// 创建房间成功
+        /// </summary>
+        CREATE = GET_ROOMS << 1,
+        /// <summary>
+        /// 加入房间成功
         /// </summary>
         JOIN = CREATE << 1,
         /// <summary>
-        /// 玩家离开房间
+        /// 对方离开房间
         /// </summary>
         LEAVE = JOIN << 1,
         /// <summary>
-        /// 踢出房间
+        /// 对方/我方被踢出房间
         /// </summary>
         KICK_OUT = LEAVE << 1,
         /// <summary>
-        /// 玩家进入准备状态
+        /// 对方进入准备状态(房主)
+        /// 进入准备状态成功(房客)
         /// </summary>
-        PREPARED = KICK_OUT << 1,
+        READY = KICK_OUT << 1,
         /// <summary>
-        /// 玩家进入开始状态
+        /// 进入开始状态成功(房主)
+        /// 对方进入开始状态(房客)
         /// </summary>
-        STARTED = PREPARED << 1,
+        STARTED = READY << 1,
         /// <summary>
-        /// 请玩家开始倒计时
+        /// 开始倒计时
         /// </summary>
         COUNT_DOWN = STARTED << 1,
         /// <summary>
-        /// 校验客户端文件完整性
+        /// 接收到对方的卡组
         /// </summary>
-        VERITY = COUNT_DOWN << 1,
+        DECK = COUNT_DOWN << 1,
         /// <summary>
-        /// 发送卡牌
-        /// </summary>
-        DECK = VERITY << 1,
-        /// <summary>
-        /// 猜拳消息
+        /// 接收到猜拳结果
         /// </summary>
         FINGER_GUESS = DECK << 1,
         /// <summary>
-        /// 聊天信息
+        /// 接收到对方的聊天信息
         /// </summary>
         CHAT = FINGER_GUESS << 1,
         /// <summary>
-        /// 操作信息
+        /// 接收到操作消息
         /// </summary>
         OPERATE = CHAT << 1,
         /// <summary>
-        /// 退出游戏
+        /// 对方退出游戏
         /// </summary>
         EXIT = OPERATE << 1,
         /// <summary>
-        /// 服务器发出警告信息
+        /// 接收到最新版本号
         /// </summary>
-        WARRING = EXIT << 1
+        GET_VERSION = EXIT << 1,
+        /// <summary>
+        /// 接收到公告板
+        /// </summary>
+        GET_BULLETIN = GET_VERSION << 1,
+        /// <summary>
+        /// 文件完整
+        /// </summary>
+        VERITY = GET_BULLETIN << 1,
+        /// <summary>
+        /// 接收到警告信息
+        /// </summary>
+        WARRING = VERITY << 1
     }
 }

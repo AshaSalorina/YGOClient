@@ -27,23 +27,23 @@ namespace Egan.Tools
         /// <returns>若干个字节数组</returns>
         private static byte[][] ToBytesArray(DataPacket packet)
         {
-            byte[][] bytesArray = new byte[ProtocolConstant.PART_COUNT][];
+            byte[][] bytesArray = new byte[YGOP.PART_COUNT][];
 
-            bytesArray[ProtocolConstant.VERSION_ORDER] = BitConverter.GetBytes(ProtocolConstant.VERSION);
-            Array.Reverse(bytesArray[ProtocolConstant.VERSION_ORDER]);
+            bytesArray[YGOP.VERSION_ORDER] = BitConverter.GetBytes(YGOP.VERSION);
+            Array.Reverse(bytesArray[YGOP.VERSION_ORDER]);
 
-            bytesArray[ProtocolConstant.TYPE_ORDER] = BitConverter.GetBytes((int)packet.Type);
-            Array.Reverse(bytesArray[ProtocolConstant.TYPE_ORDER]);
+            bytesArray[YGOP.TYPE_ORDER] = BitConverter.GetBytes((int)packet.Type);
+            Array.Reverse(bytesArray[YGOP.TYPE_ORDER]);
 
-            bytesArray[ProtocolConstant.MAGIC_ORDER] = BitConverter.GetBytes(packet.Magic);
-            Array.Reverse(bytesArray[ProtocolConstant.MAGIC_ORDER]);
+            bytesArray[YGOP.MAGIC_ORDER] = BitConverter.GetBytes(packet.Magic);
+            Array.Reverse(bytesArray[YGOP.MAGIC_ORDER]);
 
-            bytesArray[ProtocolConstant.BODY_ORDER] = 
+            bytesArray[YGOP.BODY_ORDER] = 
                 System.Text.Encoding.UTF8.GetBytes(packet.Body);
 
-            bytesArray[ProtocolConstant.LEN_ORDER] = 
-                BitConverter.GetBytes(bytesArray[ProtocolConstant.BODY_ORDER].Length);
-            Array.Reverse(bytesArray[ProtocolConstant.LEN_ORDER]);
+            bytesArray[YGOP.LEN_ORDER] = 
+                BitConverter.GetBytes(bytesArray[YGOP.BODY_ORDER].Length);
+            Array.Reverse(bytesArray[YGOP.LEN_ORDER]);
 
             return bytesArray;
         }
@@ -54,11 +54,11 @@ namespace Egan.Tools
             foreach(byte[] bytes in bytesArray)
                 len += bytes.Length;
             byte[] total = new byte[len];
-            bytesArray[ProtocolConstant.VERSION_ORDER].CopyTo(total, ProtocolConstant.VERSION_POS);
-            bytesArray[ProtocolConstant.TYPE_ORDER].CopyTo(total, ProtocolConstant.TYPE_POS);
-            bytesArray[ProtocolConstant.MAGIC_ORDER].CopyTo(total, ProtocolConstant.MAGIC_POS);
-            bytesArray[ProtocolConstant.LEN_ORDER].CopyTo(total, ProtocolConstant.LEN_POS);
-            bytesArray[ProtocolConstant.BODY_ORDER].CopyTo(total,ProtocolConstant.BODY_POS);
+            bytesArray[YGOP.VERSION_ORDER].CopyTo(total, YGOP.VERSION_POS);
+            bytesArray[YGOP.TYPE_ORDER].CopyTo(total, YGOP.TYPE_POS);
+            bytesArray[YGOP.MAGIC_ORDER].CopyTo(total, YGOP.MAGIC_POS);
+            bytesArray[YGOP.LEN_ORDER].CopyTo(total, YGOP.LEN_POS);
+            bytesArray[YGOP.BODY_ORDER].CopyTo(total,YGOP.BODY_POS);
 
             return total;
         }

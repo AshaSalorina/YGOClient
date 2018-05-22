@@ -51,9 +51,9 @@ namespace Egan.Models
         /// <param name="type">消息类型</param>
         public DataPacket(String body, MessageType type)
         {
-            this.version = ProtocolConstant.VERSION;
+            this.version = YGOP.VERSION;
             this.type = type;
-            this.magic = ProtocolConstant.MAGIC;
+            this.magic = YGOP.MAGIC;
             this.body = body;
         }
 

@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 222646567530387410}
   - component: {fileID: 114563556636109876}
   - component: {fileID: 114112652475187128}
+  - component: {fileID: 114947722406324970}
   m_Layer: 5
   m_Name: btn_CreatRoom
   m_TagString: Untagged
@@ -1468,6 +1469,17 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 0
+--- !u!114 &114947722406324970
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180100200720076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3a8c4e40968f548a91ce6ba172e7e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114971073454604978
 MonoBehaviour:
   m_ObjectHideFlags: 1

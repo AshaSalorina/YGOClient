@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Asha.Tools;
+using Egan.Models;
+using Egan.Controllers;
 
 namespace Asha
 {
@@ -77,6 +79,18 @@ namespace Asha
         /// 游戏大厅-被选中的房间的编号
         /// </summary>
         public static int selectedRoom;
+        #endregion
+
+        #region PlayerInfo
+
+        public static Player player;
+
+        #endregion
+
+        #region NetWork
+
+        public static NetworkClient client;
+
         #endregion
     }
 }

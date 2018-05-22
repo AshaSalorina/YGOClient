@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Asha.Tools;
-using Egan.Cotrollers;
+using Egan.Controllers;
+using Egan.Models;
 
 namespace Asha
 {
@@ -14,13 +15,6 @@ namespace Asha
             Load();
         }
 
-        private void Update()
-        {
-            
-        }
-
-
-        static NetworkClient client;
         public void Load()
         {
             #region 配置文件载入
@@ -32,6 +26,8 @@ namespace Asha
                 {
                     Options.backgroundURL = sR.ReadLine();
                 }
+                sR.Close();
+                fS.Close();             
             }
             catch (System.Exception)
             {
@@ -69,9 +65,31 @@ namespace Asha
             */
             #endregion
 
+            #region 建立玩家对象
+
+            Options.player = new Player();
+            try
+            {
+                FileStream fS2 = new FileStream($"{Application.dataPath}/StreamingAssets/player.ygo", FileMode.OpenOrCreate);
+                BinaryReader bR = new BinaryReader(fS2);
+                Options.player.Name = bR.ReadString();
+                Options.player.Head = bR.ReadString();
+
+
+                bR.Close();
+                fS2.Close();
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+            #endregion
+
             #region 网络连接
 
-            client = new NetworkClient();
+            Options.client = new NetworkClient();
 
             #endregion
         }
@@ -83,10 +101,19 @@ namespace Asha
         {
             try
             {
+                #region 配置文件
                 FileStream fS = new FileStream($"{Application.dataPath}/StreamingAssets/Setting.ygo", FileMode.OpenOrCreate);
                 StreamWriter sW = new StreamWriter(fS);
-
                 sW.WriteLine(Options.backgroundURL);
+
+                #endregion
+
+                #region 玩家信息文件
+                FileStream fS2 = new FileStream($"{Application.dataPath}/StreamingAssets/player.ygo", FileMode.OpenOrCreate);
+                var bW = new BinaryWriter(fS2);
+                bW.Write(Options.player.Name);
+                bW.Write(Options.player.Head);
+                #endregion
             }
             catch (System.Exception)
             {
@@ -95,6 +122,9 @@ namespace Asha
             }
 
         }
+
+
+
     }
 }
 

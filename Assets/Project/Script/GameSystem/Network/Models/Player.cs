@@ -19,22 +19,22 @@ namespace Egan.Models
 
         
         [DataMember(Name = "hd")]
-        private byte[] head;
+        private string head;
 
         
         [DataMember(Name = "isp")]
-        private bool isPrepared;
+        private bool isPrepared = false;
 
         
         [DataMember(Name = "iss")]
-        private bool isStarting;
+        private bool isStarting = false;
 
         [DataMember(Name = "fg")]
         private bool finger;
 
         public Player() { }
 
-        public Player(string name, byte[] head, bool isPrepared, bool isStarting)
+        public Player(string name, string head, bool isPrepared, bool isStarting)
         {
             this.name = name;
             this.head = head;
@@ -61,7 +61,7 @@ namespace Egan.Models
         /// <summary>
         /// 玩家头像图片
         /// </summary>
-        public byte[] Head
+        public string Head
         {
             get
             {

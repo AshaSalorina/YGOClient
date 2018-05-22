@@ -1,4 +1,4 @@
-﻿using Egan.Cotrollers;
+﻿using Egan.Controllers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,6 +53,7 @@ namespace Asha
                 {
                     Destroy(transform.GetChild(i).gameObject);
                 }
+                //NetworkClient nT = null;
                 try
                 {
                     //通过NetWorkWrapper获取房间列表，并生成房间置入滚动框
@@ -67,6 +68,7 @@ namespace Asha
                         obj.transform.Find("Host").GetComponent<Text>().text = item.Host.Name;
                         obj.transform.Find("Desc").GetComponent<Text>().text = item.Desc;
                     }
+                    nT.ShutDownGracefully();
                 }
                 catch (System.Exception e)
                 {
@@ -74,10 +76,11 @@ namespace Asha
                     Debug.Log(e.ToString());
                     //throw;
                 }
+
                 //更新控件框大小
                 Refresh();
                 //等待30s
-                yield return new WaitForSeconds(30f);
+                yield return new WaitForSeconds(5f);
             }
 
         }

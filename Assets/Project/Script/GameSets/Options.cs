@@ -22,7 +22,10 @@ namespace Asha
         /// </summary>
         public static int audioLaude;
 
-
+        /// <summary>
+        /// 主客机判定
+        /// </summary>
+        public static bool isRoomMaster;
 
 
         #endregion
@@ -61,6 +64,11 @@ namespace Asha
         /// 全局-3d游戏盘
         /// </summary>
         public static GameObject GameArea;
+
+        /// <summary>
+        /// 准备用的房间
+        /// </summary>
+        public static GameObject Room;
 
         /// <summary>
         /// 声音源

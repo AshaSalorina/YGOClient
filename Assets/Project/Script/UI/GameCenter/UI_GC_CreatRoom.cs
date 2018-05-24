@@ -20,21 +20,30 @@ namespace Asha
             });
         }
 
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
         IEnumerator CreatRoom()
         {
             try
             {
                 var room = new Room();
                 room.Host = Options.player;
-                room.Name = "FUckKonami";
-                //......
-                Options.client.CreateRoom(room);
+                room.Name = transform.parent.Find("RoomName").GetComponent<InputField>().text;
+                room.Password = "";
+                room.Password = transform.parent.Find("RoomPassword").GetComponent<InputField>().text;
+                room.HasPwd = room.Password != null && room.Password != "" ? true : false;
+                room.Desc = transform.parent.Find("RoomDes").GetComponent<InputField>().text;
+                Options.client.CreateRoom(room).ToString();
+                //RoomInfo.CreatRoom(room);
+                // transform.parent.gameObject.SetActive(false);
             }
             catch (System.Exception e)
             {
                 Debug.Log(e.ToString());
             }
-
             yield return null;
         }
     }

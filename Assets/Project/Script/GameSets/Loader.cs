@@ -13,10 +13,18 @@ namespace Asha
         private void Awake()
         {
             Load();
+            Application.wantsToQuit += ShutDownGracefully;
+        }
+
+        bool ShutDownGracefully()
+        {
+            Options.client.ShutDownGracefully();//断开连接
+            return true;
         }
 
         public void Load()
         {
+            
             #region 配置文件载入
             try
             {
@@ -29,9 +37,9 @@ namespace Asha
                 sR.Close();
                 fS.Close();             
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-                throw;
+                Debug.Log(e.ToString());
             }
             #endregion
 
@@ -72,16 +80,18 @@ namespace Asha
             {
                 FileStream fS2 = new FileStream($"{Application.dataPath}/StreamingAssets/player.ygo", FileMode.OpenOrCreate);
                 BinaryReader bR = new BinaryReader(fS2);
-                Options.player.Name = bR.ReadString();
-                Options.player.Head = bR.ReadString();
+                if (bR.PeekChar() != -1)
+                {
+                    Options.player.Name = bR.ReadString();
+                    Options.player.Head = bR.ReadString();
 
+                }
 
                 bR.Close();
                 fS2.Close();
             }
             catch (System.Exception)
             {
-
                 throw;
             }
 

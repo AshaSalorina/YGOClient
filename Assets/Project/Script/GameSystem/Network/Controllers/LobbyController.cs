@@ -75,27 +75,39 @@ namespace Egan.Controllers
         {
             int id = 0;
 
-            try
-            {
-                String roomStr = JsonConvert.SerializeObject(room);
+            String json = JsonConvert.SerializeObject(room);
 
-                //发送创建房间请求
-                socket.Send(roomStr, MessageType.CREATE);
-                DataPacket packet;
+            //发送创建房间请求
+            socket.Send(json, MessageType.CREATE);
+            DataPacket packet;
 
-                //等待服务器的响应
-                packet = socket.ReceivePacket();
+            //等待服务器的响应
+            packet = socket.ReceivePacket();
 
-                id = int.Parse(packet.Body);
-
-            }
-            catch (NullReferenceException) { }
-            catch (WebException)
-            {
-                throw new RException("网络连接失败");
-            }
+            id = int.Parse(packet.Body);
 
             return id;
+        }
+
+        public Room JoinRoom(int id, Player guest, String password)
+        {
+            Dictionary<string, object> temp = new Dictionary<string, object>();
+
+            temp.Add("id", id);
+            temp.Add("gs", guest);
+            temp.Add("pw", password);
+
+            String json = JsonConvert.SerializeObject(temp);
+
+            socket.Send(json, MessageType.JOIN);
+
+            DataPacket packet;
+
+            packet = socket.ReceivePacket();
+
+            Room room = JsonConvert.DeserializeObject<Room>(packet.Body);
+
+            return room;
         }
         
     }

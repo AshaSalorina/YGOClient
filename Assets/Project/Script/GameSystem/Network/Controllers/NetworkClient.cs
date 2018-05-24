@@ -66,6 +66,18 @@ namespace Egan.Controllers
             
         } 
 
+        /// <summary>
+        /// 加入房间
+        /// </summary>
+        /// <param name="id">房间id</param>
+        /// <param name="guest">房客信息</param>
+        /// <param name="password">密码</param>
+        /// <returns>目标房间</returns>
+        public Room JoinRoom(int id, Player guest, string password = "")
+        {
+            return lobbyController.JoinRoom(id, guest, password);
+        }
+
         public int MaxRoomNum
         {
             get

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Egan.Models
 {
@@ -28,7 +24,7 @@ namespace Egan.Models
         private bool hasPwd;
 
         
-        [DataMember(Name = "ps")]
+        [DataMember(Name = "pw")]
         private string password;
 
         

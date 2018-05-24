@@ -64,8 +64,7 @@ namespace Egan.Controllers
             }
             catch(WebException wex)
             {
-                Console.WriteLine(wex.ToString());
-                //throw new RException("网络连接失败");
+                throw new RException("网络连接失败");
             }
         }
 

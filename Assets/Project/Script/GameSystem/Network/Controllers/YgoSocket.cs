@@ -119,25 +119,36 @@ namespace Egan.Controllers
         {
             Stopwatch wacth = new Stopwatch();
             wacth.Start();
-            while (true)
+            try
             {
-                if (wacth.ElapsedMilliseconds > YGOP.TIME_OUT)
-                    throw RExceptionFactory.Generate(wacth.ElapsedMilliseconds);
-                if (decoder.ReceivePacket())
+                while (true)
                 {
-                    DataPacket packet = decoder.ParsePacket();
-                    PrintPacket(packet);
-
-                    if(packet.Type == MessageType.WARRING)
+                    if (wacth.ElapsedMilliseconds > YGOP.TIME_OUT)
+                        throw RExceptionFactory.Generate(wacth.ElapsedMilliseconds);
+                    if (decoder.ReceivePacket())
                     {
-                        R r = JsonConvert.DeserializeObject<R>(packet.Body);
-                        throw RExceptionFactory.Generate(r);
-                    }
-                        
+                        DataPacket packet = decoder.ParsePacket();
+                        PrintPacket(packet);
 
-                    return packet;
+                        if (packet.Type == MessageType.WARRING)
+                        {
+                            R r = JsonConvert.DeserializeObject<R>(packet.Body);
+                            throw RExceptionFactory.Generate(r);
+                        }
+
+                        return packet;
+                    }
                 }
             }
+            catch(SocketException)
+            {
+                throw new RException("连接中断");
+            }catch(RException rex)
+            {
+                throw rex;
+            }
+
+            return null;
         }
 
         public static void PrintPacket(DataPacket packet)

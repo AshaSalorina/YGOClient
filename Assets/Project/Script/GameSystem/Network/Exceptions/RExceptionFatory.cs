@@ -30,8 +30,8 @@ namespace Egan.Exceptions
                 case StatusCode.PLAYING: msg = "房间已开始游戏"; break;
                 case StatusCode.UNPREPARED: msg = "房客未进入准备状态"; break;
                 case StatusCode.DISMISSED: msg = "房间已解散"; break;
-                case StatusCode.FULL_LOBBY: msg = "游戏大厅的房间容量已满"; break;
-                case StatusCode.FULL_ROOM: msg = "房间的玩家容量已满"; break;
+                case StatusCode.FULL_LOBBY: msg = "游戏大厅已满"; break;
+                case StatusCode.FULL_ROOM: msg = "房间已满员"; break;
                 default: msg = r.Msg; break;
             }
 
@@ -48,7 +48,7 @@ namespace Egan.Exceptions
             if (YGOP.TIME_OUT > usedTime)
                 return new RException("网络连接失败，请检查您的网络情况");
             else
-                return new RException("服务器故障，详情请查看公告");
+                return new RException("服务器繁忙，请耐心等待");
         }
 
         public static RException Generate(Exception e)

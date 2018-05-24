@@ -12,16 +12,21 @@ namespace Asha
 
         public static void CreatRoom(Room rm)
         {
-            Options.GameCenter.SetActive(false);
+
             Options.isRoomMaster = true;
-            Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(""), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
+            Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
+
+
+            Options.GameCenter.SetActive(false);
         }
 
         public static void JoinRoom(Room rm)
         {
-            Options.GameCenter.SetActive(false);
+
             Options.isRoomMaster = false;
-            Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(""), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
+            Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
+
+            Options.GameCenter.SetActive(false);
         }
 
 

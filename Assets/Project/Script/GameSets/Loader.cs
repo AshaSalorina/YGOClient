@@ -30,7 +30,7 @@ namespace Asha
             {
                 FileStream fS = new FileStream($"{Application.dataPath}/StreamingAssets/Setting.ygo", FileMode.OpenOrCreate);
                 StreamReader sR = new StreamReader(fS);
-                while (sR.Peek() != -1)
+                if (sR.Peek() != -1)
                 {
                     Options.backgroundURL = sR.ReadLine();
                 }
@@ -84,11 +84,13 @@ namespace Asha
                 {
                     Options.player.Name = bR.ReadString();
                     Options.player.Head = bR.ReadString();
-
                 }
-
                 bR.Close();
                 fS2.Close();
+                if (Options.player.Name == null || Options.player.Name == "")
+                {
+                    Options.player.Name = "UnknownPlayer";
+                }
             }
             catch (System.Exception)
             {

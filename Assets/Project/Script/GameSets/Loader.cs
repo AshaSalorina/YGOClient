@@ -44,6 +44,7 @@ namespace Asha
             #endregion
 
             #region 路径实例化和预载入
+            Options.EventSystem = GameObject.Find("EventSystem");
             Options.MainCanvas = GameObject.Find("Canvas");
             Options.MainScence = GameObject.Find("MainScence");
 
@@ -102,6 +103,8 @@ namespace Asha
             #region 网络连接
 
             Options.client = new NetworkClient();
+
+            YGOTrig.Load();
 
             #endregion
         }

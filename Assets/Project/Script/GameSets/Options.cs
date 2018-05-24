@@ -33,6 +33,11 @@ namespace Asha
         #region 全局路径(视为常量)
 
         /// <summary>
+        /// 全局-事件系统
+        /// </summary>
+        public static GameObject EventSystem;
+
+        /// <summary>
         /// 全局-主画布
         /// </summary>
         public static GameObject MainCanvas;

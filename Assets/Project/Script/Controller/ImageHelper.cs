@@ -12,24 +12,36 @@ namespace Asha.Tools
         /// </summary>
         public enum LoadImageType
         {
+            /// <summary>
+            /// www协议或者file协议
+            /// </summary>
             WebOrLocal,
-            Resources
+            /// <summary>
+            /// 工程资源文件
+            /// </summary>
+            Resources,
+            /// <summary>
+            /// 通过String字串转化为Byte来加载
+            /// </summary>
+            Byte
         }
 
         /// <summary>
         /// 载入图片
         /// </summary>
         /// <param name="obj">目标对象</param>
-        /// <param name="url">地址</param>
+        /// <param name="img">地址</param>
         /// <param name="tp">载入类型</param>
+        /// <param name="width">图片宽度</param>
+        /// <param name="height">图片高度</param>
         /// <returns></returns>
-        public static IEnumerator LoadImage(GameObject obj, string url, LoadImageType tp)
+        public static IEnumerator LoadImage(GameObject obj, string img, LoadImageType tp = LoadImageType.Byte, int width = 256,int height = 256)
         {
 
             switch (tp)
             {
                 case LoadImageType.WebOrLocal:
-                    WWW wLink = new WWW(url);
+                    WWW wLink = new WWW(img);
                     yield return wLink;
                     try
                     {
@@ -45,10 +57,22 @@ namespace Asha.Tools
                 case LoadImageType.Resources:
                     try
                     {
-                        obj.GetComponent<Image>().sprite = Resources.Load<Sprite>(url);
+                        obj.GetComponent<Image>().sprite = Resources.Load<Sprite>(img);
                     }
                     catch (System.Exception)
                     {
+                        throw;
+                    }
+                    break;
+                case LoadImageType.Byte:
+                    try
+                    {
+                        var sp = ConvertHelper.ConvertSTI(img);
+                        obj.GetComponent<Image>().sprite = sp;
+                    }
+                    catch (System.Exception)
+                    {
+
                         throw;
                     }
                     break;

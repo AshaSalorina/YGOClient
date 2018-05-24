@@ -13,10 +13,11 @@ namespace Asha
         {
             gameObject.GetComponent<Button>().onClick.AddListener(() =>
             {
-                Options.client.ShutDownGracefully();//断开连接
                 Application.Quit();
             });
         }
+
+
     }
 }
 

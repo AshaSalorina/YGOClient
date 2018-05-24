@@ -23,6 +23,8 @@ namespace Asha
         public static int audioLaude;
 
 
+
+
         #endregion
 
         #region 全局路径(视为常量)

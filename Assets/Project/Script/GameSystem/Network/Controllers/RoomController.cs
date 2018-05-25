@@ -22,7 +22,7 @@ namespace Egan.Controllers
 
         public void Chat(string message)
         {
-
+            socket.Send(message, MessageType.CHAT);
         }
 
     }

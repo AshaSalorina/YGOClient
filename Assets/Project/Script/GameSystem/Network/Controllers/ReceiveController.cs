@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Asha;
 using Asha.Tools;
 using Egan.Constants;
 using Egan.Exceptions;
@@ -36,7 +37,7 @@ namespace Egan.Controllers
                     if (packet.Type == MessageType.WARRING)
                     {
                         R r = JsonConvert.DeserializeObject<R>(packet.Body);
-                        System.Console.WriteLine(RExceptionFactory.Generate(r));
+                        WarningBox.Show(RExceptionFactory.Generate(r).ToString());
                     }
                     YGOTrig.Distribute(packet);
                 }

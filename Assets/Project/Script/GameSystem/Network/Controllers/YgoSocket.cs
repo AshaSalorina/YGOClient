@@ -48,14 +48,10 @@ namespace Egan.Controllers
         {
             try
             {
-                //Console.WriteLine("正在连接服务器...");
                 Connect(host, port);
-                //Console.WriteLine("连接服务器成功");
 
                 //创建编码器
                 Decoder = new YGOPDecoder(this);
-
-                //如果需要，创建一个线程持续接收服务器的消息
                 
             }
             catch(WebException wex)
@@ -142,23 +138,20 @@ namespace Egan.Controllers
                     }
                 }
             }
-            catch(SocketException)
+            catch(Exception)
             {
                 throw new RException("连接中断");
-            }catch(RException rex)
-            {
-                throw rex;
             }
 
         }
 
         public static void PrintPacket(DataPacket packet)
         {
-            //Console.WriteLine(
-            //            $"+——--------——+——-----------——+——------------——+——-------——+\n" +
-            //            $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
-            //            $"+——--------——+——-----------——+——------------——+——-------——+\n"
-            //            );
+            Console.WriteLine(
+                        $"+——--------——+——-----------——+——------------——+——-------——+\n" +
+                        $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
+                        $"+——--------——+——-----------——+——------------——+——-------——+\n"
+                        );
         }
 
         public YGOPDecoder Decoder

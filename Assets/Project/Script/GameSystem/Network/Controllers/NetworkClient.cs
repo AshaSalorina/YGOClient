@@ -35,7 +35,6 @@ namespace Egan.Controllers
         public NetworkClient()
         {
             lobbyController = new LobbyController(socket);
-            receiver = new ReceiveController(socket.Decoder);
         }
 
         /// <summary>
@@ -44,14 +43,7 @@ namespace Egan.Controllers
         /// <returns>房间列表</returns>
         public List<Room> GetRooms()
         {
-            try
-            {
-                return lobbyController.GetRoomList(ref maxRoomNum);
-            }
-            catch (RException rex)
-            {
-                throw rex;
-            }
+            return lobbyController.GetRoomList(ref maxRoomNum);
         }
 
         /// <summary>
@@ -61,16 +53,13 @@ namespace Egan.Controllers
         /// <returns>处理后的服务器响应状态</returns>
         public int CreateRoom(Room room)
         {
-            try
-            {
-                int id = lobbyController.CreateRoom(room);
-                socket.SetReciver(receiver.ReceiveMessage);
-                return id;
-            }
-            catch (RException rex)
-            {
-                throw rex;
-            }
+            if (roomController == null)
+                roomController = new RoomController(socket);
+            if (receiver == null)
+                receiver = new ReceiveController(socket.Decoder);
+            int id = lobbyController.CreateRoom(room);
+            socket.SetReciver(receiver.ReceiveMessage);
+            return id;
 
         }
 
@@ -83,6 +72,10 @@ namespace Egan.Controllers
         /// <returns>目标房间</returns>
         public Room JoinRoom(int id, Player guest, string password = "")
         {
+            if (roomController == null)
+                roomController = new RoomController(socket);
+            if (receiver == null)
+                receiver = new ReceiveController(socket.Decoder);
             return lobbyController.JoinRoom(id, guest, password);
         }
 
@@ -92,7 +85,12 @@ namespace Egan.Controllers
         /// <param name="message">聊天消息</param>
         public void Chat(string message)
         {
+            roomController.Chat(message);
+        }
 
+        public void ShutDownGracefully()
+        {
+            socket.ShutdownGracefully();
         }
 
         public int MaxRoomNum
@@ -106,11 +104,6 @@ namespace Egan.Controllers
             {
                 maxRoomNum = value;
             }
-        }
-
-        public void ShutDownGracefully()
-        {
-            socket.ShutdownGracefully();
         }
     }
 

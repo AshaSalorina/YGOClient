@@ -1,4 +1,6 @@
-﻿using Egan.Constants;
+﻿using Asha;
+using Egan.Constants;
+using Egan.Exceptions;
 using Egan.Models;
 using System;
 using System.Collections.Generic;
@@ -55,22 +57,30 @@ namespace Egan.Tools
         /// <returns>是否完全接收一个包</returns>
         public bool ReceivePacket()
         {
-            if (ReceiveHead())
-            {
-                //获取消息体长度
-                byte[] lenBytes = new byte[YGOP.LEN_LEN];
-                Array.Copy(packetHead, YGOP.LEN_POS, lenBytes, 0, YGOP.LEN_LEN);
-                Array.Reverse(lenBytes);
-                int len = BitConverter.ToInt32(lenBytes, 0);
+            //try
+            //{
+                if (ReceiveHead())
+                {
+                    //获取消息体长度
+                    byte[] lenBytes = new byte[YGOP.LEN_LEN];
+                    Array.Copy(packetHead, YGOP.LEN_POS, lenBytes, 0, YGOP.LEN_LEN);
+                    Array.Reverse(lenBytes);
+                    int len = BitConverter.ToInt32(lenBytes, 0);
 
-                packetBody = new byte[len];
-                remaingBody = len;
+                    packetBody = new byte[len];
+                    remaingBody = len;
 
-                if (ReceiveBody())
-                    return true;
+                    if (ReceiveBody())
+                        return true;
 
-                return false;
-            }
+                    return false;
+                }
+            //}
+            //catch(SocketException)
+            //{
+            //    throw new RException("连接中断");
+            //}
+            
 
             return false;
         }
@@ -81,25 +91,32 @@ namespace Egan.Tools
         /// <returns>是否完全接收一个数据包头/returns>
         private bool ReceiveHead()
         {
-            
-            if(remaingHead > 0)
+            try
             {
-                //此次接收的头部消息字节数
-                int receiveHeadCount;
-                //此次接收的头部消息
-                byte[] currentHead = new byte[YGOP.HEAD_LEN];
-                if (remaingHead >= packetHead.Length)
+                if (remaingHead > 0)
                 {
-                    receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
-                }
-                else
-                {
-                    receiveHeadCount = socket.Receive(currentHead, remaingHead, 0);
-                }
+                    //此次接收的头部消息字节数
+                    int receiveHeadCount;
+                    //此次接收的头部消息
+                    byte[] currentHead = new byte[YGOP.HEAD_LEN];
+                    if (remaingHead >= packetHead.Length)
+                    {
+                        receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
+                    }
+                    else
+                    {
+                        receiveHeadCount = socket.Receive(currentHead, remaingHead, 0);
+                    }
 
-                currentHead.CopyTo(packetHead, currentHead.Length - remaingHead);
-                remaingHead -= receiveHeadCount;
+                    currentHead.CopyTo(packetHead, currentHead.Length - remaingHead);
+                    remaingHead -= receiveHeadCount;
+                }
             }
+            catch
+            {
+                WarningBox.Show("连接中断");
+            }
+
 
             return remaingHead == 0 ? true : false;
         }

@@ -20,29 +20,10 @@ namespace Egan.Controllers
             this.socket = socket;
         }
 
-        /// <summary>
-        /// 创建一个新房间
-        /// </summary>
-        /// <param name="room"></param>
-        public void Create(Room room)
+        public void Chat(string message)
         {
-            try
-            {
-                    
-                String roomStr = JsonConvert.SerializeObject(room);
 
-                DataPacket packet = new DataPacket(roomStr, MessageType.CREATE);
-
-                byte[] roomBytes = YGOPEncoder.Encoder(packet);
-
-                socket.Send(roomBytes);
-
-            }
-            catch(RException rex)
-            {
-                throw rex;
-            }
-            
         }
+
     }
 }

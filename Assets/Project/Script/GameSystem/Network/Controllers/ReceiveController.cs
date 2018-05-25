@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Asha.Tools;
 using Egan.Constants;
 using Egan.Exceptions;
@@ -41,9 +36,9 @@ namespace Egan.Controllers
                     if (packet.Type == MessageType.WARRING)
                     {
                         R r = JsonConvert.DeserializeObject<R>(packet.Body);
-                        throw RExceptionFactory.Generate(r);
+                        System.Console.WriteLine(RExceptionFactory.Generate(r));
                     }
-                    YGOTrig.
+                    YGOTrig.Distribute(packet);
                 }
             }
         }

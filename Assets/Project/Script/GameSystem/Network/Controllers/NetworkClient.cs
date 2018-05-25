@@ -35,6 +35,7 @@ namespace Egan.Controllers
         public NetworkClient()
         {
             lobbyController = new LobbyController(socket);
+            receiver = new ReceiveController(socket.Decoder);
         }
 
         /// <summary>
@@ -62,7 +63,9 @@ namespace Egan.Controllers
         {
             try
             {
-                return lobbyController.CreateRoom(room);
+                int id = lobbyController.CreateRoom(room);
+                socket.SetReciver(receiver.ReceiveMessage);
+                return id;
             }
             catch (RException rex)
             {
@@ -83,6 +86,15 @@ namespace Egan.Controllers
             return lobbyController.JoinRoom(id, guest, password);
         }
 
+        /// <summary>
+        /// 发送聊天消息
+        /// </summary>
+        /// <param name="message">聊天消息</param>
+        public void Chat(string message)
+        {
+
+        }
+
         public int MaxRoomNum
         {
             get
@@ -99,18 +111,6 @@ namespace Egan.Controllers
         public void ShutDownGracefully()
         {
             socket.ShutdownGracefully();
-        }
-
-        internal YgoSocket YgoSocket
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-
-            set
-            {
-            }
         }
     }
 

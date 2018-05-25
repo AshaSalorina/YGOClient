@@ -25,9 +25,12 @@ namespace Egan.Controllers
         /// 懒汉模式
         /// </summary>
         private YgoSocket socket = new YgoSocket();
+
         private LobbyController lobbyController;
 
         private RoomController roomController;
+
+        private ReceiveController receiver;
 
         public NetworkClient()
         {
@@ -38,11 +41,13 @@ namespace Egan.Controllers
         /// 获取房间列表信息
         /// </summary>
         /// <returns>房间列表</returns>
-        public List<Room> GetRooms() {
+        public List<Room> GetRooms()
+        {
             try
             {
-                return lobbyController.GetRoomList (ref maxRoomNum);
-            }catch(RException rex)
+                return lobbyController.GetRoomList(ref maxRoomNum);
+            }
+            catch (RException rex)
             {
                 throw rex;
             }
@@ -63,8 +68,8 @@ namespace Egan.Controllers
             {
                 throw rex;
             }
-            
-        } 
+
+        }
 
         /// <summary>
         /// 加入房间
@@ -94,6 +99,18 @@ namespace Egan.Controllers
         public void ShutDownGracefully()
         {
             socket.ShutdownGracefully();
+        }
+
+        internal YgoSocket YgoSocket
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
         }
     }
 

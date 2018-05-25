@@ -43,7 +43,7 @@ namespace Egan.Controllers
         /// <param name="host">远程主机地址</param>
         /// <param name="port">远程主机端口</param>
         /// <param name="start">消息处理方法</param>
-        public void Start(string host, int port, ReceiveController controller = null)
+        public void Start(string host, int port)
         {
             try
             {
@@ -55,17 +55,19 @@ namespace Egan.Controllers
                 decoder = new YGOPDecoder(this);
 
                 //如果需要，创建一个线程持续接收服务器的消息
-                if(receiver != null)
-                {
-                    receiver = new Thread(controller.ReceiveMessage);
-                    receiver.IsBackground = true;
-                    receiver.Start();
-                }
+                
             }
             catch(WebException wex)
             {
                 throw new RException("网络连接失败");
             }
+        }
+
+        public void SetReciver(ThreadStart start)
+        {
+            receiver = new Thread(start);
+            receiver.IsBackground = true;
+            receiver.Start();
         }
 
         /// <summary>
@@ -147,7 +149,6 @@ namespace Egan.Controllers
                 throw rex;
             }
 
-            return null;
         }
 
         public static void PrintPacket(DataPacket packet)

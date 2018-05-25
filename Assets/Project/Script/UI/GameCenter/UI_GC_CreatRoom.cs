@@ -37,7 +37,7 @@ namespace Asha
                 room.HasPwd = room.Password != null && room.Password != "" ? true : false;
                 room.Desc = transform.parent.Find("RoomDes").GetComponent<InputField>().text;
                 Options.client.CreateRoom(room).ToString();
-                //RoomInfo.CreatRoom(room);
+                Options.EventSystem.SendMessage("CreatRoom", room);
                 // transform.parent.gameObject.SetActive(false);
             }
             catch (System.Exception e)

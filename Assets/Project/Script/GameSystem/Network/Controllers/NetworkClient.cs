@@ -25,24 +25,30 @@ namespace Egan.Controllers
         /// 懒汉模式
         /// </summary>
         private YgoSocket socket = new YgoSocket();
+
         private LobbyController lobbyController;
 
         private RoomController roomController;
 
+        private ReceiveController receiver;
+
         public NetworkClient()
         {
             lobbyController = new LobbyController(socket);
+            receiver = new ReceiveController(socket.Decoder);
         }
 
         /// <summary>
         /// 获取房间列表信息
         /// </summary>
         /// <returns>房间列表</returns>
-        public List<Room> GetRooms() {
+        public List<Room> GetRooms()
+        {
             try
             {
-                return lobbyController.GetRoomList (ref maxRoomNum);
-            }catch(RException rex)
+                return lobbyController.GetRoomList(ref maxRoomNum);
+            }
+            catch (RException rex)
             {
                 throw rex;
             }
@@ -57,14 +63,16 @@ namespace Egan.Controllers
         {
             try
             {
-                return lobbyController.CreateRoom(room);
+                int id = lobbyController.CreateRoom(room);
+                socket.SetReciver(receiver.ReceiveMessage);
+                return id;
             }
             catch (RException rex)
             {
                 throw rex;
             }
-            
-        } 
+
+        }
 
         /// <summary>
         /// 加入房间
@@ -76,6 +84,15 @@ namespace Egan.Controllers
         public Room JoinRoom(int id, Player guest, string password = "")
         {
             return lobbyController.JoinRoom(id, guest, password);
+        }
+
+        /// <summary>
+        /// 发送聊天消息
+        /// </summary>
+        /// <param name="message">聊天消息</param>
+        public void Chat(string message)
+        {
+
         }
 
         public int MaxRoomNum

@@ -33,6 +33,7 @@ namespace Egan.Controllers
         /// </summary>
         private Thread receiver;
 
+
         public YgoSocket() : 
             base(AddressFamily.InterNetwork, 
                 SocketType.Stream, ProtocolType.Tcp){}
@@ -43,7 +44,7 @@ namespace Egan.Controllers
         /// <param name="host">远程主机地址</param>
         /// <param name="port">远程主机端口</param>
         /// <param name="start">消息处理方法</param>
-        public void Start(string host, int port, ReceiveController controller = null)
+        public void Start(string host, int port)
         {
             try
             {
@@ -52,20 +53,22 @@ namespace Egan.Controllers
                 //Console.WriteLine("连接服务器成功");
 
                 //创建编码器
-                decoder = new YGOPDecoder(this);
+                Decoder = new YGOPDecoder(this);
 
                 //如果需要，创建一个线程持续接收服务器的消息
-                if(receiver != null)
-                {
-                    receiver = new Thread(controller.ReceiveMessage);
-                    receiver.IsBackground = true;
-                    receiver.Start();
-                }
+                
             }
             catch(WebException wex)
             {
                 throw new RException("网络连接失败");
             }
+        }
+
+        public void SetReciver(ThreadStart start)
+        {
+            receiver = new Thread(start);
+            receiver.IsBackground = true;
+            receiver.Start();
         }
 
         /// <summary>
@@ -124,9 +127,9 @@ namespace Egan.Controllers
                 {
                     if (wacth.ElapsedMilliseconds > YGOP.TIME_OUT)
                         throw RExceptionFactory.Generate(wacth.ElapsedMilliseconds);
-                    if (decoder.ReceivePacket())
+                    if (Decoder.ReceivePacket())
                     {
-                        DataPacket packet = decoder.ParsePacket();
+                        DataPacket packet = Decoder.ParsePacket();
                         PrintPacket(packet);
 
                         if (packet.Type == MessageType.WARRING)
@@ -147,7 +150,6 @@ namespace Egan.Controllers
                 throw rex;
             }
 
-            return null;
         }
 
         public static void PrintPacket(DataPacket packet)
@@ -158,5 +160,19 @@ namespace Egan.Controllers
             //            $"+——--------——+——-----------——+——------------——+——-------——+\n"
             //            );
         }
+
+        public YGOPDecoder Decoder
+        {
+            get
+            {
+                return decoder;
+            }
+
+            set
+            {
+                decoder = value;
+            }
+        }
+
     }
 }

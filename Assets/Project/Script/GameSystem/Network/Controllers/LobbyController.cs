@@ -33,6 +33,18 @@ namespace Egan.Controllers
             }
         }
 
+        internal YgoSocket YgoSocket
+        {
+            get
+            {
+                throw new System.NotImplementedException();
+            }
+
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// 获取房间列表
         /// </summary>

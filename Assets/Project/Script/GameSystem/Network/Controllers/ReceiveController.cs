@@ -39,7 +39,7 @@ namespace Egan.Controllers
                         R r = JsonConvert.DeserializeObject<R>(packet.Body);
                         WarningBox.Show(RExceptionFactory.Generate(r).ToString());
                     }
-                    YGOTrig.Distribute(packet);
+                    Options.YGOWaiter.Distribute(packet);
                 }
             }
         }

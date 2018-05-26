@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Asha.Tools
 {
     /// <summary>
-    /// 我实在受不了那么多加载了，就总结了一个
+    /// For AshaSalorina
     /// </summary>
     public class InstantiateHelper
     {

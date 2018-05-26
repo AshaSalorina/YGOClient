@@ -8,6 +8,9 @@ using Egan.Models;
 
 namespace Asha
 {
+    /// <summary>
+    /// In EventSystem
+    /// </summary>
     public class Loader : MonoBehaviour
     {
         private void Awake()

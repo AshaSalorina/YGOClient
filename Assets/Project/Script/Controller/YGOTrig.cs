@@ -34,7 +34,7 @@ namespace Asha.Tools
         /// 分发消息包
         /// </summary>
         /// <param name="packet">消息包</param>
-        public static void Distribute(DataPacket packet)
+        public void Distribute(DataPacket packet)
         {
             Packets[packet.Type].Add(packet);
         }

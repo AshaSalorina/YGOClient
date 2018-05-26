@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 224646378964340524}
   - component: {fileID: 222015294618130444}
   - component: {fileID: 114304245686351130}
+  - component: {fileID: 114946986912896732}
   m_Layer: 5
   m_Name: warningBox
   m_TagString: Untagged
@@ -285,6 +286,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &114946986912896732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470763559838748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 007470e20979f3b4ba35bfa9c0509736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222015294618130444
 CanvasRenderer:
   m_ObjectHideFlags: 1

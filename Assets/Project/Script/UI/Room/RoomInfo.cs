@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 namespace Asha
 {
     /// <summary>
-    /// 挂到EventSystem下
+    /// In EventSystem
     /// </summary>
     public class RoomInfo : MonoBehaviour
     {
@@ -66,6 +66,19 @@ namespace Asha
         }
 
 
+        /// <summary>
+        /// 游戏开始
+        /// </summary>
+        public void GameBegin()
+        {
+
+        }
+
+
+        /// <summary>
+        /// 循环消息机,等待房客加入和获取房间中聊天信息
+        /// </summary>
+        /// <returns></returns>
         IEnumerator WaitForCustomAndRoomMessage()
         {
             while (true)
@@ -81,7 +94,6 @@ namespace Asha
 
                         Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = custom.Name;
                         ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, custom.Head,ImageHelper.LoadImageType.Byte);
-
                         #endregion
                         customIn = true;
                     }

@@ -8,6 +8,9 @@ using Egan.Models;
 
 namespace Asha
 {
+    /// <summary>
+    /// In EventSystem
+    /// </summary>
     public class Loader : MonoBehaviour
     {
         private void Awake()
@@ -49,29 +52,15 @@ namespace Asha
             Options.MainScence = GameObject.Find("MainScence");
 
             Options.Menu = InstantiateHelper.InsObj( Resources.Load<GameObject>(@"Prefabs\UI\MainScence\pl_menu"),Options.MainScence, "pl_menu", false);
-            //Options.Menu = GameObject.Find("pl_menu");
-            //Options.Menu.SetActive(false);
+
             Options.GameCenter = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\GameCenter"), Options.MainCanvas, "GameCenter", false);
             Options.GameCenter.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
 
-            //Options.GameCenter = GameObject.Find("GameCenter");
-            //Options.GameCenter.SetActive(false);
-
-
             Options.Optionpl = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\MainScence\pl_Options"), Options.MainScence, "pl_Options", false);
-            //Options.Optionpl = GameObject.Find("pl_Options");
-            //Options.Optionpl.SetActive(false);
 
             Options.CardsSet = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\CardSet\CardsSet"), Options.MainCanvas, "CardsSet", false);
             Options.CardsSet.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
-            //Options.CardsSet = GameObject.Find("CardsSet");
-            //Options.CardsSet.SetActive(false);
-            /*
-            Options.Game2D = GameObject.Find("Game2D");
-            Options.Game2D.SetActive(false);
-            Options.GameArea = GameObject.Find("GameArea");
-            Options.GameArea.SetActive(false);
-            */
+           
             #endregion
 
             #region 建立玩家对象
@@ -100,14 +89,27 @@ namespace Asha
 
             #endregion
 
-            #region 网络连接
+        }
 
-            Options.client = new NetworkClient();
-
-            YGOTrig.Load();
-
+        /// <summary>
+        /// 玩家点击屏幕第一次后执行
+        /// </summary>
+        public void NetLoad()
+        {
+            #region 网络连接和消息分发器激活
+            try
+            {
+                Options.client = new NetworkClient();
+                YGOTrig.Load();
+                Options.YGOWaiter = new YGOTrig();
+            }
+            catch (System.Exception e)
+            {
+                WarningBox.Show(e.ToString());
+            }
             #endregion
         }
+
 
         /// <summary>
         /// 保存配置文件
@@ -137,8 +139,6 @@ namespace Asha
             }
 
         }
-
-
 
     }
 }

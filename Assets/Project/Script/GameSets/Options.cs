@@ -8,6 +8,9 @@ using Egan.Controllers;
 
 namespace Asha
 {
+    /// <summary>
+    /// Save All
+    /// </summary>
     public class Options
     {
 

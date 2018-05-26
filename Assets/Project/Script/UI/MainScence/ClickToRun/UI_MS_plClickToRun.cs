@@ -14,10 +14,9 @@ namespace Asha
             {
                 if (Input.GetMouseButtonUp(0))
                 {
+                    Options.EventSystem.SendMessage("NetLoad");
                     Options.Menu.SetActive(true);
                     GameObject.Find("Title").SetActive(false);
-                    //gameObject.SetActive(false);
-                    //enabled = false;
                     Destroy(gameObject);
                 }
             });

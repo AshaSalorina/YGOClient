@@ -25,7 +25,6 @@ namespace Asha
             {
                 Destroy(gameObject);
             });
-
         }
 
         private void OnDisable()
@@ -51,6 +50,7 @@ namespace Asha
             catch (System.Exception e)
             {
                 WarningBox.Show(e.ToString());
+                Destroy(gameObject);
             }
             yield return new WaitForSeconds(0.1f);
             Options.EventSystem.SendMessage("CreatRoom", room);

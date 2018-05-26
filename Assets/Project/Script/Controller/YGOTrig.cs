@@ -9,7 +9,7 @@ using System.Threading;
 namespace Asha.Tools
 {
     /// <summary>
-    /// 消息触发器，用于分发消息和构建消息队列
+    /// 消息触发器，用于分发消息和构建消息队列,请通过Options下的消息机对象调用
     /// </summary>
     public class YGOTrig
     {

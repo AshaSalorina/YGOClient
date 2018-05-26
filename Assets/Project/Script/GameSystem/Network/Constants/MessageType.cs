@@ -46,21 +46,21 @@ namespace Egan.Constants
         /// </summary>
         COUNT_DOWN = STARTED << 1,
         /// <summary>
+        /// 接收到对方的聊天信息
+        /// </summary>
+        CHAT = COUNT_DOWN << 1,
+        /// <summary>
         /// 接收到对方的卡组
         /// </summary>
-        DECK = COUNT_DOWN << 1,
+        DECK = CHAT << 1,
         /// <summary>
         /// 接收到猜拳结果
         /// </summary>
         FINGER_GUESS = DECK << 1,
         /// <summary>
-        /// 接收到对方的聊天信息
-        /// </summary>
-        CHAT = FINGER_GUESS << 1,
-        /// <summary>
         /// 接收到操作消息
         /// </summary>
-        OPERATE = CHAT << 1,
+        OPERATE = FINGER_GUESS << 1,
         /// <summary>
         /// 对方退出游戏
         /// </summary>

@@ -60,7 +60,13 @@ namespace Asha
 
             Options.CardsSet = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\CardSet\CardsSet"), Options.MainCanvas, "CardsSet", false);
             Options.CardsSet.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
-           
+
+            #endregion
+
+            #region 预制体载入
+
+            Options.warrningBox = Resources.Load<GameObject>("Prefabs/UI/MessageBox/warningBox");
+
             #endregion
 
             #region 建立玩家对象

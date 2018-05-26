@@ -20,6 +20,7 @@ namespace Asha.Tools
 
         public static void Load()
         {
+            Packets = new Dictionary<MessageType, List<DataPacket>>();
             foreach (MessageType item in Enum.GetValues(typeof(MessageType)))
             {
                 if (!Packets.ContainsKey(item))

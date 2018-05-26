@@ -88,6 +88,14 @@ namespace Egan.Controllers
             roomController.Chat(message);
         }
 
+        /// <summary>
+        /// 离开房间
+        /// </summary>
+        public void Leave()
+        {
+            roomController.Leave();
+        }
+
         public void ShutDownGracefully()
         {
             socket.ShutdownGracefully();

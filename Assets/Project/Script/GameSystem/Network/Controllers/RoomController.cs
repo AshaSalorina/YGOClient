@@ -25,5 +25,10 @@ namespace Egan.Controllers
             socket.Send(message, MessageType.CHAT);
         }
 
+        public void Leave()
+        {
+            socket.Send("", MessageType.LEAVE);
+        }
+
     }
 }

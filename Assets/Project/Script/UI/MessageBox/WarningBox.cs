@@ -23,7 +23,7 @@ namespace Asha
         /// <param name="msg">要显示的信息</param>
         public static void Show(string msg)
         {
-            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/MessageBox/warningBox"),Options.MainCanvas,"WarningBox");
+            var obj = InstantiateHelper.InsObj(Options.warrningBox, Options.MainCanvas,"WarningBox");
             obj.transform.Find("Text").GetComponent<Text>().text = msg;
         }
 

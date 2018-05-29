@@ -14,6 +14,21 @@ namespace Asha
     public class RoomInfo : MonoBehaviour
     {
 
+        static int selected;
+        /// <summary>
+        /// 选中的Togle
+        /// </summary>
+        public static int Selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                selected = value;
+            }
+        }
         bool customIn = false;
 
         public void CreatRoom(Room rm)

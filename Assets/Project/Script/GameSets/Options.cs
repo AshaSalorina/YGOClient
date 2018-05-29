@@ -84,6 +84,12 @@ namespace Asha
         public static GameObject AudioSource;
         #endregion
 
+        #region Prefabs
+
+        public static GameObject warrningBox;
+
+        #endregion
+
         #region 消息机对象
         /// <summary>
         /// 服务器被动等待队列分发器

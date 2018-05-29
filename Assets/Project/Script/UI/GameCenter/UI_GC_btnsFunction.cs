@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Asha.Tools;
+using Egan.Models;
 
 namespace Asha
 {
@@ -20,12 +21,27 @@ namespace Asha
 
         void CreatRoom()
         {
-            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\CreatRoom"), Options.GameCenter, "CreatRoom");
+            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\CreatRoom"), Options.MainCanvas, "CreatRoom");
         }
 
         void JoinRoom()
         {
-
+            if (RoomInfo.Selected == -1)
+            {
+                WarningBox.Show("请选中一个房间");
+                return;
+            }
+            Room rm = null;
+            try
+            {
+                //todo:密码
+               rm = Options.client.JoinRoom(RoomInfo.Selected,Options.player);
+            }
+            catch (System.Exception e)
+            {
+                WarningBox.Show(e.ToString());
+            }
+            Options.EventSystem.SendMessage("JoinRoom",rm);
         }
 
         void RandomJoin()

@@ -35,6 +35,17 @@ namespace Egan.Controllers
         public NetworkClient()
         {
             lobbyController = new LobbyController(socket);
+
+            try
+            {
+                socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
+                receiver = new ReceiveController(socket.Decoder);
+                socket.StartReciver(receiver.ReceiveMessage);
+            }
+            catch
+            {
+                throw new RException("网络连接失败");
+            }
         }
 
         /// <summary>
@@ -43,7 +54,11 @@ namespace Egan.Controllers
         /// <returns>房间列表</returns>
         public List<Room> GetRooms()
         {
-            return lobbyController.GetRoomList(ref maxRoomNum);
+            receiver.Stop = false;
+            List<Room> rooms =  lobbyController.GetRoomList(ref maxRoomNum);
+            receiver.Stop = true;
+
+            return rooms;
         }
 
         /// <summary>
@@ -53,14 +68,16 @@ namespace Egan.Controllers
         /// <returns>处理后的服务器响应状态</returns>
         public int CreateRoom(Room room)
         {
+            receiver.Stop = true;
             if (roomController == null)
                 roomController = new RoomController(socket);
+            receiver.Stop = true;
+            int id = lobbyController.CreateRoom(room);
             if (receiver == null)
                 receiver = new ReceiveController(socket.Decoder);
-            int id = lobbyController.CreateRoom(room);
-            socket.SetReciver(receiver.ReceiveMessage);
+            receiver.Stop = false;
+            socket.StartReciver(receiver.ReceiveMessage);
             return id;
-
         }
 
         /// <summary>
@@ -74,9 +91,13 @@ namespace Egan.Controllers
         {
             if (roomController == null)
                 roomController = new RoomController(socket);
-            if (receiver == null)
-                receiver = new ReceiveController(socket.Decoder);
-            return lobbyController.JoinRoom(id, guest, password);
+
+            receiver.Stop = true;
+            Room room = lobbyController.JoinRoom(id, guest, password);
+            receiver.Stop = false;
+            socket.StartReciver(receiver.ReceiveMessage);
+
+            return room;
         }
 
         /// <summary>

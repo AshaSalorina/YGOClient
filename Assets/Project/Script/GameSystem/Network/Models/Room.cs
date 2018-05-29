@@ -8,34 +8,27 @@ namespace Egan.Models
     [DataContract]
     public class Room
     {
-        
+        [DataMember(Name = "id")]
         private int id;
 
-        
         [DataMember(Name = "nm")]
         private string name;
-
         
         [DataMember(Name = "ds")]
         private string desc;
-
         
         [DataMember(Name = "hp")]
         private bool hasPwd;
-
         
         [DataMember(Name = "pw")]
         private string password;
 
-        
         [DataMember(Name = "isp")]
         private bool isPlaying;
 
-        
         [DataMember(Name = "hs")]
         private Player host;
 
-        
         [DataMember(Name = "gs")]
         private Player guest;
 
@@ -81,6 +74,8 @@ namespace Egan.Models
                 id = value;
             }
         }
+
+
 
         /// <summary>
         /// 房间名称

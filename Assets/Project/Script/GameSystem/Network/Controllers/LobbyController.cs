@@ -23,14 +23,7 @@ namespace Egan.Controllers
         public LobbyController(YgoSocket socket)
         {
             this.socket = socket;
-            try
-            {
-                socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
-            }
-            catch
-            {
-                throw new RException("网络连接失败");
-            }
+            
         }
 
         internal YgoSocket YgoSocket

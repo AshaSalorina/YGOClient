@@ -15,10 +15,6 @@ namespace Egan.Controllers
 {
     class YgoSocket : Socket
     {
-        /// <summary>
-        /// 数据包队列
-        /// </summary>
-        public static List<DataPacket> packetQueue = new List<DataPacket>();
 
         /// <summary>
         /// 解码器
@@ -58,13 +54,6 @@ namespace Egan.Controllers
             {
                 throw new RException("网络连接失败");
             }
-        }
-
-        public void SetReciver(ThreadStart start)
-        {
-            receiver = new Thread(start);
-            receiver.IsBackground = true;
-            receiver.Start();
         }
 
         /// <summary>

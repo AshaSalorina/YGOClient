@@ -16,8 +16,25 @@ namespace Asha
         private void Awake()
         {
             Load();
+            StartCoroutine(YGOWaiterUpdate());
             Application.wantsToQuit += ShutDownGracefully;
         }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
+        }
+
+        IEnumerator YGOWaiterUpdate()
+        {
+            while (true)
+            {
+                Options.YGOWaiter.Update();
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
+
 
         bool ShutDownGracefully()
         {

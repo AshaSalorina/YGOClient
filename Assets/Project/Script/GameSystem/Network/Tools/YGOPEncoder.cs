@@ -15,7 +15,6 @@ namespace Egan.Tools
     {
         public static byte[] Encoder(DataPacket packet)
         {
-            Console.WriteLine(packet.Body);
             byte[][] array = ToBytesArray(packet);
             return Compose(array);
         }

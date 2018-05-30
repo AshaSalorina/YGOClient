@@ -21,10 +21,6 @@ namespace Egan.Controllers
         /// </summary>
         private YGOPDecoder decoder;
         /// <summary>
-        /// 处理服务器消息的控制器
-        /// </summary>
-        private ReceiveController controller;
-        /// <summary>
         /// 接收服务器消息的线程
         /// </summary>
         private Thread receiver;
@@ -66,9 +62,7 @@ namespace Egan.Controllers
                 if (Connected)
                 {
                     Shutdown(SocketShutdown.Both);
-                    //Close();
-                    if(controller != null)
-                        controller.Stop = true;
+                    Close();
                 }
             }catch(Exception e)
             {
@@ -127,9 +121,9 @@ namespace Egan.Controllers
                     }
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                throw new RException("连接中断");
+                throw ex;
             }
 
         }

@@ -112,9 +112,9 @@ namespace Egan.Tools
                     remaingHead -= receiveHeadCount;
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                WarningBox.Show("连接中断");
+                throw ex;
             }
 
 
@@ -127,25 +127,32 @@ namespace Egan.Tools
         /// <returns>是否完全接收一个消息体</returns>
         private bool ReceiveBody()
         {
-            if(remaingBody > 0)
+            try
             {
-                //此次接收的消息体字节数
-                int receiveBodyCount;
-
-                //此次接收的消息体
-                byte[] currentBody = new byte[packetBody.Length];
-                if (remaingBody >= packetBody.Length)
+                if (remaingBody > 0)
                 {
-                    receiveBodyCount = socket.Receive(currentBody, currentBody.Length, 0);
-                }
-                else
-                {
-                    receiveBodyCount = socket.Receive(currentBody, remaingBody, 0);
-                }
+                    //此次接收的消息体字节数
+                    int receiveBodyCount;
 
-                currentBody.CopyTo(packetBody, currentBody.Length - remaingBody);
-                remaingBody -= receiveBodyCount;
+                    //此次接收的消息体
+                    byte[] currentBody = new byte[packetBody.Length];
+                    if (remaingBody >= packetBody.Length)
+                    {
+                        receiveBodyCount = socket.Receive(currentBody, currentBody.Length, 0);
+                    }
+                    else
+                    {
+                        receiveBodyCount = socket.Receive(currentBody, remaingBody, 0);
+                    }
+
+                    currentBody.CopyTo(packetBody, currentBody.Length - remaingBody);
+                    remaingBody -= receiveBodyCount;
+                }
+            }catch(Exception ex)
+            {
+                throw ex;
             }
+            
 
             return remaingBody == 0 ? true : false;
         }

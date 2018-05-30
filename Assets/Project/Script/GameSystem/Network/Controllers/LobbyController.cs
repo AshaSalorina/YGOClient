@@ -43,32 +43,20 @@ namespace Egan.Controllers
         /// </summary>
         /// <param name="max">最大房间数</param>
         /// <returns>房间列表</returns>
-        public List<Room> GetRoomList(ref int max)
+        public void GetRoomList()
         {
-            List<Room> rooms = null;
-
             try
             {
                 //发送获取房间列表请求
                 socket.Send("", MessageType.GET_ROOMS);
                 DataPacket packet;
 
-                //等待服务器的响应
-                packet = socket.ReceivePacket();
-
-                string jsonText = packet.Body;
-                var jobj = JObject.Parse(jsonText);
-                max = int.Parse(jobj["mx"].ToString());
-                rooms = JsonConvert.DeserializeObject<List<Room>>(jobj["rm"].ToString());
-
             }
-            catch(NullReferenceException){}
             catch (RException rex)
             {
                 throw rex;
             }
 
-            return rooms;
         }
 
         /// <summary>
@@ -76,25 +64,15 @@ namespace Egan.Controllers
         /// </summary>
         /// <param name="room">新房间信息</param>
         /// <returns>新房间ID</returns>
-        public int CreateRoom(Room room)
+        public void CreateRoom(Room room)
         {
-            int id = 0;
-
             String json = JsonConvert.SerializeObject(room);
 
             //发送创建房间请求
             socket.Send(json, MessageType.CREATE);
-            DataPacket packet;
-
-            //等待服务器的响应
-            packet = socket.ReceivePacket();
-
-            id = int.Parse(packet.Body);
-
-            return id;
         }
 
-        public Room JoinRoom(int id, Player guest, String password)
+        public void JoinRoom(int id, Player guest, String password)
         {
             Dictionary<string, object> temp = new Dictionary<string, object>();
 
@@ -106,13 +84,6 @@ namespace Egan.Controllers
 
             socket.Send(json, MessageType.JOIN);
 
-            DataPacket packet;
-
-            packet = socket.ReceivePacket();
-
-            Room room = JsonConvert.DeserializeObject<Room>(packet.Body);
-
-            return room;
         }
         
     }

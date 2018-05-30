@@ -40,7 +40,7 @@ namespace Egan.Controllers
             {
                 socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
                 receiver = new ReceiveController(socket.Decoder);
-                socket.StartReciver(receiver.ReceiveMessage);
+                receiver.Start();
             }
             catch
             {
@@ -54,11 +54,8 @@ namespace Egan.Controllers
         /// <returns>房间列表</returns>
         public List<Room> GetRooms()
         {
-            receiver.Stop = false;
-            List<Room> rooms =  lobbyController.GetRoomList(ref maxRoomNum);
-            receiver.Stop = true;
-
-            return rooms;
+            lobbyController.GetRoomList();
+            return new List<Room>();
         }
 
         /// <summary>
@@ -68,16 +65,10 @@ namespace Egan.Controllers
         /// <returns>处理后的服务器响应状态</returns>
         public int CreateRoom(Room room)
         {
-            receiver.Stop = true;
             if (roomController == null)
                 roomController = new RoomController(socket);
-            receiver.Stop = true;
-            int id = lobbyController.CreateRoom(room);
-            if (receiver == null)
-                receiver = new ReceiveController(socket.Decoder);
-            receiver.Stop = false;
-            socket.StartReciver(receiver.ReceiveMessage);
-            return id;
+            lobbyController.CreateRoom(room);
+            return 0;
         }
 
         /// <summary>
@@ -87,17 +78,12 @@ namespace Egan.Controllers
         /// <param name="guest">房客信息</param>
         /// <param name="password">密码</param>
         /// <returns>目标房间</returns>
-        public Room JoinRoom(int id, Player guest, string password = "")
+        public void JoinRoom(int id, Player guest, string password = "")
         {
             if (roomController == null)
                 roomController = new RoomController(socket);
+            lobbyController.JoinRoom(id, guest, password);
 
-            receiver.Stop = true;
-            Room room = lobbyController.JoinRoom(id, guest, password);
-            receiver.Stop = false;
-            socket.StartReciver(receiver.ReceiveMessage);
-
-            return room;
         }
 
         /// <summary>
@@ -117,8 +103,17 @@ namespace Egan.Controllers
             roomController.Leave();
         }
 
+        /// <summary>
+        /// 改变开始\准备状态
+        /// </summary>
+        public void ChangeStatus()
+        {
+            roomController.ChangeStatus();
+        }
+
         public void ShutDownGracefully()
         {
+            receiver.Close();
             socket.ShutdownGracefully();
         }
 

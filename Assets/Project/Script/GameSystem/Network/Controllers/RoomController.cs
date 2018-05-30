@@ -30,5 +30,10 @@ namespace Egan.Controllers
             socket.Send("", MessageType.LEAVE);
         }
 
+        public void ChangeStatus()
+        {
+            socket.Send("", MessageType.READY);
+        }
+
     }
 }

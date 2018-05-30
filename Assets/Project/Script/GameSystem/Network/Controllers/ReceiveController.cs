@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using Asha;
 using Egan.Constants;
@@ -11,10 +12,10 @@ namespace Egan.Controllers
 {
     class ReceiveController
     {
+        private bool stop = false;
 
         private YGOPDecoder decoder;
 
-        private AutoResetEvent Event = new AutoResetEvent(false);
 
         public ReceiveController(YGOPDecoder decoder)
         {
@@ -28,40 +29,37 @@ namespace Egan.Controllers
             thread.Start();
         }
 
-        public void Resume()
+        public void Close()
         {
-            Event.Set();
-        }
-
-        public void Reset()
-        {
-            Event.Reset();
+            stop = true;
         }
 
         public void ReceiveMessage()
         {
-            Stopwatch wacth = new Stopwatch();
-            wacth.Start();
 
-            while (true)
+            try
             {
-                Event.WaitOne();
-                if (wacth.ElapsedMilliseconds > YGOP.TIME_OUT)
-                    throw RExceptionFactory.Generate(wacth.ElapsedMilliseconds);
-                if (decoder.ReceivePacket())
+                while (!stop)
                 {
-                    DataPacket packet = decoder.ParsePacket();
-                    YgoSocket.PrintPacket(packet);
-
-                    if (packet.Type == MessageType.WARRING)
+                    if (decoder.ReceivePacket())
                     {
-                        R r = JsonConvert.DeserializeObject<R>(packet.Body);
-                        WarningBox.Show(RExceptionFactory.Generate(r).ToString());
-                        wacth.Restart();
+                        DataPacket packet = decoder.ParsePacket();
+                        YgoSocket.PrintPacket(packet);
+                        //Options.YGOWaiter.Distribute(packet);
+
+                        if (packet.Type == MessageType.WARRING)
+                        {
+                            R r = JsonConvert.DeserializeObject<R>(packet.Body);
+                            
+                        }
                     }
-                    Options.YGOWaiter.Distribute(packet);
                 }
+            }catch(Exception ex)
+            {
+                DataPacket packet = new DataPacket(StatusCode.DISCONNECTED);
+                Options.YGOWaiter.Distribute(packet);
             }
+            
         }
 
 

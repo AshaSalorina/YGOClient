@@ -1,4 +1,6 @@
 ﻿using Egan.Constants;
+using Egan.Tools;
+using Newtonsoft.Json;
 using System;
 
 namespace Egan.Models
@@ -60,6 +62,15 @@ namespace Egan.Models
             this.magic = magic;
             this.len = len;
             this.body = body;
+        }
+
+        public DataPacket(StatusCode code)
+        {
+            R r = new R((int)code, "");
+            this.version = YGOP.VERSION;
+            this.type = MessageType.WARRING;
+            this.magic = YGOP.MAGIC;
+            this.body = JsonConvert.SerializeObject(r);
         }
 
         /// <summary>

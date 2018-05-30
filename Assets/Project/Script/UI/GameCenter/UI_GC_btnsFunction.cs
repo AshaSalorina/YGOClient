@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Asha.Tools;
 using Egan.Models;
+using Egan.Constants;
 
 namespace Asha
 {
@@ -31,16 +32,15 @@ namespace Asha
                 WarningBox.Show("请选中一个房间");
                 return;
             }
+            Debug.Log(RoomInfo.Selected.ToString());
             Room rm = null;
-            try
-            {
-                //todo:密码
-               rm = Options.client.JoinRoom(RoomInfo.Selected,Options.player);
-            }
-            catch (System.Exception e)
-            {
-                WarningBox.Show(e.ToString());
-            }
+            //todo:密码
+            //todo:这里如何获得房间
+            Options.client.JoinRoom(RoomInfo.Selected,Options.player);
+
+            Options.YGOWaiter.Switch(MessageType.JOIN, true);
+
+            
             Options.EventSystem.SendMessage("JoinRoom",rm);
         }
 

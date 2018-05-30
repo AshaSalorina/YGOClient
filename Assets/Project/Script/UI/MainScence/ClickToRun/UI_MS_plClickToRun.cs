@@ -14,6 +14,7 @@ namespace Asha
             {
                 if (Input.GetMouseButtonUp(0))
                 {
+                    //载入网络
                     Options.EventSystem.SendMessage("NetLoad");
                     Options.Menu.SetActive(true);
                     GameObject.Find("Title").SetActive(false);

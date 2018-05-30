@@ -52,10 +52,9 @@ namespace Egan.Controllers
         /// 获取房间列表信息
         /// </summary>
         /// <returns>房间列表</returns>
-        public List<Room> GetRooms()
+        public void GetRooms()
         {
             lobbyController.GetRoomList();
-            return new List<Room>();
         }
 
         /// <summary>
@@ -63,12 +62,11 @@ namespace Egan.Controllers
         /// </summary>
         /// <param name="room">新房间信息</param>
         /// <returns>处理后的服务器响应状态</returns>
-        public int CreateRoom(Room room)
+        public void CreateRoom(Room room)
         {
             if (roomController == null)
                 roomController = new RoomController(socket);
             lobbyController.CreateRoom(room);
-            return 0;
         }
 
         /// <summary>

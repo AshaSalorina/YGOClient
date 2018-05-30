@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Threading;
 using Newtonsoft.Json;
 using Egan.Tools;
+using UnityEngine.UI;
 
 namespace Asha.Tools
 {
@@ -33,6 +34,7 @@ namespace Asha.Tools
                         case MessageType.CREATE:
                             break;
                         case MessageType.JOIN:
+                            OnJoin();
                             break;
                         case MessageType.LEAVE:
                             break;
@@ -89,11 +91,13 @@ namespace Asha.Tools
         public static void Load()
         {
             Packets = new Dictionary<MessageType, List<DataPacket>>();
+            PacketsSwitch = new Dictionary<MessageType, bool>();
             foreach (MessageType item in Enum.GetValues(typeof(MessageType)))
             {
                 if (!Packets.ContainsKey(item))
                 {
                     Packets.Add(item, new List<DataPacket>());
+                    PacketsSwitch.Add(item, false);
                 }
 
             }
@@ -101,7 +105,7 @@ namespace Asha.Tools
 
         #endregion
 
-        #region 分发开关
+        #region 分发消息包和开关
         /// <summary>
         /// 分发消息包
         /// </summary>
@@ -112,13 +116,13 @@ namespace Asha.Tools
         }
 
         /// <summary>
-        /// 打开某类开关
+        /// 控制某类开关
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="e"></param>
         public void Switch(MessageType msg, bool e)
         {
-
+            PacketsSwitch[msg] = e;
         }
         #endregion
 
@@ -134,30 +138,77 @@ namespace Asha.Tools
                 {
                     case StatusCode.INCORRECT:
                         //拒绝加入
-                        //弹窗提示
+                        //停止监听join消息
+                        Switch(MessageType.JOIN, false);
+                        WarningBox.Show("密码错误");
                         break;
                     case StatusCode.PLAYING:
                         //拒绝加入
-                        //弹窗提示
+                        WarningBox.Show("房间已开始游戏");
                         break;
                     case StatusCode.UNPREPARED:
                         //todo
                         break;
                     case StatusCode.DISMISSED:
                         //拒绝加入
-                        //弹窗提示
+                        WarningBox.Show("房间已解散");
                         break;
                     case StatusCode.FULL_LOBBY:
                         //拒绝创建房间
-                        //弹窗提示
+                        WarningBox.Show("大厅已满");
                         break;
                     case StatusCode.FULL_ROOM:
                         //拒绝加入
-                        //弹窗提示
+                        WarningBox.Show("房间已满");
                         break;
                     default:
+                        WarningBox.Show("未知的错误");
                         break;
                 }
+            }
+        }
+
+
+        void OnJoin()
+        {
+            if (RoomInfo.IsMaster)
+            {
+                if (!RoomInfo.CustomIn)
+                {
+                    if (YGOTrig.Packets[MessageType.JOIN].Count > 0)
+                    {
+                        var custom = JsonConvert.DeserializeObject<Player>(
+                            Packets[MessageType.JOIN][0].Body);
+                        #region 写入玩家数据
+
+                        Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = custom.Name;
+                        ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, custom.Head, ImageHelper.LoadImageType.Byte);
+
+                        #endregion
+                        //移除过时消息
+                        Packets[MessageType.JOIN].RemoveRange(0, 1);
+                        RoomInfo.CustomIn = true;
+                    }
+                }
+                else
+                {
+                    if (Packets[MessageType.LEAVE].Count > 0)
+                    {
+                        #region 清空玩家数据
+
+                        Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
+                        Options.Room.transform.Find("Other").Find("Head").GetComponent<Text>().text = "";
+
+                        #endregion
+                        //移除过时消息
+                        Packets[MessageType.LEAVE].RemoveRange(0, 1);
+                        RoomInfo.CustomIn = false;
+                    }
+                }
+            }
+            else
+            {
+
             }
         }
 

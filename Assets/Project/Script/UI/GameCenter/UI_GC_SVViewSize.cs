@@ -63,6 +63,7 @@ namespace Asha
                 }
                 foreach (var item in ls)
                 {
+                    //等待一帧
                     yield return new WaitForFixedUpdate();
                     GameObject obj = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\room"), gameObject);
                     obj.GetComponent<Toggle>().onValueChanged.AddListener(var =>

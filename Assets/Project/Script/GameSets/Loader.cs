@@ -16,7 +16,7 @@ namespace Asha
         private void Awake()
         {
             Load();
-            StartCoroutine(YGOWaiterUpdate());
+
             Application.wantsToQuit += ShutDownGracefully;
         }
 
@@ -33,7 +33,6 @@ namespace Asha
                 yield return new WaitForFixedUpdate();
             }
         }
-
 
 
         bool ShutDownGracefully()
@@ -125,6 +124,9 @@ namespace Asha
                 Options.client = new NetworkClient();
                 YGOTrig.Load();
                 Options.YGOWaiter = new YGOTrig();
+                //警告消息常驻
+                Options.YGOWaiter.Switch(Egan.Constants.MessageType.WARRING, true);
+                StartCoroutine(YGOWaiterUpdate());
             }
             catch (System.Exception e)
             {

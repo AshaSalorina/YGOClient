@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Asha.Tools;
 using Newtonsoft.Json;
+using System;
+using Egan.Constants;
 
 namespace Asha
 {
@@ -15,6 +17,8 @@ namespace Asha
     {
 
         static int selected;
+        static bool customIn = false;
+        static bool isMaster;
         /// <summary>
         /// 选中的Togle
         /// </summary>
@@ -29,14 +33,33 @@ namespace Asha
                 selected = value;
             }
         }
-        bool customIn = false;
+
+        public static bool CustomIn
+        {
+            get
+            {
+                return customIn;
+            }
+            set
+            {
+                customIn = value;
+            }
+        }
+
+        public static bool IsMaster
+        {
+            get
+            {
+                return isMaster;
+            }
+        }
 
         public void CreatRoom(Room rm)
         {
 
             Options.GameCenter.SetActive(false);
 
-            Options.isRoomMaster = true;
+            isMaster = true;
             Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
 
             #region 房主信息载入
@@ -48,7 +71,8 @@ namespace Asha
             #endregion
 
             #region 等待房客
-            StartCoroutine(WaitForCustomAndRoomMessage());
+            Options.YGOWaiter.Switch(MessageType.JOIN, true);
+            //StartCoroutine(WaitForCustomAndRoomMessage());
             #endregion
 
         }
@@ -56,7 +80,7 @@ namespace Asha
         public void JoinRoom(Room rm)
         {
             Options.GameCenter.SetActive(false);
-            Options.isRoomMaster = false;
+            isMaster = false;
             Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
 
             #region 房主信息载入
@@ -74,7 +98,7 @@ namespace Asha
         /// </summary>
         public void LeaveRoom()
         {
-            StopAllCoroutines();
+            Options.YGOWaiter.Switch(MessageType.JOIN, false);
             //Options.client.LeaveRoom();
             Options.GameCenter.SetActive(true);
             Destroy(Options.Room);
@@ -92,14 +116,16 @@ namespace Asha
 
         /// <summary>
         /// 循环消息机,等待房客加入和获取房间中聊天信息
+        /// 已弃用,请使用Options.YGOWaiter.Switch(msgtype,bool)来打开消息机
         /// </summary>
         /// <returns></returns>
+        [Obsolete]
         IEnumerator WaitForCustomAndRoomMessage()
         {
             while (true)
             {
                 //一个join必然对应一个leave
-                if (!customIn)
+                if (!CustomIn)
                 {
                     if (YGOTrig.Packets[Egan.Constants.MessageType.JOIN].Count > 0)
                     {
@@ -109,7 +135,10 @@ namespace Asha
 
                         Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = custom.Name;
                         ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, custom.Head,ImageHelper.LoadImageType.Byte);
+
                         #endregion
+                        //移除过时消息
+                        YGOTrig.Packets[Egan.Constants.MessageType.JOIN].RemoveRange(0, 1);
                         customIn = true;
                     }
                 }
@@ -122,8 +151,9 @@ namespace Asha
                         Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
                         Options.Room.transform.Find("Other").Find("Head").GetComponent<Text>().text = "";
 
-
                         #endregion
+                        //移除过时消息
+                        YGOTrig.Packets[Egan.Constants.MessageType.LEAVE].RemoveRange(0, 1);
                         customIn = false;
                     }
                 }

@@ -5,6 +5,7 @@ using System.IO;
 using Asha.Tools;
 using Egan.Models;
 using Egan.Controllers;
+using System;
 
 namespace Asha
 {
@@ -27,7 +28,9 @@ namespace Asha
 
         /// <summary>
         /// 主客机判定
+        /// 请使用RoomInfo.isMaster
         /// </summary>
+        [Obsolete]
         public static bool isRoomMaster;
 
 

@@ -20,7 +20,7 @@ namespace Asha
             transform.Find("OK").GetComponent<Button>().onClick.AddListener(() =>
             {
                 StopAllCoroutines();
-                StartCoroutine(CreatRoom());
+                CreatRoom();
             });
 
             transform.Find("Canel").GetComponent<Button>().onClick.AddListener(() =>
@@ -31,10 +31,10 @@ namespace Asha
 
         private void OnDisable()
         {
-            StopAllCoroutines();
+            //StopAllCoroutines();
         }
 
-        IEnumerator CreatRoom()
+        void CreatRoom()
         {
 
             var room = new Room();
@@ -52,8 +52,7 @@ namespace Asha
             room.HasPwd = room.Password != null && room.Password != "" ? true : false;
             room.Desc = transform.Find("RoomDes").GetComponent<InputField>().text;
 
-            yield return new WaitForSeconds(0.1f);
-
+            //todo:待修改
             try
             {
                 room.Id = Options.client.CreateRoom(room);
@@ -63,8 +62,6 @@ namespace Asha
                 WarningBox.Show(e.ToString());
                 Destroy(gameObject);
             }
-
-            yield return new WaitForSeconds(0.1f);
 
             Options.EventSystem.SendMessage("CreatRoom", room);
             Destroy(gameObject);

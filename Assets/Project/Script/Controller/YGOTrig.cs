@@ -8,6 +8,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using Egan.Tools;
 using UnityEngine.UI;
+using Newtonsoft.Json.Linq;
 
 namespace Asha.Tools
 {
@@ -30,6 +31,7 @@ namespace Asha.Tools
                     switch (item)
                     {
                         case MessageType.GET_ROOMS:
+                            OnGetRooms();
                             break;
                         case MessageType.CREATE:
                             break;
@@ -72,6 +74,7 @@ namespace Asha.Tools
             }
 
         }
+
 
         #endregion
 
@@ -128,46 +131,17 @@ namespace Asha.Tools
 
         #region 具体处理
 
-        void OnWarning()
+
+        private void OnGetRooms()
         {
-            foreach (var item in Packets[MessageType.WARRING])
+            if (Packets[MessageType.GET_ROOMS].Count > 0)
             {
-                var rb = JsonConvert.DeserializeObject<R>(item.Body);
-                StatusCode code = (StatusCode)rb.Code;
-                switch (code)
-                {
-                    case StatusCode.INCORRECT:
-                        //拒绝加入
-                        //停止监听join消息
-                        Switch(MessageType.JOIN, false);
-                        WarningBox.Show("密码错误");
-                        break;
-                    case StatusCode.PLAYING:
-                        //拒绝加入
-                        WarningBox.Show("房间已开始游戏");
-                        break;
-                    case StatusCode.UNPREPARED:
-                        //todo
-                        break;
-                    case StatusCode.DISMISSED:
-                        //拒绝加入
-                        WarningBox.Show("房间已解散");
-                        break;
-                    case StatusCode.FULL_LOBBY:
-                        //拒绝创建房间
-                        WarningBox.Show("大厅已满");
-                        break;
-                    case StatusCode.FULL_ROOM:
-                        //拒绝加入
-                        WarningBox.Show("房间已满");
-                        break;
-                    default:
-                        WarningBox.Show("未知的错误");
-                        break;
-                }
+                var lr = Packets[MessageType.GET_ROOMS][0].Body;
+                var job = JObject.Parse(lr);
+                UI_GC_SVViewSize.rooms = JsonConvert.DeserializeObject<List<Room>>(job["rm"].ToString());
+                Switch(MessageType.GET_ROOMS, false);
             }
         }
-
 
         void OnJoin()
         {
@@ -211,6 +185,48 @@ namespace Asha.Tools
 
             }
         }
+
+        void OnWarning()
+        {
+            foreach (var item in Packets[MessageType.WARRING])
+            {
+                var rb = JsonConvert.DeserializeObject<R>(item.Body);
+                StatusCode code = (StatusCode)rb.Code;
+                switch (code)
+                {
+                    case StatusCode.INCORRECT:
+                        //拒绝加入
+                        //停止监听join消息
+                        Switch(MessageType.JOIN, false);
+                        WarningBox.Show("密码错误");
+                        break;
+                    case StatusCode.PLAYING:
+                        //拒绝加入
+                        WarningBox.Show("房间已开始游戏");
+                        break;
+                    case StatusCode.UNPREPARED:
+                        //todo
+                        break;
+                    case StatusCode.DISMISSED:
+                        //拒绝加入
+                        WarningBox.Show("房间已解散");
+                        break;
+                    case StatusCode.FULL_LOBBY:
+                        //拒绝创建房间
+                        WarningBox.Show("大厅已满");
+                        break;
+                    case StatusCode.FULL_ROOM:
+                        //拒绝加入
+                        WarningBox.Show("房间已满");
+                        break;
+                    default:
+                        WarningBox.Show("未知的错误");
+                        break;
+                }
+            }
+        }
+
+
 
         #endregion
 

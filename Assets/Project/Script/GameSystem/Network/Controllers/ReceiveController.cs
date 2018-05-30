@@ -45,7 +45,7 @@ namespace Egan.Controllers
                     {
                         DataPacket packet = decoder.ParsePacket();
                         YgoSocket.PrintPacket(packet);
-                        //Options.YGOWaiter.Distribute(packet);
+                        Options.YGOWaiter.Distribute(packet);
 
                         if (packet.Type == MessageType.WARRING)
                         {

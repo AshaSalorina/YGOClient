@@ -104,9 +104,10 @@ namespace Egan.Controllers
         /// <summary>
         /// 改变开始\准备状态
         /// </summary>
-        public void ChangeStatus()
+        /// <param name="isHost">是否为房主</param>
+        public void ChangeStatus(bool isHost)
         {
-            roomController.ChangeStatus();
+            roomController.ChangeStatus(isHost);
         }
 
         public void ShutDownGracefully()

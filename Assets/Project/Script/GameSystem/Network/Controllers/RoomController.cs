@@ -30,9 +30,9 @@ namespace Egan.Controllers
             socket.Send("", MessageType.LEAVE);
         }
 
-        public void ChangeStatus()
+        public void ChangeStatus(bool isHost)
         {
-            socket.Send("", MessageType.READY);
+            socket.Send("", isHost ? MessageType.STARTED : MessageType.READY);
         }
 
     }

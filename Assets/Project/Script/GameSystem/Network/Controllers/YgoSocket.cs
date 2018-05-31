@@ -1,4 +1,5 @@
-﻿using Egan.Constants;
+﻿using Asha;
+using Egan.Constants;
 using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
@@ -130,6 +131,9 @@ namespace Egan.Controllers
 
         public static void PrintPacket(DataPacket packet)
         {
+            //WarningBox.Show($"+——--------——+——-----------——+——------------——+——-------——+\n" +
+            //            $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +
+            //            $"+——--------——+——-----------——+——------------——+——-------——+\n");
             Console.WriteLine(
                         $"+——--------——+——-----------——+——------------——+——-------——+\n" +
                         $"|  {packet.Version}  | {packet.Type.ToString()}  |  {packet.Magic}  |  {packet.Len}  |  {packet.Body}  |\n" +

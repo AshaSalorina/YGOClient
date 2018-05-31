@@ -12,26 +12,28 @@ namespace Asha
     {
         public static List<Room> rooms;
 
-        // Use this for initialization
-        void Start()
+        private void Awake()
         {
             rooms = new List<Room>();
-            Refresh();
+        }
+
+        private void OnEnable()
+        {
             //携程启动
             StartCoroutine(RefreshRoomList());
         }
-
+        
         private void OnDisable()
         {
             //携程维护
-            StopCoroutine(RefreshRoomList());
+            StopAllCoroutines();
         }
 
 
         private void OnDestroy()
         {
             //携程维护
-            StopCoroutine(RefreshRoomList());
+            StopAllCoroutines();
         }
 
         /// <summary>
@@ -54,9 +56,20 @@ namespace Asha
                 Options.client.GetRooms();
                 Options.YGOWaiter.Switch(Egan.Constants.MessageType.GET_ROOMS, true);
                 //等待rooms被载入
+                int outofFrame = 1000;
                 while (rooms.Count == 0)
                 {
                     yield return new WaitForFixedUpdate();
+                    outofFrame--;
+                    if (outofFrame == 0)
+                    {
+                        WarningBox.Show("连接超时");
+                        break;
+                    }
+                }
+                if (outofFrame == 0)
+                {
+                    continue;
                 }
                 //移除旧的列表
                 for (int i = 0; i < transform.childCount; i++)

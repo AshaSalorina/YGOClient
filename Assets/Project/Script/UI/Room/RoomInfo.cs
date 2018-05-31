@@ -60,9 +60,11 @@ namespace Asha
             }
         }
 
-        public void CreatRoom(Room rm)
+        /// <summary>
+        /// 玩家创建了一个房间
+        /// </summary>
+        public void CreatRoom()
         {
-
             Options.GameCenter.SetActive(false);
 
             isMaster = true;
@@ -83,18 +85,27 @@ namespace Asha
 
         }
 
-        public void JoinRoom(Room rm)
+        /// <summary>
+        /// 玩家加入了一个房间
+        /// </summary>
+        /// <param name="rm"></param>
+        public void JoinRoom(object room)
         {
+            var rm = (Room)room;
             Options.GameCenter.SetActive(false);
             isMaster = false;
             Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
 
-            #region 房主信息载入
+            #region 自身信息载入
             Options.Room.transform.Find("Self").Find("Name").GetComponent<Text>().text = Options.player.Name;
             if (Options.player.Head != null && Options.player.Head != "")
             {
                 Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
             }
+
+            Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = rm.Host.Name;
+            ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, rm.Host.Head, ImageHelper.LoadImageType.Byte);
+
             #endregion
 
         }
@@ -105,11 +116,26 @@ namespace Asha
         public void LeaveRoom()
         {
             Options.YGOWaiter.Switch(MessageType.JOIN, false);
-            //Options.client.LeaveRoom();
+            Options.YGOWaiter.Switch(MessageType.LEAVE, false);
+            Options.client.Leave();
+            DestroyRoom();
+        }
+
+        /// <summary>
+        /// 玩家被动离开房间
+        /// </summary>
+        public void BeLeavedRoom()
+        {
+            //Options.YGOWaiter.Switch(MessageType.JOIN, false);
+            //Options.client.Leave();
+            DestroyRoom();
+        }
+
+        public void DestroyRoom()
+        {
             Options.GameCenter.SetActive(true);
             Destroy(Options.Room);
         }
-
 
         /// <summary>
         /// 游戏开始
@@ -155,7 +181,7 @@ namespace Asha
                         #region 清空玩家数据
 
                         Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
-                        Options.Room.transform.Find("Other").Find("Head").GetComponent<Text>().text = "";
+                        Options.Room.transform.Find("Other").Find("Head").GetComponent<Image>().sprite = null;
 
                         #endregion
                         //移除过时消息
@@ -163,7 +189,6 @@ namespace Asha
                         customIn = false;
                     }
                 }
-
                 yield return new WaitForFixedUpdate();
             }
 

@@ -10,9 +10,12 @@ namespace Asha
 {
     public class UI_GC_SVViewSize : MonoBehaviour
     {
+        public static List<Room> rooms;
+
         // Use this for initialization
         void Start()
         {
+            rooms = new List<Room>();
             Refresh();
             //携程启动
             StartCoroutine(RefreshRoomList());
@@ -45,23 +48,22 @@ namespace Asha
         public IEnumerator RefreshRoomList()
         {
             while (true)
-            { 
+            {
+                //清空过期列表
+                rooms.Clear();
+                Options.client.GetRooms();
+                Options.YGOWaiter.Switch(Egan.Constants.MessageType.GET_ROOMS, true);
+                //等待rooms被载入
+                while (rooms.Count == 0)
+                {
+                    yield return new WaitForFixedUpdate();
+                }
                 //移除旧的列表
                 for (int i = 0; i < transform.childCount; i++)
                 {
                     Destroy(transform.GetChild(i).gameObject);
                 }
-                //NetworkClient nT = null;
-                List<Room> ls = null;
-                try
-                {
-                    ls = Options.client.GetRooms();
-                }
-                catch (System.Exception e)
-                {
-                    WarningBox.Show(e.ToString());
-                }
-                foreach (var item in ls)
+                foreach (var item in rooms)
                 {
                     //等待一帧
                     yield return new WaitForFixedUpdate();

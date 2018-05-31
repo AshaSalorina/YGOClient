@@ -12,7 +12,6 @@ namespace Asha
     /// </summary>
     public class UI_GC_CreatRoom : MonoBehaviour
     {
-
         void Start()
         {
             transform.Find("RoomName").GetComponent<InputField>().text = "新的房间";
@@ -36,7 +35,6 @@ namespace Asha
 
         void CreatRoom()
         {
-
             var room = new Room();
             room.Host = Options.player;
             room.Name = transform.Find("RoomName").GetComponent<InputField>().text;
@@ -52,18 +50,11 @@ namespace Asha
             room.HasPwd = room.Password != null && room.Password != "" ? true : false;
             room.Desc = transform.Find("RoomDes").GetComponent<InputField>().text;
 
-            //todo:待修改
-            try
-            {
-                room.Id = Options.client.CreateRoom(room);
-            }
-            catch (System.Exception e)
-            {
-                WarningBox.Show(e.ToString());
-                Destroy(gameObject);
-            }
-
-            Options.EventSystem.SendMessage("CreatRoom", room);
+            Options.client.CreateRoom(room);
+            //开始监听创建房间的消息
+            Options.YGOWaiter.Switch(Egan.Constants.MessageType.CREATE, true);
+            //todo:打开一个转圈圈的panel
+            //销毁自身
             Destroy(gameObject);
         }
     }

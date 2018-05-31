@@ -34,6 +34,7 @@ namespace Asha.Tools
                             OnGetRooms();
                             break;
                         case MessageType.CREATE:
+                            OnCreat();
                             break;
                         case MessageType.JOIN:
                             OnJoin();
@@ -74,6 +75,7 @@ namespace Asha.Tools
             }
 
         }
+
 
 
         #endregion
@@ -212,7 +214,8 @@ namespace Asha.Tools
                         WarningBox.Show("房间已解散");
                         break;
                     case StatusCode.FULL_LOBBY:
-                        //拒绝创建房间
+                        //拒绝并中断创建房间
+                        Switch(MessageType.CREATE, false);
                         WarningBox.Show("大厅已满");
                         break;
                     case StatusCode.FULL_ROOM:
@@ -226,6 +229,18 @@ namespace Asha.Tools
             }
         }
 
+        private void OnCreat()
+        {
+            if (Packets[MessageType.CREATE].Count > 0) 
+            {
+                var room = JsonConvert.DeserializeObject<Room>(
+                    Packets[MessageType.CREATE][0].Body);
+                //确认创建房间成功,通知事件系统创建房间
+                Options.EventSystem.SendMessage("CreatRoom", room);
+                //清空队列
+                Packets[MessageType.CREATE].Clear();
+            }
+        }
 
 
         #endregion

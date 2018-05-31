@@ -34,6 +34,9 @@ namespace Asha
             }
         }
 
+        /// <summary>
+        /// 客人进房
+        /// </summary>
         public static bool CustomIn
         {
             get
@@ -46,6 +49,9 @@ namespace Asha
             }
         }
 
+        /// <summary>
+        /// 是否为房主
+        /// </summary>
         public static bool IsMaster
         {
             get

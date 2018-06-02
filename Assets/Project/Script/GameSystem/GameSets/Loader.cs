@@ -37,7 +37,14 @@ namespace Asha
 
         bool ShutDownGracefully()
         {
-            Options.client.ShutDownGracefully();//断开连接
+            if (Options.client != null)
+            {
+                if (Options.Room != null)
+                {
+                    Options.client.Leave();
+                }
+                Options.client.ShutDownGracefully();//断开连接
+            }
             return true;
         }
 

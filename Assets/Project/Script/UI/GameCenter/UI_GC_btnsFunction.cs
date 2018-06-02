@@ -32,7 +32,6 @@ namespace Asha
                 WarningBox.Show("请选中一个房间");
                 return;
             }
-            Debug.Log(RoomInfo.Selected.ToString());
             Room rm = null;
             //todo:密码
             //todo:这里如何获得房间

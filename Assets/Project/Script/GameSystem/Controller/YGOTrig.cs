@@ -40,6 +40,7 @@ namespace Asha.Tools
                             OnJoin();
                             break;
                         case MessageType.LEAVE:
+                            OnLeave();
                             break;
                         case MessageType.KICK_OUT:
                             break;
@@ -48,6 +49,7 @@ namespace Asha.Tools
                         case MessageType.STARTED:
                             break;
                         case MessageType.COUNT_DOWN:
+                            OnCountDown();
                             break;
                         case MessageType.CHAT:
                             break;
@@ -73,7 +75,6 @@ namespace Asha.Tools
                     }
                 }
             }
-
         }
 
 
@@ -133,57 +134,99 @@ namespace Asha.Tools
 
         #region 具体处理
 
-
-        private void OnGetRooms()
+        /// <summary>
+        /// 获取房间列表的处理
+        /// </summary>
+        void OnGetRooms()
         {
             if (Packets[MessageType.GET_ROOMS].Count > 0)
             {
-                var lr = Packets[MessageType.GET_ROOMS][0].Body;
-                var job = JObject.Parse(lr);
-                UI_GC_SVViewSize.rooms = JsonConvert.DeserializeObject<List<Room>>(job["rm"].ToString());
+                UI_GC_SVViewSize.rooms = PacketExp.ExpGetRooms(Packets[MessageType.GET_ROOMS][0]);
                 Switch(MessageType.GET_ROOMS, false);
+                Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
             }
         }
 
+        /// <summary>
+        /// 加入房间的处理
+        /// </summary>
         void OnJoin()
         {
             if (RoomInfo.IsMaster)
             {
-                if (!RoomInfo.CustomIn)
+                //房主应该做什么
+                if (Packets[MessageType.JOIN].Count > 0)
                 {
-                    if (YGOTrig.Packets[MessageType.JOIN].Count > 0)
-                    {
-                        var custom = JsonConvert.DeserializeObject<Player>(
-                            Packets[MessageType.JOIN][0].Body);
-                        #region 写入玩家数据
+                    //WarningBox.Show(Packets[MessageType.JOIN].Count.ToString());
+                    var custom = PacketExp.ExpHJoin(Packets[MessageType.JOIN][0]);
+                    #region 写入玩家数据
 
-                        Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = custom.Name;
-                        ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, custom.Head, ImageHelper.LoadImageType.Byte);
+                    Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = custom.Name;
+                    ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, custom.Head, ImageHelper.LoadImageType.Byte);
 
-                        #endregion
-                        //移除过时消息
-                        Packets[MessageType.JOIN].RemoveRange(0, 1);
-                        RoomInfo.CustomIn = true;
-                    }
-                }
-                else
-                {
-                    if (Packets[MessageType.LEAVE].Count > 0)
-                    {
-                        #region 清空玩家数据
-
-                        Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
-                        Options.Room.transform.Find("Other").Find("Head").GetComponent<Text>().text = "";
-
-                        #endregion
-                        //移除过时消息
-                        Packets[MessageType.LEAVE].RemoveRange(0, 1);
-                        RoomInfo.CustomIn = false;
-                    }
+                    #endregion
+                    //移除过时消息
+                    Packets[MessageType.JOIN].RemoveRange(0, 1);
+                    RoomInfo.CustomIn = true;
+                    //打开leave和ready监听,并关闭join监听
+                    Switch(MessageType.LEAVE, true);
+                    Switch(MessageType.READY, true);
+                    Switch(MessageType.JOIN, false);
                 }
             }
             else
             {
+                //房客应该做什么
+                if (Packets[MessageType.JOIN].Count > 0)
+                {
+                    var room = PacketExp.ExpGJoin(Packets[MessageType.JOIN][0]);
+                    #region 写入玩家数据
+
+                    Options.EventSystem.SendMessage("JoinRoom", room);
+                    #endregion
+                    //移除过时消息
+                    Packets[MessageType.JOIN].RemoveRange(0, 1);
+                    RoomInfo.CustomIn = true;
+                    Switch(MessageType.LEAVE, true);
+                    Switch(MessageType.READY, true);
+                    Switch(MessageType.JOIN, false);
+                }
+            }
+        }
+
+
+        void OnLeave()
+        {
+            if (RoomInfo.IsMaster)
+            {
+                if (Packets[MessageType.LEAVE].Count > 0)
+                {
+                    //WarningBox.Show(Packets[MessageType.LEAVE].Count.ToString());
+                    #region 清空玩家数据
+
+                    Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
+                    Options.Room.transform.Find("Other").Find("Head").GetComponent<Image>().sprite = null;
+                    WarningBox.Show("ClearPlayer");
+                    #endregion
+                    //移除过时消息
+                    Packets[MessageType.LEAVE].RemoveRange(0, 1);
+                    RoomInfo.CustomIn = false;
+                    //打开join监听,并关闭leave监听
+                    Switch(MessageType.JOIN, true);
+                    Switch(MessageType.READY, false);
+                    Switch(MessageType.LEAVE, false);
+                    WarningBox.Show("OpenJoinList");
+                }
+            }
+            else
+            {
+                if (Packets[MessageType.LEAVE].Count > 0)
+                {
+                    Switch(MessageType.LEAVE, false);
+                    Options.EventSystem.SendMessage("DestroyRoom");
+                    WarningBox.Show("房主关闭了房间");
+                    Packets[MessageType.LEAVE].RemoveRange(0, 1);
+                }
 
             }
         }
@@ -227,22 +270,25 @@ namespace Asha.Tools
                         break;
                 }
             }
+            Packets[MessageType.WARRING].Clear();
         }
 
-        private void OnCreat()
+        void OnCreat()
         {
             if (Packets[MessageType.CREATE].Count > 0) 
             {
-                var room = JsonConvert.DeserializeObject<Room>(
-                    Packets[MessageType.CREATE][0].Body);
+                //var room = PacketExp.ExpCreate(Packets[MessageType.CREATE][0]);
                 //确认创建房间成功,通知事件系统创建房间
-                Options.EventSystem.SendMessage("CreatRoom", room);
+                Options.EventSystem.SendMessage("CreatRoom");
                 //清空队列
                 Packets[MessageType.CREATE].Clear();
             }
         }
 
-
+        void OnCountDown()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
 

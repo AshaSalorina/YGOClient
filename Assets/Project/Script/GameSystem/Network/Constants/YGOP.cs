@@ -7,6 +7,25 @@ using System.Threading.Tasks;
 namespace Egan.Constants
 {
     /// <summary>
+    /// 猜拳常量
+    /// </summary>
+    public enum FingerGuess
+    {
+        /// <summary>
+        /// 剪刀
+        /// </summary>
+        SCISSORS = 0x1,
+        /// <summary>
+        /// 石头
+        /// </summary>
+        ROCK = 0x2,
+        /// <summary>
+        /// 布
+        /// </summary>
+        PAPER = 0x4
+}
+
+    /// <summary>
     /// YGOP协议的其他常量
     /// </summary>
     public class YGOP
@@ -97,22 +116,5 @@ namespace Egan.Constants
         /// 请求超时时间
         /// </summary>
         public static readonly int TIME_OUT = 10000;
-
-        /// <summary>
-        /// 未出拳
-        /// </summary>
-        public static readonly int NO_FINGER = 0x0;
-        /// <summary>
-        /// 剪刀
-        /// </summary>
-        public static readonly int SCISSORS = 0x1;
-        /// <summary>
-        /// 石头
-        /// </summary>
-        public static readonly int ROCK = 0x10;
-        /// <summary>
-        /// 布
-        /// </summary>
-        public static readonly int PAPER = 0x100;
     }
 }

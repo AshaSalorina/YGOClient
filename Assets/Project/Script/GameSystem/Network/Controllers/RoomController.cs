@@ -35,5 +35,15 @@ namespace Egan.Controllers
             socket.Send("", isHost ? MessageType.STARTED : MessageType.READY);
         }
 
+        public void KickOut()
+        {
+            socket.Send("", MessageType.KICK_OUT);
+        }
+
+        public void FingerGuess(FingerGuess finger)
+        {
+            socket.Send(finger.ToString(), MessageType.FINGER_GUESS);
+        }
+
     }
 }

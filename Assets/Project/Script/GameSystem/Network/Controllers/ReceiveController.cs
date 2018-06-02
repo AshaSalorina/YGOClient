@@ -45,19 +45,23 @@ namespace Egan.Controllers
                     {
                         DataPacket packet = decoder.ParsePacket();
                         YgoSocket.PrintPacket(packet);
-                        Options.YGOWaiter.Distribute(packet);
+                        //Options.YGOWaiter.Distribute(packet);
 
                         if (packet.Type == MessageType.WARRING)
                         {
                             R r = JsonConvert.DeserializeObject<R>(packet.Body);
-                            
+                        }
+                        if(packet.Type == MessageType.JOIN)
+                        {
+                            packet.Type = MessageType.JOIN;
                         }
                     }
                 }
             }catch(Exception ex)
             {
                 DataPacket packet = new DataPacket(StatusCode.DISCONNECTED);
-                Options.YGOWaiter.Distribute(packet);
+                //Options.YGOWaiter.Distribute(packet);
+                Console.WriteLine(ex.ToString());
             }
             
         }

@@ -110,6 +110,32 @@ namespace Egan.Controllers
             roomController.ChangeStatus(isHost);
         }
 
+        public void KickOut()
+        {
+            roomController.KickOut();
+        }
+
+        /// <summary>
+        /// 发送卡组
+        /// </summary>
+        /// <param name="decks">卡牌id列表</param>
+        public void SendDeck(List<int> decks)
+        {
+
+        }
+
+        /// <summary>
+        /// 猜拳
+        /// </summary>
+        /// <param name="finger">出拳</param>
+        public void FingerGuess(FingerGuess finger)
+        {
+            roomController.FingerGuess(finger);
+        }
+
+        /// <summary>
+        /// 优雅关闭
+        /// </summary>
         public void ShutDownGracefully()
         {
             receiver.Close();

@@ -14,15 +14,15 @@ namespace Egan.Constants
         /// <summary>
         /// 剪刀
         /// </summary>
-        SCISSORS = 0x1,
+        SCISSORS = 3,
         /// <summary>
         /// 石头
         /// </summary>
-        ROCK = 0x2,
+        ROCK = 2,
         /// <summary>
         /// 布
         /// </summary>
-        PAPER = 0x4
+        PAPER = 1
 }
 
     /// <summary>

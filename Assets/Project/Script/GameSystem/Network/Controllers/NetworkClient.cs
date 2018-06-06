@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System;
 using System.Threading;
 using Egan.Controllers;
+using Asha;
 
 namespace Egan.Controllers
 {
@@ -29,6 +30,8 @@ namespace Egan.Controllers
         private LobbyController lobbyController;
 
         private RoomController roomController;
+
+        private GameController gameController;
 
         private ReceiveController receiver;
 
@@ -116,21 +119,36 @@ namespace Egan.Controllers
         }
 
         /// <summary>
-        /// 发送卡组
+        /// 决斗开始
         /// </summary>
-        /// <param name="decks">卡牌id列表</param>
-        public void SendDeck(List<int> decks)
-        {
-
-        }
-
-        /// <summary>
-        /// 猜拳
-        /// </summary>
+        /// <param name="id">房间ID</param>
+        /// <param name="isHost">是否为房主</param>
         /// <param name="finger">出拳</param>
-        public void FingerGuess(FingerGuess finger)
+        /// <param name="deck">卡组</param>
+        public void Duel(int id, bool isHost, 
+            FingerGuess finger, List<int>deck)
         {
-            roomController.FingerGuess(finger);
+            try
+            {
+                //重新连接
+                socket = new YgoSocket();
+                ShutDownGracefully();
+
+                socket.Start(RemoteAddress.DUEL_IP, RemoteAddress.DUEL_PORT);
+                receiver = new ReceiveController(socket.Decoder);
+                receiver.Start();
+
+                gameController = new GameController(socket);
+
+                //执行游戏开始前的准备工作
+                gameController.JoinGame(id, isHost);
+                gameController.SendDeck(deck);
+                gameController.Finger(finger);
+            }
+            catch(Exception ex)
+            {
+                throw new RException(ex.Message);
+            }
         }
 
         /// <summary>

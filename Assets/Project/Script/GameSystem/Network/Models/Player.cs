@@ -19,24 +19,13 @@ namespace Egan.Models
 
         
         [DataMember(Name = "isp")]
-        private bool isPrepared = false;
-
-        
-        [DataMember(Name = "iss")]
-        private bool isStarting = false;
+        private bool isSP= false;
 
         [DataMember(Name = "fg")]
         private bool finger;
 
         public Player() { }
 
-        public Player(string name, string head, bool isPrepared, bool isStarting)
-        {
-            this.name = name;
-            this.head = head;
-            this.isPrepared = isPrepared;
-            this.isStarting = isStarting;
-        }
 
         /// <summary>
         /// 玩家名
@@ -71,34 +60,18 @@ namespace Egan.Models
         }
 
         /// <summary>
-        /// 玩家（房客）是否已进入准备状态
+        /// 玩家是否已进入开始\准备状态
         /// </summary>
         public bool IsPrepared
         {
             get
             {
-                return isPrepared;
+                return isSP;
             }
 
             set
             {
-                isPrepared = value;
-            }
-        }
-
-        /// <summary>
-        /// 玩家（房主）是否已经进入开始状态
-        /// </summary>
-        public bool IsStarted
-        {
-            get
-            {
-                return isStarting;
-            }
-
-            set
-            {
-                isStarting = value;
+                isSP = value;
             }
         }
 

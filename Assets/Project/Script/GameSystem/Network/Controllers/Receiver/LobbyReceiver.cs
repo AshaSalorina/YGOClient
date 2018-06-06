@@ -1,40 +1,25 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Threading;
 using Asha;
 using Egan.Constants;
-using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
 using Newtonsoft.Json;
 
 namespace Egan.Controllers
 {
-    class ReceiveController
+    /// <summary>
+    /// 大厅接收器
+    /// 处理来自游戏大厅的消息
+    /// </summary>
+    class LobbyReceiver : AbstractReceiver
     {
-        private bool stop = false;
-
-        private YGOPDecoder decoder;
-
-
-        public ReceiveController(YGOPDecoder decoder)
+ 
+        public LobbyReceiver(YGOPDecoder decoder)
         {
             this.decoder = decoder;
         }
 
-        public void Start()
-        {
-            Thread thread = new Thread(ReceiveMessage);
-            thread.IsBackground = true;
-            thread.Start();
-        }
-
-        public void Close()
-        {
-            stop = true;
-        }
-
-        public void ReceiveMessage()
+        public override void ReceiveMessage()
         {
 
             try

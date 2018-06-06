@@ -33,7 +33,7 @@ namespace Egan.Controllers
 
         private GameController gameController;
 
-        private ReceiveController receiver;
+        private LobbyReceiver receiver;
 
         public NetworkClient()
         {
@@ -42,7 +42,7 @@ namespace Egan.Controllers
             try
             {
                 socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
-                receiver = new ReceiveController(socket.Decoder);
+                receiver = new LobbyReceiver(socket.Decoder);
                 receiver.Start();
             }
             catch
@@ -135,7 +135,7 @@ namespace Egan.Controllers
                 ShutDownGracefully();
 
                 socket.Start(RemoteAddress.DUEL_IP, RemoteAddress.DUEL_PORT);
-                receiver = new ReceiveController(socket.Decoder);
+                receiver = new LobbyReceiver(socket.Decoder);
                 receiver.Start();
 
                 gameController = new GameController(socket);

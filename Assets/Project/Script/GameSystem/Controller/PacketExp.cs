@@ -22,7 +22,7 @@ public class PacketExp {
     {
         var lr = dp.Body;
         var job = JObject.Parse(lr);
-        return JsonConvert.DeserializeObject<List<Room>>(job["rm"].ToString());
+        return JsonConvert.DeserializeObject<List<Room>>(job["rs"].ToString());
     }
 
     /// <summary>
@@ -55,4 +55,26 @@ public class PacketExp {
         return int.Parse(dp.Body);
     }
 
+    /// <summary>
+    /// 解释猜拳结果
+    /// </summary>
+    /// <param name="dp">数据包</param>
+    /// <returns>输平赢(-1,0,1)</returns>
+    public static int ExpFingerResult(DataPacket dp)
+    {
+        return int.Parse(dp.Body);
+    }
+
+    /// <summary>
+    /// 解释卡组消息
+    /// </summary>
+    /// <param name="dp"></param>
+    /// <returns></returns>
+    public static List<int> ExpDeck(DataPacket dp)
+    {
+        List<int> deck = new List<int>();
+        foreach (int card in JsonConvert.DeserializeObject<List<float>>(dp.Body))
+            deck.Add(card);
+        return deck;
+    }
 }

@@ -14,11 +14,11 @@ namespace Egan.Controllers
     /// </summary>
     class GameController
     {
-        private YgoSocket socket;
+        private static YgoSocket socket;
 
         public GameController(YgoSocket socket)
         {
-            this.socket = socket;
+            GameController.socket = socket;
         }
 
         public void JoinGame(int id, bool isHost)
@@ -29,7 +29,6 @@ namespace Egan.Controllers
         public void SendDeck(List<int> deck)
         {
             socket.Send(JsonConvert.SerializeObject(deck), MessageType.DECK);
-
         }
 
         public void Finger(FingerGuess finger)

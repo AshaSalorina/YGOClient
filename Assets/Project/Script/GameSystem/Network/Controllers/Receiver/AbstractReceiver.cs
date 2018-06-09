@@ -1,4 +1,5 @@
 ﻿using Egan.Tools;
+using System;
 using System.Threading;
 
 namespace Egan.Controllers
@@ -8,11 +9,16 @@ namespace Egan.Controllers
 
         protected bool stop = false;
 
+        protected bool run = true;
+
         protected YGOPDecoder decoder;
+
+        Thread thread;
 
         public void Start()
         {
-            Thread thread = new Thread(ReceiveMessage);
+            run = true;
+            thread = new Thread(ReceiveMessage);
             thread.IsBackground = true;
             thread.Start();
         }

@@ -26,6 +26,11 @@ namespace Egan.Models
 
         public Player() { }
 
+        public override string ToString()
+        {
+            return name;
+        }
+
 
         /// <summary>
         /// 玩家名

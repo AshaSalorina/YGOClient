@@ -12,6 +12,10 @@ namespace Egan.Constants
     public enum MessageType
     {
         /// <summary>
+        /// 测试数据
+        /// </summary>
+        TEST = 0X0,
+        /// <summary>
         /// 接收到房间列表
         /// </summary>
         GET_ROOMS = 0x1,

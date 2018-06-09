@@ -7,6 +7,8 @@ using System;
 using System.Threading;
 using Egan.Controllers;
 using Asha;
+using Egan.Tools;
+using System.Runtime.Remoting.Messaging;
 
 namespace Egan.Controllers
 {
@@ -25,7 +27,9 @@ namespace Egan.Controllers
         /// <summary>
         /// 懒汉模式
         /// </summary>
-        private YgoSocket socket = new YgoSocket();
+        private static YgoSocket socket;
+
+        private static YGOPDecoder decoder;
 
         private LobbyController lobbyController;
 
@@ -33,21 +37,24 @@ namespace Egan.Controllers
 
         private GameController gameController;
 
-        private LobbyReceiver receiver;
+        private AbstractReceiver receiver;
 
         public NetworkClient()
         {
-            lobbyController = new LobbyController(socket);
+            
 
             try
             {
+                socket = new YgoSocket();
+                lobbyController = new LobbyController(socket);
                 socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
-                receiver = new LobbyReceiver(socket.Decoder);
+                decoder = new YGOPDecoder(socket);
+                receiver = new LobbyReceiver(decoder);
                 receiver.Start();
             }
-            catch
+            catch(Exception e)
             {
-                throw new RException("网络连接失败");
+                throw new RException(e.ToString());
             }
         }
 
@@ -123,32 +130,45 @@ namespace Egan.Controllers
         /// </summary>
         /// <param name="id">房间ID</param>
         /// <param name="isHost">是否为房主</param>
-        /// <param name="finger">出拳</param>
-        /// <param name="deck">卡组</param>
-        public void Duel(int id, bool isHost, 
-            FingerGuess finger, List<int>deck)
+        public void Duel(int id, bool isHost)
         {
             try
             {
-                //重新连接
-                socket = new YgoSocket();
                 ShutDownGracefully();
 
+                while (socket.isConnected());
+
+                socket = new YgoSocket();
+
+                decoder = new YGOPDecoder(socket);
+
+                roomController.Socket = socket;
+                lobbyController.Socket = socket;
+
                 socket.Start(RemoteAddress.DUEL_IP, RemoteAddress.DUEL_PORT);
-                receiver = new LobbyReceiver(socket.Decoder);
+
+                receiver = new DuelReceiver(decoder);
                 receiver.Start();
 
                 gameController = new GameController(socket);
 
                 //执行游戏开始前的准备工作
                 gameController.JoinGame(id, isHost);
-                gameController.SendDeck(deck);
-                gameController.Finger(finger);
             }
             catch(Exception ex)
             {
                 throw new RException(ex.Message);
             }
+        }
+
+        public void SendDeck(List<int> deck)
+        {
+            gameController.SendDeck(deck);
+        }
+
+        public void FingerGuess(FingerGuess finger)
+        {
+            gameController.Finger(finger);
         }
 
         /// <summary>
@@ -158,6 +178,8 @@ namespace Egan.Controllers
         {
             receiver.Close();
             socket.ShutdownGracefully();
+            while (socket.isConnected()) ;
+            
         }
 
         public int MaxRoomNum

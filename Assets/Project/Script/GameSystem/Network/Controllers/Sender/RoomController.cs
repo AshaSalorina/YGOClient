@@ -15,34 +15,47 @@ namespace Egan.Controllers
 
         private YgoSocket socket;
 
+        internal YgoSocket Socket
+        {
+            get
+            {
+                return socket;
+            }
+
+            set
+            {
+                socket = value;
+            }
+        }
+
         public RoomController(YgoSocket socket)
         {
-            this.socket = socket;
+            this.Socket = socket;
         }
 
         public void Chat(string message)
         {
-            socket.Send(message, MessageType.CHAT);
+            Socket.Send(message, MessageType.CHAT);
         }
 
         public void Leave()
         {
-            socket.Send("", MessageType.LEAVE);
+            Socket.Send("", MessageType.LEAVE);
         }
 
         public void ChangeStatus(bool isHost)
         {
-            socket.Send("", isHost ? MessageType.STARTED : MessageType.READY);
+            Socket.Send("", isHost ? MessageType.STARTED : MessageType.READY);
         }
 
         public void KickOut()
         {
-            socket.Send("", MessageType.KICK_OUT);
+            Socket.Send("", MessageType.KICK_OUT);
         }
 
         public void FingerGuess(FingerGuess finger)
         {
-            socket.Send(finger.ToString(), MessageType.FINGER_GUESS);
+            Socket.Send(finger.ToString(), MessageType.FINGER_GUESS);
         }
 
     }

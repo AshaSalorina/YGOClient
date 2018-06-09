@@ -22,7 +22,7 @@ namespace Egan.Controllers
 
         public LobbyController(YgoSocket socket)
         {
-            this.socket = socket;
+            this.Socket = socket;
             
         }
 
@@ -38,6 +38,19 @@ namespace Egan.Controllers
             }
         }
 
+        internal YgoSocket Socket
+        {
+            get
+            {
+                return socket;
+            }
+
+            set
+            {
+                socket = value;
+            }
+        }
+
         /// <summary>
         /// 获取房间列表
         /// </summary>
@@ -48,7 +61,7 @@ namespace Egan.Controllers
             try
             {
                 //发送获取房间列表请求
-                socket.Send("", MessageType.GET_ROOMS);
+                Socket.Send("", MessageType.GET_ROOMS);
                 DataPacket packet;
 
             }
@@ -69,7 +82,7 @@ namespace Egan.Controllers
             String json = JsonConvert.SerializeObject(room);
 
             //发送创建房间请求
-            socket.Send(json, MessageType.CREATE);
+            Socket.Send(json, MessageType.CREATE);
         }
 
         public void JoinRoom(int id, Player guest, String password)
@@ -82,7 +95,7 @@ namespace Egan.Controllers
 
             String json = JsonConvert.SerializeObject(temp);
 
-            socket.Send(json, MessageType.JOIN);
+            Socket.Send(json, MessageType.JOIN);
 
         }
         

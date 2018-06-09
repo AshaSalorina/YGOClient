@@ -18,10 +18,6 @@ namespace Egan.Controllers
     {
 
         /// <summary>
-        /// 解码器
-        /// </summary>
-        private YGOPDecoder decoder;
-        /// <summary>
         /// 接收服务器消息的线程
         /// </summary>
         private Thread receiver;
@@ -42,9 +38,6 @@ namespace Egan.Controllers
             try
             {
                 Connect(host, port);
-
-                //创建编码器
-                Decoder = new YGOPDecoder(this);
                 
             }
             catch(WebException wex)
@@ -60,7 +53,7 @@ namespace Egan.Controllers
         {
             try
             {
-                if (Connected)
+                if (isConnected())
                 {
                     Shutdown(SocketShutdown.Both);
                     Close();
@@ -93,42 +86,6 @@ namespace Egan.Controllers
             }
         }
 
-        /// <summary>
-        /// 接收并返回一个完整的数据包
-        /// 超时或消息类型为警告时抛出RException异常
-        /// </summary>
-        public DataPacket ReceivePacket()
-        {
-            Stopwatch wacth = new Stopwatch();
-            wacth.Start();
-            try
-            {
-                while (true)
-                {
-                    if (wacth.ElapsedMilliseconds > YGOP.TIME_OUT)
-                        throw RExceptionFactory.Generate(wacth.ElapsedMilliseconds);
-                    if (Decoder.ReceivePacket())
-                    {
-                        DataPacket packet = Decoder.ParsePacket();
-                        PrintPacket(packet);
-
-                        if (packet.Type == MessageType.WARRING)
-                        {
-                            R r = JsonConvert.DeserializeObject<R>(packet.Body);
-                            throw RExceptionFactory.Generate(r);
-                        }
-
-                        return packet;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
         public static void PrintPacket(DataPacket packet)
         {
             //WarningBox.Show($"+——--------——+——-----------——+——------------——+——-------——+\n" +
@@ -141,18 +98,28 @@ namespace Egan.Controllers
                         );
         }
 
-        public YGOPDecoder Decoder
+        public bool isConnected()
         {
-            get
-            {
-                return decoder;
-            }
+                bool blockingState = Blocking;
+                try
+                {
+                    Blocking = false;
+                    DataPacket packet = new DataPacket("", MessageType.TEST);
+                    base.Send(YGOPEncoder.Encoder(packet));
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                finally
+                {
+                    try {
+                    // 恢复状态
+                    Blocking = blockingState;
+                    } catch { };
 
-            set
-            {
-                decoder = value;
-            }
+                }
         }
-
     }
 }

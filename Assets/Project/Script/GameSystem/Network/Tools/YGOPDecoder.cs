@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Egan.Tools
@@ -101,7 +102,7 @@ namespace Egan.Tools
                     byte[] currentHead = new byte[YGOP.HEAD_LEN];
                     if (remaingHead >= packetHead.Length)
                     {
-                        receiveHeadCount = socket.Receive(currentHead, currentHead.Length, 0);
+                        receiveHeadCount = socket.Receive(currentHead, currentHead.Length, SocketFlags.None);
                     }
                     else
                     {
@@ -112,9 +113,19 @@ namespace Egan.Tools
                     remaingHead -= receiveHeadCount;
                 }
             }
-            catch(Exception ex)
+            catch (ThreadAbortException)
             {
-                throw ex;
+                return false;
+            }
+            catch (ObjectDisposedException)
+            {
+                return false;
+            }
+            catch (SocketException ex)
+            {
+                //Console.WriteLine(ex.GetBaseException().ToString());
+                return false;
+                //throw ex;
             }
 
 
@@ -148,11 +159,20 @@ namespace Egan.Tools
                     currentBody.CopyTo(packetBody, currentBody.Length - remaingBody);
                     remaingBody -= receiveBodyCount;
                 }
-            }catch(Exception ex)
+            }
+            catch (ThreadAbortException)
+            {
+                return false;
+            }
+            catch (ObjectDisposedException)
+            {
+                return false;
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
 
             return remaingBody == 0 ? true : false;
         }

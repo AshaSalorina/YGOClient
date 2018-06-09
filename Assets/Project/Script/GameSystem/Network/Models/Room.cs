@@ -37,6 +37,11 @@ namespace Egan.Models
             return obj is Room && id.Equals(((Room)obj).Id);
         }
 
+        public override string ToString()
+        {
+            return $"{id}\t{name}\t{desc}\t{host}\t{guest}\t" + (isPlaying ?"是":"否");
+        }
+
         public override int GetHashCode()
         {
             var hashCode = -1952275321;

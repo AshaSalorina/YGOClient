@@ -28,7 +28,7 @@ namespace Egan.Exceptions
                 case StatusCode.DISMISSED: msg = "房间已解散"; break;
                 case StatusCode.FULL_LOBBY: msg = "游戏大厅已满"; break;
                 case StatusCode.FULL_ROOM: msg = "房间已满员"; break;
-                default: msg = r.Msg; break;
+                default: msg = "未知错误"; break;
             }
 
             return new RException(msg);

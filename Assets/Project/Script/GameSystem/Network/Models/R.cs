@@ -12,7 +12,6 @@ namespace Egan.Tools
         [DataMember]
         private int code;
 
-        [DataMember]
         private string msg;
 
         public R(int code, string msg)

@@ -34,7 +34,7 @@ namespace Egan.Controllers
                     {
                         DataPacket packet = decoder.ParsePacket();
                         //YgoSocket.PrintPacket(packet);
-                        //Options.YGOWaiter.Distribute(packet);
+                        Options.YGOWaiter.Distribute(packet);
 
                         switch (packet.Type)
                         {

@@ -27,7 +27,7 @@ namespace Egan.Controllers
                     if (decoder.ReceivePacket())
                     {
                         DataPacket packet = decoder.ParsePacket();
-                        //Options.YGOWaiter.Distribute(packet);
+                        Options.YGOWaiter.Distribute(packet);
                         switch (packet.Type)
                         {
                             case MessageType.GET_ROOMS:

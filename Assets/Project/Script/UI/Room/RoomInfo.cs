@@ -19,6 +19,8 @@ namespace Asha
         static int selected;
         static bool customIn = false;
         static bool isMaster;
+        static bool isReady = false;
+
         /// <summary>
         /// 选中的Togle
         /// </summary>
@@ -57,6 +59,19 @@ namespace Asha
             get
             {
                 return isMaster;
+            }
+        }
+
+        public static bool IsReady
+        {
+            get
+            {
+                return isReady;
+            }
+
+            set
+            {
+                isReady = value;
             }
         }
 

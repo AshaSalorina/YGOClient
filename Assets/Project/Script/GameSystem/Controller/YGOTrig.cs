@@ -45,6 +45,9 @@ namespace Asha.Tools
                         case MessageType.KICK_OUT:
                             break;
                         case MessageType.READY:
+
+                            OnReady();
+
                             break;
                         case MessageType.STARTED:
                             break;
@@ -289,6 +292,17 @@ namespace Asha.Tools
         {
             throw new NotImplementedException();
         }
+
+        void OnReady()
+        {
+            if (Packets[MessageType.READY].Count > 0)
+            {
+                //UI_Room_CheckReady.GetReady
+                UI_Room_CheckReady.obj.SendMessage("GetReady");
+                Packets[MessageType.READY].RemoveRange(0, 1);
+            }
+        }
+
         #endregion
 
 

@@ -86,7 +86,7 @@ namespace Egan.Controllers
             catch (Exception ex)
             {
                 DataPacket packet = new DataPacket(StatusCode.DISCONNECTED);
-                //Options.YGOWaiter.Distribute(packet);
+                Options.YGOWaiter.Distribute(packet);
                 Console.WriteLine(ex.ToString());
             }
         }

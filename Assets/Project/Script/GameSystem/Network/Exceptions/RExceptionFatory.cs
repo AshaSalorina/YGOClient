@@ -23,11 +23,25 @@ namespace Egan.Exceptions
             switch (code)
             {
                 case StatusCode.INCORRECT: msg = "房间密码错误"; break;
-                case StatusCode.PLAYING: msg = "房间已开始游戏"; break;
                 case StatusCode.UNPREPARED: msg = "房客未进入准备状态"; break;
                 case StatusCode.DISMISSED: msg = "房间已解散"; break;
                 case StatusCode.FULL_LOBBY: msg = "游戏大厅已满"; break;
                 case StatusCode.FULL_ROOM: msg = "房间已满员"; break;
+                case StatusCode.BLACKLISTED:
+                    msg = "本机已被列入黑名单";
+                    break;
+                case StatusCode.INTERNAL_SERVER_ERROR:
+                    msg = "服务器内部错误";
+                    break;
+                case StatusCode.BE_IN_ANOTHER:
+                    msg = "您已在其他房间";
+                    break;
+                case StatusCode.NOT_IN_HERE:
+                    msg = "您不在此房间内";
+                    break;
+                case StatusCode.NO_ACCESS:
+                    msg = "您无权执行此操作";
+                    break;
                 default: msg = "未知错误"; break;
             }
 

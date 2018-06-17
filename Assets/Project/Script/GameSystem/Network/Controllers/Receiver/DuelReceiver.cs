@@ -38,6 +38,9 @@ namespace Egan.Controllers
                                 foreach (Room room in rooms)
                                     Console.WriteLine(room);
                                 break;
+                            case MessageType.CREATE:
+                                Console.WriteLine("对方连接成功");
+                                break;
                             case MessageType.JOIN:
                                 Console.WriteLine("已切换到决斗服务器");
                                 

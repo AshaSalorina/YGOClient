@@ -11,6 +11,7 @@ namespace Egan.Constants
         /// 房间密码错误
         /// </summary>
         INCORRECT = 4316,
+        PLAYING = 0000,
         /// <summary>
         /// 房客未准备
         /// </summary>
@@ -43,6 +44,10 @@ namespace Egan.Constants
         /// 玩家无权限
         /// </summary>
         NO_ACCESS = 6024,
+        /// <summary>
+        /// 连接中断
+        /// </summary>
+        DISCONNECTED = 6060
         
     }
 }

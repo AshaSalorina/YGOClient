@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HYJ.Models;
 
 namespace Egan.Controllers
 {
@@ -34,6 +35,11 @@ namespace Egan.Controllers
         public void Finger(FingerGuess finger)
         {
             socket.Send(((int)finger).ToString(), MessageType.FINGER_GUESS);
+        }
+
+        public void Operate(Message msg)
+        {
+            socket.Send(JsonConvert.SerializeObject(msg), MessageType.OPERATE);
         }
 
         //public void Operate()

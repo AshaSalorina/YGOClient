@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,18 +15,22 @@ namespace HYJ.Models
         /// <summary>
         /// 发送者
         /// </summary>
+        [DataMember(Name = "sd")]
         public ControllerEnum sender;
         /// <summary>
         /// 消息类型
         /// </summary>
+        [DataMember(Name = "mc")]
         public MessageEnum messageClass;
         /// <summary>
         /// 描述
         /// </summary>
+        [DataMember(Name = "ds")]
         public string desdescription;
         /// <summary>
         /// 内容
         /// </summary>
+        [DataMember(Name = "ct")]
         public string[] content = null;
 
         /// <summary>

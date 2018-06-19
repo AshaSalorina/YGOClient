@@ -18,6 +18,7 @@ namespace Asha
             transform.Find("btn_CreatRoom").GetComponent<Button>().onClick.AddListener(CreatRoom);
             transform.Find("btn_JoinRoom").GetComponent<Button>().onClick.AddListener(JoinRoom);
             transform.Find("btn_RandomJoin").GetComponent<Button>().onClick.AddListener(RandomJoin);
+            transform.Find(" btn_Refresh").GetComponent<Button>().onClick.AddListener(Refresh);
         }
 
         void CreatRoom()
@@ -32,21 +33,22 @@ namespace Asha
                 WarningBox.Show("请选中一个房间");
                 return;
             }
-            Room rm = null;
             //todo:密码
-            //todo:这里如何获得房间
             Options.client.JoinRoom(RoomInfo.Selected,Options.player);
-
+            //等待加入房间
             Options.YGOWaiter.Switch(MessageType.JOIN, true);
-
-            
-            Options.EventSystem.SendMessage("JoinRoom",rm);
         }
 
         void RandomJoin()
         {
 
         }
+
+        void Refresh()
+        {
+            GameObject.Find("pl_Room").transform.Find("Viewport").SendMessage("RefreshRoomList");
+        }
+
     }
 }
 

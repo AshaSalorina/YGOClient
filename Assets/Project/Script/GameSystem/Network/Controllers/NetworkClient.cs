@@ -120,6 +120,9 @@ namespace Egan.Controllers
             roomController.ChangeStatus(isHost);
         }
 
+        /// <summary>
+        /// 踢出房间
+        /// </summary>
         public void KickOut()
         {
             roomController.KickOut();
@@ -161,11 +164,19 @@ namespace Egan.Controllers
             }
         }
 
+        /// <summary>
+        /// 发送卡组
+        /// </summary>
+        /// <param name="deck">卡片ID集</param>
         public void SendDeck(List<int> deck)
         {
             gameController.SendDeck(deck);
         }
 
+        /// <summary>
+        /// 猜拳
+        /// </summary>
+        /// <param name="finger">出拳</param>
         public void FingerGuess(FingerGuess finger)
         {
             gameController.Finger(finger);

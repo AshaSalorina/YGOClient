@@ -3,6 +3,7 @@ using Egan.Constants;
 using Egan.Exceptions;
 using Egan.Models;
 using Egan.Tools;
+using HYJ.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -43,7 +44,6 @@ namespace Egan.Controllers
                                 break;
                             case MessageType.JOIN:
                                 Console.WriteLine("已切换到决斗服务器");
-                                
                                 break;
                             case MessageType.LEAVE:
                                 Console.WriteLine("对方离开游戏");
@@ -63,7 +63,6 @@ namespace Egan.Controllers
                                     Console.WriteLine("]");
                                 }
                                     
-                                       
                                 break;
                             case MessageType.FINGER_GUESS:
                                 string result = "猜拳结果错误";
@@ -76,6 +75,8 @@ namespace Egan.Controllers
                                 Console.WriteLine($"猜拳结果:{result}");
                                 break;
                             case MessageType.OPERATE:
+                                Message message = JsonConvert.DeserializeObject<Message>(packet.Body);
+                                Console.WriteLine($"收到操作消息：{message.desdescription}");
                                 break;
                             case MessageType.WARRING:
                                 R r = JsonConvert.DeserializeObject<R>(packet.Body);

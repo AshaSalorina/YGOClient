@@ -77,4 +77,16 @@ public class PacketExp {
             deck.Add(card);
         return deck;
     }
+
+    public static int ExpCountDown(DataPacket dp)
+    {
+        return int.Parse(dp.Body);
+    }
+
+    public static string ExpChat(DataPacket dp)
+    {
+        return dp.Body;
+    }
+
+
 }

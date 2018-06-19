@@ -18,6 +18,7 @@ public class UI_Room_Input : MonoBehaviour {
         if (Input.GetKey(KeyCode.KeypadEnter))
         {
             Options.client.Chat(ts.text);
+            ts.text = "";
         }
 	}
 }

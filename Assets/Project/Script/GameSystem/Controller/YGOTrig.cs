@@ -45,9 +45,7 @@ namespace Asha.Tools
                         case MessageType.KICK_OUT:
                             break;
                         case MessageType.READY:
-
                             OnReady();
-
                             break;
                         case MessageType.STARTED:
                             break;
@@ -55,6 +53,7 @@ namespace Asha.Tools
                             OnCountDown();
                             break;
                         case MessageType.CHAT:
+                            OnChat();
                             break;
                         case MessageType.DECK:
                             break;
@@ -79,9 +78,6 @@ namespace Asha.Tools
                 }
             }
         }
-
-
-
         #endregion
 
         #region Static
@@ -145,6 +141,7 @@ namespace Asha.Tools
             if (Packets[MessageType.GET_ROOMS].Count > 0)
             {
                 UI_GC_SVViewSize.rooms = PacketExp.ExpGetRooms(Packets[MessageType.GET_ROOMS][0]);
+                WarningBox.Show(UI_GC_SVViewSize.rooms.Count.ToString());
                 Switch(MessageType.GET_ROOMS, false);
                 Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
             }
@@ -280,9 +277,9 @@ namespace Asha.Tools
         {
             if (Packets[MessageType.CREATE].Count > 0) 
             {
-                //var room = PacketExp.ExpCreate(Packets[MessageType.CREATE][0]);
+                var room = PacketExp.ExpCreate(Packets[MessageType.CREATE][0]);
                 //确认创建房间成功,通知事件系统创建房间
-                Options.EventSystem.SendMessage("CreatRoom");
+                Options.EventSystem.SendMessage("CreatRoom", room);
                 //清空队列
                 Packets[MessageType.CREATE].Clear();
             }
@@ -290,7 +287,20 @@ namespace Asha.Tools
 
         void OnCountDown()
         {
-            throw new NotImplementedException();
+            if (Packets[MessageType.GET_ROOMS].Count > 0)
+            {
+                int cd = PacketExp.ExpCountDown(Packets[MessageType.GET_ROOMS][0]);
+                Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
+
+                if (cd == 0)
+                {
+                    Options.EventSystem.SendMessage("GameBegin");
+                }
+                else
+                {
+                    UI_Room_Talk.ShowText($"倒计时{cd.ToString()}秒...");
+                }
+            }
         }
 
         void OnReady()
@@ -302,6 +312,17 @@ namespace Asha.Tools
                 Packets[MessageType.READY].RemoveRange(0, 1);
             }
         }
+
+        void OnChat()
+        {
+            if (Packets[MessageType.CHAT].Count > 0)
+            {
+                var msg = PacketExp.ExpChat(Packets[MessageType.CHAT][0]);
+                Packets[MessageType.CHAT].RemoveRange(0, 1);
+                UI_Room_Talk.ShowText(msg);
+            }
+        }
+
 
         #endregion
 

@@ -24,7 +24,7 @@ namespace Asha
             }
             else
             {
-                StartCoroutine(ImageHelper.LoadImage(gameObject, "Images/UI/Backgrounds/df1", ImageHelper.LoadImageType.Resources));
+                StartCoroutine(ImageHelper.LoadImage(gameObject, "Images/UI/MainScence/Backgrounds/df", ImageHelper.LoadImageType.Resources));
             }
         }
 

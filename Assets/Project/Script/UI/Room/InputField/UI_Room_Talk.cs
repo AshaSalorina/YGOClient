@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class UI_Room_Talk : MonoBehaviour {
 
-	void ShowText(string str)
+    public static GameObject obj;
+
+    private void Start()
     {
-        transform.Find("Text").GetComponent<Text>().text += '\n'+ str;
+        obj = gameObject;
     }
 
 
-
+    public static void ShowText(string str)
+    {
+        obj.transform.Find("Text").GetComponent<Text>().text += '\n'+ str;
+    }
 }

@@ -108,7 +108,7 @@ namespace Asha
                 fS2.Close();
                 if (Options.player.Name == null || Options.player.Name == "")
                 {
-                    Options.player.Name = "UnknownPlayer";
+                    Options.player.Name = "YGOPlayer";
                 }
             }
             catch (System.Exception)

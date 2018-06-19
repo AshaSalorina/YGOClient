@@ -18,7 +18,7 @@ namespace Asha
             transform.Find("btn_CreatRoom").GetComponent<Button>().onClick.AddListener(CreatRoom);
             transform.Find("btn_JoinRoom").GetComponent<Button>().onClick.AddListener(JoinRoom);
             transform.Find("btn_RandomJoin").GetComponent<Button>().onClick.AddListener(RandomJoin);
-            transform.Find(" btn_Refresh").GetComponent<Button>().onClick.AddListener(Refresh);
+            transform.Find("btn_Refresh").GetComponent<Button>().onClick.AddListener(Refresh);
         }
 
         void CreatRoom()

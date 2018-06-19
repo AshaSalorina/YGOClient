@@ -148,6 +148,7 @@ namespace Asha
 
         public IEnumerator IERefreshRoomList()
         {
+            yield return new WaitForFixedUpdate();
             while (true)
             {
                 refDone = false;

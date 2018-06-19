@@ -207,15 +207,21 @@ namespace Asha.Tools
                     Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
                     Options.Room.transform.Find("Other").Find("Head").GetComponent<Image>().sprite = null;
                     WarningBox.Show("ClearPlayer");
+
                     #endregion
                     //移除过时消息
                     Packets[MessageType.LEAVE].RemoveRange(0, 1);
+                    //重新标记房客状态
                     RoomInfo.CustomIn = false;
-                    //打开join监听,并关闭leave监听
+
+                    //如果已经存在计时,让计时停止
+                    Options.Room.SendMessage("StopCD");
+
+                    //打开join监听,并关闭leave和ready监听
                     Switch(MessageType.JOIN, true);
                     Switch(MessageType.READY, false);
                     Switch(MessageType.LEAVE, false);
-                    WarningBox.Show("OpenJoinList");
+                    WarningBox.Show("对方决斗者离开了房间");
                 }
             }
             else
@@ -299,6 +305,7 @@ namespace Asha.Tools
                 else
                 {
                     //todo:
+                    Options.Room.SendMessage("CountDown", cd);
                     //UI_Room_Talk.ShowText($"倒计时{cd.ToString()}秒...");
                 }
             }

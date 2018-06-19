@@ -79,7 +79,6 @@ public class PacketExp {
         return deck;
     }
 
-<<<<<<< HEAD
     public static int ExpCountDown(DataPacket dp)
     {
         return int.Parse(dp.Body);
@@ -90,11 +89,8 @@ public class PacketExp {
         return dp.Body;
     }
 
-
-=======
     public static Message ExpOperate(DataPacket dp)
     {
         return JsonConvert.DeserializeObject<Message>(dp.Body);
     }
->>>>>>> 6b8ba138617402cbf5820fd12d68344b9cb47492
 }

@@ -84,8 +84,6 @@ namespace Asha
                     obj.GetComponent<Toggle>().onValueChanged.AddListener(var =>
                     {
                         RoomInfo.Selected = var ? item.Id : -1;
-                        RoomInfo.Id = item.Id;
-                        RoomInfo.Name = item.Name;
                     });
                     obj.transform.Find("ID").GetComponent<Text>().text = item.Id.ToString();
                     obj.name = item.Name;

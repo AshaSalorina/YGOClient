@@ -298,7 +298,8 @@ namespace Asha.Tools
                 }
                 else
                 {
-                    UI_Room_Talk.ShowText($"倒计时{cd.ToString()}秒...");
+                    //todo:
+                    //UI_Room_Talk.ShowText($"倒计时{cd.ToString()}秒...");
                 }
             }
         }

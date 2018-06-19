@@ -1,12 +1,12 @@
-﻿using Egan.Models;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Asha.Tools;
 using Newtonsoft.Json;
 using System;
 using Egan.Constants;
+using Egan.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Asha
 {
@@ -20,6 +20,7 @@ namespace Asha
         static bool customIn = false;
         static bool isMaster;
         static bool isReady = false;
+        static string roomName = "DefRoom";
 
         /// <summary>
         /// 选中的Togle
@@ -85,6 +86,19 @@ namespace Asha
             set
             {
                 id = value;
+            }
+        }
+
+        public static string Name
+        {
+            get
+            {
+                return roomName;
+            }
+
+            set
+            {
+                roomName = value;
             }
         }
 
@@ -171,6 +185,9 @@ namespace Asha
             DestroyRoom();
         }
 
+        /// <summary>
+        /// 房间被销毁
+        /// </summary>
         public void DestroyRoom()
         {
             Options.YGOWaiter.Switch(MessageType.CHAT, false);
@@ -185,6 +202,7 @@ namespace Asha
         {
             Options.client.Duel(Id, IsMaster);
             InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), null, "GameArea");
+            Destroy(Options.Room);
         }
 
 

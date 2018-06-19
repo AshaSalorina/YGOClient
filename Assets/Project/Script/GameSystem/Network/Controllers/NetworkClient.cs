@@ -9,6 +9,7 @@ using Egan.Controllers;
 using Asha;
 using Egan.Tools;
 using System.Runtime.Remoting.Messaging;
+using HYJ.Models;
 
 namespace Egan.Controllers
 {
@@ -86,7 +87,7 @@ namespace Egan.Controllers
         /// <param name="guest">房客信息</param>
         /// <param name="password">密码</param>
         /// <returns>目标房间</returns>
-        public void JoinRoom(int id, Player guest, string password = "")
+        public void JoinRoom(int id, Egan.Models.Player guest, string password = "")
         {
             if (roomController == null)
                 roomController = new RoomController(socket);
@@ -120,6 +121,9 @@ namespace Egan.Controllers
             roomController.ChangeStatus(isHost);
         }
 
+        /// <summary>
+        /// 踢出房间
+        /// </summary>
         public void KickOut()
         {
             roomController.KickOut();
@@ -161,14 +165,31 @@ namespace Egan.Controllers
             }
         }
 
+        /// <summary>
+        /// 发送卡组
+        /// </summary>
+        /// <param name="deck">卡片ID集</param>
         public void SendDeck(List<int> deck)
         {
             gameController.SendDeck(deck);
         }
 
+        /// <summary>
+        /// 猜拳
+        /// </summary>
+        /// <param name="finger">出拳</param>
         public void FingerGuess(FingerGuess finger)
         {
             gameController.Finger(finger);
+        }
+
+        /// <summary>
+        /// 玩家操作
+        /// </summary>
+        /// <param name="message">操作消息</param>
+        public void Operate(Message message)
+        {
+            gameController.Operate(message);
         }
 
         /// <summary>

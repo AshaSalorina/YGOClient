@@ -1,6 +1,7 @@
 ﻿using Asha.Tools;
 using Egan.Constants;
 using Egan.Models;
+using HYJ.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections;
@@ -30,9 +31,9 @@ public class PacketExp {
     /// </summary>
     /// <param name="dp"></param>
     /// <returns></returns>
-    public static Player ExpHJoin(DataPacket dp)
+    public static Egan.Models.Player ExpHJoin(DataPacket dp)
     {
-        return JsonConvert.DeserializeObject<Player>(dp.Body);
+        return JsonConvert.DeserializeObject<Egan.Models.Player>(dp.Body);
     }
 
     /// <summary>
@@ -78,6 +79,7 @@ public class PacketExp {
         return deck;
     }
 
+<<<<<<< HEAD
     public static int ExpCountDown(DataPacket dp)
     {
         return int.Parse(dp.Body);
@@ -89,4 +91,10 @@ public class PacketExp {
     }
 
 
+=======
+    public static Message ExpOperate(DataPacket dp)
+    {
+        return JsonConvert.DeserializeObject<Message>(dp.Body);
+    }
+>>>>>>> 6b8ba138617402cbf5820fd12d68344b9cb47492
 }

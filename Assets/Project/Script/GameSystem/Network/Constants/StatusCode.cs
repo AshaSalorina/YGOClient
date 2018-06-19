@@ -4,13 +4,14 @@ namespace Egan.Constants
     public enum StatusCode
     {
         /// <summary>
+        /// 被列入黑名单
+        /// </summary>
+        BLACKLISTED = 4314,
+        /// <summary>
         /// 房间密码错误
         /// </summary>
         INCORRECT = 4316,
-        /// <summary>
-        /// 房间已开始游戏
-        /// </summary>
-        PLAYING = 4381,
+        PLAYING = 0000,
         /// <summary>
         /// 房客未准备
         /// </summary>
@@ -27,18 +28,26 @@ namespace Egan.Constants
         /// 房间已满
         /// </summary>
         FULL_ROOM = 4392,
-
+        /// <summary>
+        /// 服务器内部错误
+        /// </summary>
+        INTERNAL_SERVER_ERROR = 5000,
+        /// <summary>
+        /// 玩家已在其他房间
+        /// </summary>
+        BE_IN_ANOTHER = 6008,
+        /// <summary>
+        /// 玩家不在本房间
+        /// </summary>
+        NOT_IN_HERE = 6012,
+        /// <summary>
+        /// 玩家无权限
+        /// </summary>
+        NO_ACCESS = 6024,
         /// <summary>
         /// 连接中断
         /// </summary>
-        DISCONNECTED = 6101,
-        /// <summary>
-        /// 服务器繁忙
-        /// </summary>
-        BUSSY_SERVER = 6201,
-        /// <summary>
-        /// 被列入黑名单
-        /// </summary>
-        BLACKLISTED = 6301,
+        DISCONNECTED = 6060
+        
     }
 }

@@ -119,7 +119,7 @@ namespace Asha
             if (Options.player.Head != null && Options.player.Head != "")
             {
                 //todo:这里可能有问题,pic是self的子物体的子物体,如果出现bug则需要修改
-                ImageHelper.LoadImage(Options.Room.transform.Find("Self").Find("Pic").gameObject, Options.player.Head);
+                ImageHelper.LoadImage(Options.Room.transform.Find("Self").Find("Head").Find("Mask").Find("Pic").gameObject, Options.player.Head);
                 //Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
             }
             #endregion
@@ -154,7 +154,7 @@ namespace Asha
             Options.Room.transform.Find("Self").Find("Name").GetComponent<Text>().text = Options.player.Name;
             if (Options.player.Head != null && Options.player.Head != "")
             {
-                ImageHelper.LoadImage(Options.Room.transform.Find("Self").Find("Pic").gameObject, Options.player.Head);
+                ImageHelper.LoadImage(Options.Room.transform.Find("Self").Find("Head").Find("Mask").Find("Pic").gameObject, Options.player.Head);
                 //Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
             }
 

@@ -165,6 +165,8 @@ namespace Asha
                 Options.client.GetRooms();
                 //等待rooms被载入,并设置超时时间
                 int outofFrame = 1000;
+                //标志已经发出刷新申请,可以发送下一次申请了
+                refDone = true;
                 while (rooms.Count == 0)
                 {
                     yield return new WaitForFixedUpdate();
@@ -203,7 +205,7 @@ namespace Asha
                 //更新控件框大小
                 RefreshRoomSize();
                 //刷新标志完成
-                refDone = true;
+                //refDone = true;
                 //等待30s
                 yield return new WaitForSeconds(30f);
             }

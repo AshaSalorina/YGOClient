@@ -46,7 +46,7 @@ namespace Asha
 
         void Refresh()
         {
-            GameObject.Find("pl_Room").transform.Find("Viewport").SendMessage("RefreshRoomList");
+            GameObject.Find("pl_Room").transform.Find("Scroll View").Find("Viewport").SendMessage("RefreshRoomList");
         }
 
     }

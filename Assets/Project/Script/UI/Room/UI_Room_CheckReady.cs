@@ -87,7 +87,7 @@ namespace  Asha
         /// </summary>
         public void GetStart()
         {
-            Options.YGOWaiter.Switch(MessageType.READY, false);
+            //Options.YGOWaiter.Switch(MessageType.READY, false);
             readyActive = false;//锁死准备按钮
             //取消超时监听
             StopAllCoroutines();
@@ -102,7 +102,7 @@ namespace  Asha
         /// </summary>
         public void ToStart()
         {
-            Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, false);
+            //Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, false);
             StopAllCoroutines();
         }
 

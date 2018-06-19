@@ -170,9 +170,6 @@ namespace Asha
         /// </summary>
         public void LeaveRoom()
         {
-            Options.YGOWaiter.Switch(MessageType.CHAT, false);
-            Options.YGOWaiter.Switch(MessageType.JOIN, false);
-            Options.YGOWaiter.Switch(MessageType.LEAVE, false);
             Options.client.Leave();
             DestroyRoom();
         }
@@ -189,11 +186,20 @@ namespace Asha
         }
 
         /// <summary>
-        /// 房间被销毁
+        /// 房间被异常销毁
         /// </summary>
         public void DestroyRoom()
         {
+            selected = -1;
+
+            Options.YGOWaiter.Switch(MessageType.JOIN, true);
+            Options.YGOWaiter.Switch(MessageType.CREATE, true);
+
             Options.YGOWaiter.Switch(MessageType.CHAT, false);
+            Options.YGOWaiter.Switch(MessageType.STARTED, false);
+            Options.YGOWaiter.Switch(MessageType.LEAVE, false);
+            Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, false);
+
             Options.GameCenter.SetActive(true);
             Destroy(Options.Room);
         }
@@ -201,7 +207,7 @@ namespace Asha
         /// <summary>
         /// 游戏开始
         /// </summary>
-        public void GameBegin()
+        public void AGameBegin()
         {
             //转到决斗服务器
             Options.client.Duel(Id, IsMaster);

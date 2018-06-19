@@ -48,6 +48,7 @@ namespace Asha.Tools
                             OnReady();
                             break;
                         case MessageType.STARTED:
+                            Options.EventSystem.SendMessage("GetStart");
                             break;
                         case MessageType.COUNT_DOWN:
                             OnCountDown();
@@ -232,7 +233,7 @@ namespace Asha.Tools
                 if (Packets[MessageType.LEAVE].Count > 0)
                 {
                     //Switch(MessageType.LEAVE, false);
-                    Options.EventSystem.SendMessage("DestroyRoom");
+                    Options.EventSystem.SendMessage("BeLeavedRoom");
                     WarningBox.Show("房主关闭了房间");
                     Packets[MessageType.LEAVE].RemoveRange(0, 1);
                 }
@@ -300,10 +301,10 @@ namespace Asha.Tools
             {
                 int cd = PacketExp.ExpCountDown(Packets[MessageType.GET_ROOMS][0]);
                 Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
-
+                //Debug.Log(cd.ToString());
                 if (cd == 0)
                 {
-                    Options.EventSystem.SendMessage("GameBegin");
+                    Options.EventSystem.SendMessage("AGameBegin");
                 }
                 else
                 {

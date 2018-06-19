@@ -28,7 +28,7 @@ namespace Asha
 
         void JoinRoom()
         {
-            if (RoomInfo.Selected == -1)
+            if (RoomInfo.Selected == -1 || RoomInfo.Selected == 0)
             {
                 WarningBox.Show("请选中一个房间");
                 return;

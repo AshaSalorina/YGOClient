@@ -23,7 +23,8 @@ namespace Asha
 
         void CreatRoom()
         {
-            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\CreatRoom"), Options.MainCanvas, "CreatRoom");
+            //var obj = 
+            InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\GameCenter\CreatRoom"), Options.MainCanvas, "CreatRoom");
         }
 
         void JoinRoom()

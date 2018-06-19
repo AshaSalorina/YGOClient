@@ -102,6 +102,7 @@ namespace  Asha
         /// </summary>
         public void ToStart()
         {
+            Options.EventSystem.SendMessage("AGameBegin");
             //Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, false);
             StopAllCoroutines();
         }

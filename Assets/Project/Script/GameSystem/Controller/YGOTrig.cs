@@ -48,7 +48,7 @@ namespace Asha.Tools
                             OnReady();
                             break;
                         case MessageType.STARTED:
-                            Options.EventSystem.SendMessage("GetStart");
+                            OnStarted();
                             break;
                         case MessageType.COUNT_DOWN:
                             OnCountDown();
@@ -79,6 +79,8 @@ namespace Asha.Tools
                 }
             }
         }
+
+
         #endregion
 
         #region Static
@@ -304,7 +306,8 @@ namespace Asha.Tools
                 //Debug.Log(cd.ToString());
                 if (cd == 0)
                 {
-                    Options.EventSystem.SendMessage("AGameBegin");
+                    //UI_Room_CheckReady.obj.SendMessage("ToStart");
+                    //Options.EventSystem.SendMessage("AGameBegin");
                 }
                 else
                 {
@@ -335,7 +338,15 @@ namespace Asha.Tools
             }
         }
 
-
+        void OnStarted()
+        {
+            if (Packets[MessageType.CHAT].Count > 0)
+            {
+                //Debug.Log("Std");
+                Packets[MessageType.CHAT].RemoveRange(0, 1);
+                UI_Room_CheckReady.obj.SendMessage("GetStart");
+            }
+        }
         #endregion
 
 

@@ -177,7 +177,7 @@ namespace Asha.Tools
                     //打开leave和ready监听,并关闭join监听
                     Switch(MessageType.LEAVE, true);
                     Switch(MessageType.READY, true);
-                    //Switch(MessageType.JOIN, false);
+                    Switch(MessageType.JOIN, false);
                 }
             }
             else
@@ -195,7 +195,7 @@ namespace Asha.Tools
                     RoomInfo.CustomIn = true;
                     Switch(MessageType.LEAVE, true);
                     Switch(MessageType.READY, true);
-                    //Switch(MessageType.JOIN, false);
+                    Switch(MessageType.JOIN, false);
                 }
             }
         }
@@ -225,8 +225,8 @@ namespace Asha.Tools
 
                     //打开join监听
                     Switch(MessageType.JOIN, true);
-                    //Switch(MessageType.READY, false);
-                    //Switch(MessageType.LEAVE, false);
+                    Switch(MessageType.READY, false);
+                    Switch(MessageType.LEAVE, false);
                     WarningBox.Show("对方决斗者离开了房间");
                 }
             }
@@ -234,7 +234,7 @@ namespace Asha.Tools
             {
                 if (Packets[MessageType.LEAVE].Count > 0)
                 {
-                    //Switch(MessageType.LEAVE, false);
+                    Switch(MessageType.LEAVE, false);
                     Options.EventSystem.SendMessage("BeLeavedRoom");
                     WarningBox.Show("房主关闭了房间");
                     Packets[MessageType.LEAVE].RemoveRange(0, 1);

@@ -212,7 +212,8 @@ namespace Asha
             //转到决斗服务器
             Options.client.Duel(Id, IsMaster);
             //创建决斗场景
-            InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), null, "GameArea");
+            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), GameObject.Find("GACanvas").gameObject, "GameArea");
+            //obj.GetComponent<Canvas>().GetComponent<Camera>() = GameObject.Find("UICamera").GetComponent<Camera>();
             //移除房间
             Destroy(Options.Room);
         }

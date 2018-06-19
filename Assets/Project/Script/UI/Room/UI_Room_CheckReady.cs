@@ -94,7 +94,7 @@ namespace  Asha
             //监听倒计时
             Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, true);
             //计算超时
-            StartCoroutine(WaitOutOfTime());
+            //StartCoroutine(WaitOutOfTime());
         }
 
         /// <summary>

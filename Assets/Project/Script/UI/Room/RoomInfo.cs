@@ -1,12 +1,12 @@
-﻿using Egan.Models;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Asha.Tools;
 using Newtonsoft.Json;
 using System;
 using Egan.Constants;
+using Egan.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Asha
 {
@@ -15,11 +15,12 @@ namespace Asha
     /// </summary>
     public class RoomInfo : MonoBehaviour
     {
-
+        static int id;
         static int selected;
         static bool customIn = false;
         static bool isMaster;
         static bool isReady = false;
+        static string roomName = "DefRoom";
 
         /// <summary>
         /// 选中的Togle
@@ -75,12 +76,40 @@ namespace Asha
             }
         }
 
+        public static int Id
+        {
+            get
+            {
+                return id;
+            }
+
+            set
+            {
+                id = value;
+            }
+        }
+
+        public static string Name
+        {
+            get
+            {
+                return roomName;
+            }
+
+            set
+            {
+                roomName = value;
+            }
+        }
+
         /// <summary>
         /// 玩家创建了一个房间
         /// </summary>
-        public void CreatRoom()
+        public void CreatRoom(object roomID)
         {
             Options.GameCenter.SetActive(false);
+
+            id = (int)roomID;
 
             isMaster = true;
             Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
@@ -95,6 +124,8 @@ namespace Asha
 
             #region 等待房客
             Options.YGOWaiter.Switch(MessageType.JOIN, true);
+
+            Options.YGOWaiter.Switch(MessageType.CHAT, true);
             //StartCoroutine(WaitForCustomAndRoomMessage());
             #endregion
 
@@ -106,10 +137,16 @@ namespace Asha
         /// <param name="rm"></param>
         public void JoinRoom(object room)
         {
+            Options.YGOWaiter.Switch(MessageType.CHAT, true);
+
+            #region 初始化房间
             var rm = (Room)room;
+            id = rm.Id;
             Options.GameCenter.SetActive(false);
             isMaster = false;
             Options.Room = InstantiateHelper.InsObj(Resources.Load<GameObject>(@"Prefabs\UI\Room\Room"), Options.MainCanvas, MathCommonData.ZVector3, MathCommonData.EVector3, "Room", true);
+
+            #endregion
 
             #region 自身信息载入
             Options.Room.transform.Find("Self").Find("Name").GetComponent<Text>().text = Options.player.Name;
@@ -130,6 +167,7 @@ namespace Asha
         /// </summary>
         public void LeaveRoom()
         {
+            Options.YGOWaiter.Switch(MessageType.CHAT, false);
             Options.YGOWaiter.Switch(MessageType.JOIN, false);
             Options.YGOWaiter.Switch(MessageType.LEAVE, false);
             Options.client.Leave();
@@ -141,13 +179,18 @@ namespace Asha
         /// </summary>
         public void BeLeavedRoom()
         {
+            Options.YGOWaiter.Switch(MessageType.CHAT, false);
             //Options.YGOWaiter.Switch(MessageType.JOIN, false);
             //Options.client.Leave();
             DestroyRoom();
         }
 
+        /// <summary>
+        /// 房间被销毁
+        /// </summary>
         public void DestroyRoom()
         {
+            Options.YGOWaiter.Switch(MessageType.CHAT, false);
             Options.GameCenter.SetActive(true);
             Destroy(Options.Room);
         }
@@ -157,7 +200,9 @@ namespace Asha
         /// </summary>
         public void GameBegin()
         {
-
+            Options.client.Duel(Id, IsMaster);
+            InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), null, "GameArea");
+            Destroy(Options.Room);
         }
 
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using HYJ;
+using HYJ.Models;
 
 namespace Asha.Tools
 {

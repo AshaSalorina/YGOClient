@@ -28,7 +28,10 @@ namespace Asha.Tools
             {
                 obj.name = name;
             }
-            obj.transform.SetParent(parent.transform);
+            if (parent != null)
+            {
+                obj.transform.SetParent(parent.transform);
+            }
             obj.transform.localPosition = localPositon;
             obj.transform.localScale = localScale;
             obj.SetActive(isActive);

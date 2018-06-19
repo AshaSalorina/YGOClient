@@ -79,6 +79,16 @@ public class PacketExp {
         return deck;
     }
 
+    public static int ExpCountDown(DataPacket dp)
+    {
+        return int.Parse(dp.Body);
+    }
+
+    public static string ExpChat(DataPacket dp)
+    {
+        return dp.Body;
+    }
+
     public static Message ExpOperate(DataPacket dp)
     {
         return JsonConvert.DeserializeObject<Message>(dp.Body);

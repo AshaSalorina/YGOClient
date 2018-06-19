@@ -299,14 +299,14 @@ namespace Asha.Tools
 
         void OnCountDown()
         {
-            if (Packets[MessageType.GET_ROOMS].Count > 0)
+            if (Packets[MessageType.COUNT_DOWN].Count > 0)
             {
-                int cd = PacketExp.ExpCountDown(Packets[MessageType.GET_ROOMS][0]);
-                Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
+                int cd = PacketExp.ExpCountDown(Packets[MessageType.COUNT_DOWN][0]);
+                Packets[MessageType.COUNT_DOWN].RemoveRange(0, 1);
                 //Debug.Log(cd.ToString());
                 if (cd == 0)
                 {
-                    //UI_Room_CheckReady.obj.SendMessage("ToStart");
+                    UI_Room_CheckReady.obj.SendMessage("ToStart");
                     //Options.EventSystem.SendMessage("AGameBegin");
                 }
                 else
@@ -340,10 +340,10 @@ namespace Asha.Tools
 
         void OnStarted()
         {
-            if (Packets[MessageType.CHAT].Count > 0)
+            if (Packets[MessageType.STARTED].Count > 0)
             {
                 //Debug.Log("Std");
-                Packets[MessageType.CHAT].RemoveRange(0, 1);
+                Packets[MessageType.STARTED].RemoveRange(0, 1);
                 UI_Room_CheckReady.obj.SendMessage("GetStart");
             }
         }

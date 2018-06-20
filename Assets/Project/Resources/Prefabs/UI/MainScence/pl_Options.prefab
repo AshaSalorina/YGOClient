@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114640758439022310}
   - component: {fileID: 114681817976196630}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: BGStr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,8 +160,9 @@ GameObject:
   - component: {fileID: 222105758360855610}
   - component: {fileID: 114853541856375644}
   - component: {fileID: 114720217141568796}
+  - component: {fileID: 114176041468048392}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btn_ChangeBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -488,6 +489,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114176041468048392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1486648497747594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669feaff02f1b2043a2c90be25b4a2ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114261087290048314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1321,7 +1333,7 @@ RectTransform:
   - {fileID: 224487559743789652}
   - {fileID: 224467857491194246}
   m_Father: {fileID: 224797867724101842}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1379,7 +1391,7 @@ RectTransform:
   m_Children:
   - {fileID: 224856834615951178}
   m_Father: {fileID: 224797867724101842}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1417,9 +1429,9 @@ RectTransform:
   - {fileID: 224456620020014010}
   - {fileID: 224941150402201126}
   - {fileID: 224360022862749934}
+  - {fileID: 224542189312388044}
   - {fileID: 224708890817182388}
   - {fileID: 224940498162853114}
-  - {fileID: 224542189312388044}
   - {fileID: 224615729747700154}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1459,7 +1471,7 @@ RectTransform:
   m_Children:
   - {fileID: 224432116231185050}
   m_Father: {fileID: 224797867724101842}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

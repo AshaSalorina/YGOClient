@@ -43,6 +43,7 @@ namespace Asha
             {
                 WarningBox.Show("房间名不能为空");
                 StopAllCoroutines();
+                return;
             }
 
             room.Password = "";

@@ -80,7 +80,6 @@ namespace Asha.Tools
             }
         }
 
-
         #endregion
 
         #region Static
@@ -276,6 +275,24 @@ namespace Asha.Tools
                     case StatusCode.FULL_ROOM:
                         //拒绝加入
                         WarningBox.Show("房间已满");
+                        break;
+                    case StatusCode.BLACKLISTED:
+                        WarningBox.Show("您已被加入黑名单");
+                        break;
+                    case StatusCode.INTERNAL_SERVER_ERROR:
+                        WarningBox.Show("服务器内部发生错误");
+                        break;
+                    case StatusCode.BE_IN_ANOTHER:
+                        WarningBox.Show("您已在其他房间");
+                        break;
+                    case StatusCode.NOT_IN_HERE:
+                        WarningBox.Show("您不在房间中");
+                        break;
+                    case StatusCode.NO_ACCESS:
+                        WarningBox.Show("您无权执行此操作");
+                        break;
+                    case StatusCode.DISCONNECTED:
+                        WarningBox.Show("连接已中断");
                         break;
                     default:
                         WarningBox.Show("未知的错误");

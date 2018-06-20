@@ -46,12 +46,7 @@ namespace Egan.Controllers
 
             try
             {
-                socket = new YgoSocket();
-                lobbyController = new LobbyController(socket);
-                socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
-                decoder = new YGOPDecoder(socket);
-                receiver = new LobbyReceiver(decoder);
-                receiver.Start();
+                ReconnectLobby();
             }
             catch(Exception e)
             {
@@ -190,6 +185,19 @@ namespace Egan.Controllers
         public void Operate(Message message)
         {
             gameController.Operate(message);
+        }
+
+        /// <summary>
+        /// 连接大厅服务器
+        /// </summary>
+        public void ReconnectLobby()
+        {
+            socket = new YgoSocket();
+            lobbyController = new LobbyController(socket);
+            socket.Start(RemoteAddress.LOBBY_IP, RemoteAddress.LOBBY_PORT);
+            decoder = new YGOPDecoder(socket);
+            receiver = new LobbyReceiver(decoder);
+            receiver.Start();
         }
 
         /// <summary>

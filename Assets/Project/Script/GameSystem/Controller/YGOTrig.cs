@@ -234,6 +234,7 @@ namespace Asha.Tools
                         if (Options.GameArea != null)
                         {
                             GameObject.Destroy(Options.GameArea);
+                            Options.client.ReconnectLobby();
                         }
                         Options.GameCenter.SetActive(true);
                     }

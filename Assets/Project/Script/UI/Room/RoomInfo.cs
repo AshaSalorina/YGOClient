@@ -208,6 +208,7 @@ namespace Asha
             if (Options.GameArea != null)
             {
                 Destroy(Options.GameArea);
+                Options.client.ReconnectLobby();
             }
         }
 

@@ -58,7 +58,6 @@ namespace Asha
             StopAllCoroutines();
         }
 
-
         private void OnDestroy()
         {
             //携程维护

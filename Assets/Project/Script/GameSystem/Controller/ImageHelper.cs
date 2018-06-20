@@ -43,16 +43,24 @@ namespace Asha.Tools
                 case LoadImageType.WebOrLocal:
                     WWW wLink = new WWW(img);
                     yield return wLink;
-                    try
+
+                    Texture2D t2D = wLink.texture;
+                    if (t2D == null)
                     {
-                        Texture2D t2D = wLink.texture;
+                        wLink = new WWW("file://" + img);
+                        yield return wLink;
+                        t2D = wLink.texture;
+                    }
+                    if (t2D != null)
+                    {
                         Sprite sprite = Sprite.Create(t2D, new Rect(0, 0, t2D.width, t2D.height), new Vector2(0.5f, 0.5f));
                         obj.GetComponent<Image>().sprite = sprite;
                     }
-                    catch (System.Exception)
+                    else
                     {
-                        throw;
+                        WarningBox.Show("输入的可能不是图片,如果是网页图片,请加上协议");
                     }
+
                     break;
                 case LoadImageType.Resources:
                     try

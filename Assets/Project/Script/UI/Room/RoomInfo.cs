@@ -190,7 +190,7 @@ namespace Asha
         /// </summary>
         public void DestroyRoom()
         {
-            selected = -1;
+            selected = 0;
 
             Options.YGOWaiter.Switch(MessageType.JOIN, true);
             Options.YGOWaiter.Switch(MessageType.CREATE, true);
@@ -201,7 +201,14 @@ namespace Asha
             Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, false);
 
             Options.GameCenter.SetActive(true);
-            Destroy(Options.Room);
+            if (Options.Room != null)
+            {
+                Destroy(Options.Room);
+            }
+            if (Options.GameArea != null)
+            {
+                Destroy(Options.GameArea);
+            }
         }
 
         /// <summary>
@@ -212,7 +219,7 @@ namespace Asha
             //转到决斗服务器
             Options.client.Duel(Id, IsMaster);
             //创建决斗场景
-            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), GameObject.Find("GACanvas").gameObject, "GameArea");
+            Options.GameArea = InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), GameObject.Find("GACanvas").gameObject, "GameArea");
             //obj.GetComponent<Canvas>().GetComponent<Camera>() = GameObject.Find("UICamera").GetComponent<Camera>();
             //移除房间
             Destroy(Options.Room);

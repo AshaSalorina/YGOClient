@@ -118,7 +118,9 @@ namespace Asha
             Options.Room.transform.Find("Self").Find("Name").GetComponent<Text>().text = Options.player.Name;
             if (Options.player.Head != null && Options.player.Head != "")
             {
-                Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
+                //todo:这里可能有问题,pic是self的子物体的子物体,如果出现bug则需要修改
+                ImageHelper.LoadImage(Options.Room.transform.Find("Self").Find("Head").Find("Mask").Find("Pic").gameObject, Options.player.Head);
+                //Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
             }
             #endregion
 
@@ -152,7 +154,8 @@ namespace Asha
             Options.Room.transform.Find("Self").Find("Name").GetComponent<Text>().text = Options.player.Name;
             if (Options.player.Head != null && Options.player.Head != "")
             {
-                Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
+                ImageHelper.LoadImage(Options.Room.transform.Find("Self").Find("Head").Find("Mask").Find("Pic").gameObject, Options.player.Head);
+                //Options.Room.transform.Find("Self").Find("Head").GetComponent<Text>().text = Options.player.Head;
             }
 
             Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = rm.Host.Name;
@@ -167,9 +170,6 @@ namespace Asha
         /// </summary>
         public void LeaveRoom()
         {
-            Options.YGOWaiter.Switch(MessageType.CHAT, false);
-            Options.YGOWaiter.Switch(MessageType.JOIN, false);
-            Options.YGOWaiter.Switch(MessageType.LEAVE, false);
             Options.client.Leave();
             DestroyRoom();
         }
@@ -186,11 +186,20 @@ namespace Asha
         }
 
         /// <summary>
-        /// 房间被销毁
+        /// 房间被异常销毁
         /// </summary>
         public void DestroyRoom()
         {
+            selected = -1;
+
+            Options.YGOWaiter.Switch(MessageType.JOIN, true);
+            Options.YGOWaiter.Switch(MessageType.CREATE, true);
+
             Options.YGOWaiter.Switch(MessageType.CHAT, false);
+            Options.YGOWaiter.Switch(MessageType.STARTED, false);
+            Options.YGOWaiter.Switch(MessageType.LEAVE, false);
+            Options.YGOWaiter.Switch(MessageType.COUNT_DOWN, false);
+
             Options.GameCenter.SetActive(true);
             Destroy(Options.Room);
         }
@@ -198,10 +207,14 @@ namespace Asha
         /// <summary>
         /// 游戏开始
         /// </summary>
-        public void GameBegin()
+        public void AGameBegin()
         {
+            //转到决斗服务器
             Options.client.Duel(Id, IsMaster);
-            InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), null, "GameArea");
+            //创建决斗场景
+            var obj = InstantiateHelper.InsObj(Resources.Load<GameObject>("Prefabs/UI/GameArea/GameArea"), GameObject.Find("GACanvas").gameObject, "GameArea");
+            //obj.GetComponent<Canvas>().GetComponent<Camera>() = GameObject.Find("UICamera").GetComponent<Camera>();
+            //移除房间
             Destroy(Options.Room);
         }
 

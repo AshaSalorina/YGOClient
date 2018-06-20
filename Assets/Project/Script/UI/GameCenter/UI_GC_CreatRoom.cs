@@ -50,6 +50,9 @@ namespace Asha
             room.HasPwd = room.Password != null && room.Password != "" ? true : false;
             room.Desc = transform.Find("RoomDes").GetComponent<InputField>().text;
 
+            //预先注册房间名
+            RoomInfo.Name = room.Name;
+
             Options.client.CreateRoom(room);
             //开始监听创建房间的消息
             Options.YGOWaiter.Switch(Egan.Constants.MessageType.CREATE, true);

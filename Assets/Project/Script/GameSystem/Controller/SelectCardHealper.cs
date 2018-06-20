@@ -17,7 +17,6 @@ namespace Asha.Tools
         public static void SelectedCard(Card obj)
         {
             var ISCH = obj.GetType();
-
         }
     }
 

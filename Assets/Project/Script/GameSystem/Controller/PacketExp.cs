@@ -81,6 +81,7 @@ public class PacketExp {
 
     public static int ExpCountDown(DataPacket dp)
     {
+        //Debug.Log(dp.Body);
         return int.Parse(dp.Body);
     }
 

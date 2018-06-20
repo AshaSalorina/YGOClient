@@ -48,6 +48,7 @@ namespace Asha.Tools
                             OnReady();
                             break;
                         case MessageType.STARTED:
+                            OnStarted();
                             break;
                         case MessageType.COUNT_DOWN:
                             OnCountDown();
@@ -78,6 +79,8 @@ namespace Asha.Tools
                 }
             }
         }
+
+
         #endregion
 
         #region Static
@@ -140,10 +143,10 @@ namespace Asha.Tools
         {
             if (Packets[MessageType.GET_ROOMS].Count > 0)
             {
-                UI_GC_SVViewSize.rooms = PacketExp.ExpGetRooms(Packets[MessageType.GET_ROOMS][0]);
-                WarningBox.Show(UI_GC_SVViewSize.rooms.Count.ToString());
-                Switch(MessageType.GET_ROOMS, false);
-                Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
+                UI_GC_SVViewSize.rooms = PacketExp.ExpGetRooms(Packets[MessageType.GET_ROOMS][Packets[MessageType.GET_ROOMS].Count - 1]);
+                //WarningBox.Show(UI_GC_SVViewSize.rooms.Count.ToString());
+                //Switch(MessageType.GET_ROOMS, false);
+                Packets[MessageType.GET_ROOMS].RemoveRange(0, Packets[MessageType.GET_ROOMS].Count);
             }
         }
 
@@ -162,7 +165,10 @@ namespace Asha.Tools
                     #region 写入玩家数据
 
                     Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = custom.Name;
-                    ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").gameObject, custom.Head, ImageHelper.LoadImageType.Byte);
+                    if (custom.Head != null && custom.Head != "")
+                    {
+                        ImageHelper.LoadImage(Options.Room.transform.Find("Other").Find("Head").Find("Mask").Find("Pic").gameObject, custom.Head, ImageHelper.LoadImageType.Byte);
+                    }
 
                     #endregion
                     //移除过时消息
@@ -205,17 +211,23 @@ namespace Asha.Tools
                     #region 清空玩家数据
 
                     Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
-                    Options.Room.transform.Find("Other").Find("Head").GetComponent<Image>().sprite = null;
-                    WarningBox.Show("ClearPlayer");
+                    Options.Room.transform.Find("Other").Find("Head").Find("Mask").Find("Pic").GetComponent<Image>().sprite = null;
+                    //WarningBox.Show("ClearPlayer");
+
                     #endregion
                     //移除过时消息
                     Packets[MessageType.LEAVE].RemoveRange(0, 1);
+                    //重新标记房客状态
                     RoomInfo.CustomIn = false;
-                    //打开join监听,并关闭leave监听
+
+                    //如果已经存在计时,让计时停止
+                    Options.Room.SendMessage("StopCD");
+
+                    //打开join监听
                     Switch(MessageType.JOIN, true);
                     Switch(MessageType.READY, false);
                     Switch(MessageType.LEAVE, false);
-                    WarningBox.Show("OpenJoinList");
+                    WarningBox.Show("对方决斗者离开了房间");
                 }
             }
             else
@@ -223,7 +235,7 @@ namespace Asha.Tools
                 if (Packets[MessageType.LEAVE].Count > 0)
                 {
                     Switch(MessageType.LEAVE, false);
-                    Options.EventSystem.SendMessage("DestroyRoom");
+                    Options.EventSystem.SendMessage("BeLeavedRoom");
                     WarningBox.Show("房主关闭了房间");
                     Packets[MessageType.LEAVE].RemoveRange(0, 1);
                 }
@@ -242,7 +254,7 @@ namespace Asha.Tools
                     case StatusCode.INCORRECT:
                         //拒绝加入
                         //停止监听join消息
-                        Switch(MessageType.JOIN, false);
+                        //Switch(MessageType.JOIN, false);
                         WarningBox.Show("密码错误");
                         break;
                     case StatusCode.PLAYING:
@@ -258,7 +270,7 @@ namespace Asha.Tools
                         break;
                     case StatusCode.FULL_LOBBY:
                         //拒绝并中断创建房间
-                        Switch(MessageType.CREATE, false);
+                        //Switch(MessageType.CREATE, false);
                         WarningBox.Show("大厅已满");
                         break;
                     case StatusCode.FULL_ROOM:
@@ -287,18 +299,20 @@ namespace Asha.Tools
 
         void OnCountDown()
         {
-            if (Packets[MessageType.GET_ROOMS].Count > 0)
+            if (Packets[MessageType.COUNT_DOWN].Count > 0)
             {
-                int cd = PacketExp.ExpCountDown(Packets[MessageType.GET_ROOMS][0]);
-                Packets[MessageType.GET_ROOMS].RemoveRange(0, 1);
-
+                int cd = PacketExp.ExpCountDown(Packets[MessageType.COUNT_DOWN][0]);
+                Packets[MessageType.COUNT_DOWN].RemoveRange(0, 1);
+                //Debug.Log(cd.ToString());
                 if (cd == 0)
                 {
-                    Options.EventSystem.SendMessage("GameBegin");
+                    UI_Room_CheckReady.obj.SendMessage("ToStart");
+                    //Options.EventSystem.SendMessage("AGameBegin");
                 }
                 else
                 {
                     //todo:
+                    Options.Room.SendMessage("CountDown", cd);
                     //UI_Room_Talk.ShowText($"倒计时{cd.ToString()}秒...");
                 }
             }
@@ -324,7 +338,15 @@ namespace Asha.Tools
             }
         }
 
-
+        void OnStarted()
+        {
+            if (Packets[MessageType.STARTED].Count > 0)
+            {
+                //Debug.Log("Std");
+                Packets[MessageType.STARTED].RemoveRange(0, 1);
+                UI_Room_CheckReady.obj.SendMessage("GetStart");
+            }
+        }
         #endregion
 
 

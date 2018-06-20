@@ -206,26 +206,39 @@ namespace Asha.Tools
             {
                 if (Packets[MessageType.LEAVE].Count > 0)
                 {
-                    //WarningBox.Show(Packets[MessageType.LEAVE].Count.ToString());
-                    #region 清空玩家数据
+                    if (Options.Room != null)
+                    {
+                        //WarningBox.Show(Packets[MessageType.LEAVE].Count.ToString());
+                        #region 清空玩家数据
 
-                    Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
-                    Options.Room.transform.Find("Other").Find("Head").Find("Mask").Find("Pic").GetComponent<Image>().sprite = null;
-                    //WarningBox.Show("ClearPlayer");
+                        Options.Room.transform.Find("Other").Find("Name").GetComponent<Text>().text = "NoPlayer";
+                        Options.Room.transform.Find("Other").Find("Head").Find("Mask").Find("Pic").GetComponent<Image>().sprite = null;
+                        //WarningBox.Show("ClearPlayer");
 
-                    #endregion
-                    //移除过时消息
-                    Packets[MessageType.LEAVE].RemoveRange(0, 1);
-                    //重新标记房客状态
-                    RoomInfo.CustomIn = false;
+                        #endregion
+                        //移除过时消息
+                        Packets[MessageType.LEAVE].RemoveRange(0, 1);
+                        //重新标记房客状态
+                        RoomInfo.CustomIn = false;
 
-                    //如果已经存在计时,让计时停止
-                    Options.Room.SendMessage("StopCD");
+                        //如果已经存在计时,让计时停止
+                        Options.Room.SendMessage("StopCD");
 
-                    //打开join监听
-                    Switch(MessageType.JOIN, true);
-                    Switch(MessageType.READY, false);
-                    Switch(MessageType.LEAVE, false);
+                        //打开join监听
+                        Switch(MessageType.JOIN, true);
+                        Switch(MessageType.READY, false);
+                        Switch(MessageType.LEAVE, false);
+                    }
+                    else
+                    {
+                        if (Options.GameArea != null)
+                        {
+                            GameObject.Destroy(Options.GameArea);
+                        }
+                        Options.GameCenter.SetActive(true);
+                    }
+
+
                     WarningBox.Show("对方决斗者离开了房间");
                 }
             }
